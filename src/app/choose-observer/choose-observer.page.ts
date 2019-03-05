@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
-  selector: 'app-setting',
-  templateUrl: './setting.page.html',
-  styleUrls: ['./setting.page.scss'],
+  selector: 'app-choose-observer',
+  templateUrl: './choose-observer.page.html',
+  styleUrls: ['./choose-observer.page.scss'],
 })
-export class SettingPage implements OnInit {
-	
-	public prev_page: String = '/home';
+export class ChooseObserverPage implements OnInit {
+
+  	public prev_page: String = '/home';
 	
 	constructor(private router:Router, private route: ActivatedRoute) 
 	{
@@ -29,14 +29,5 @@ export class SettingPage implements OnInit {
 	{
 		this.router.navigate([this.prev_page]);
 	}
-	
-	public goToObserver()
-	{
-		this.router.navigate(['/choose-observer',{back: '/setting'}])
-	}
-	
-	public CpaFai()
-	{
-		console.log("t'as pas géré ça connard")
-	}
+
 }

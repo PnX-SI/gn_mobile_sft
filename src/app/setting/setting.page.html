@@ -1,6 +1,6 @@
 <ion-header>
 	<ion-toolbar >
-	  	<ion-button size="small" shape="round" slot="start" (click)="retourArriere()">
+	  	<ion-button shape="round" slot="start" (click)="retourArriere()">
 			<ion-icon name="arrow-back"></ion-icon>
 		</ion-button>
     	<ion-title><strong>Setting</strong></ion-title>
@@ -8,5 +8,36 @@
 </ion-header>
 
 <ion-content padding>
-
+	<ion-list>
+		<ion-list-header>
+			<ion-label><strong>OBSERVERS</strong></ion-label>
+		</ion-list-header>
+		<ion-item button (click)="goToObserver()">
+			<ion-label>
+			<h3>Default observer</h3>
+			<p>Not defined</p>
+			</ion-label>
+		</ion-item>
+	</ion-list>
+	<ion-list>
+		<ion-list-header>
+			<ion-label><strong>POINTING</strong></ion-label>
+		</ion-list-header>
+		<ion-item button (click)="CpaFai()">
+			<ion-label>Display the map scale</ion-label>
+			 <ion-checkbox slot="end" checked></ion-checkbox>
+		</ion-item>
+	</ion-list>
+	<ion-list>
+		<ion-list-header>
+			<ion-label><strong>About</strong></ion-label>
+		</ion-list-header>
+		<ion-item>
+			<ion-label>
+			<h3>App version</h3>
+			<p>placeholder version</p>
+			<p>placeholder date</p>
+			</ion-label>
+		</ion-item>
+	</ion-list>
 </ion-content>
