@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar>
     <ion-title>
       <strong>Flora</strong>
     </ion-title>
-    <ion-button size="small" shape="round" slot="end">
+    <ion-button size="small" shape="round" slot="end" (click)="goToSetting()">
     	<ion-icon slot="icon-only" name="settings"></ion-icon>
     </ion-button>
   </ion-toolbar>
@@ -17,13 +17,13 @@
 		<ion-item>
 			<ion-label>
 			<h3>Last synchronization</h3>
-			<p class="descripteur">Never</p>
+			<p>Never</p>
 			</ion-label>
 		</ion-item>
 		<ion-item>
 			<ion-label>
 			<h3>Input not synchronized</h3>
-			<p class="descripteur">0</p>
+			<p>0</p>
 			</ion-label>
 		</ion-item>
 	</ion-list>
