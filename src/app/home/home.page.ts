@@ -27,6 +27,6 @@ export class HomePage {
 	
 	public goToInput()
 	{
-		this.router.navigate(['/input-osb-et-date'])
+		this.router.navigate(['/start-input'])
 	}
 }
