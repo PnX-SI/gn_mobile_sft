@@ -17,6 +17,11 @@ export class HomePage {
 	}
 	public goToSetting()
 	{
-		this.router.navigate(['/setting',{back: '/home'}])
+		this.router.navigate(['/setting'])
+	}
+	
+	public goToSync()
+	{
+		this.router.navigate(['/data-sync'])
 	}
 }

@@ -1,16 +1,37 @@
 <ion-header>
   <ion-toolbar>
-  	<ion-button shape="round" slot="start" (click)="retourArriere()">
-		<ion-icon name="arrow-back"></ion-icon>
-	</ion-button>
+  	<ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title id="title">Observers</ion-title>
-    <ion-button id="srchbtn" animated="true" shape="round" slot="end" (click)="showSearchBar()">
+    <ion-button id="srchbtn" animated="true" size="small" shape="round" slot="end" (click)="showSearchBar()">
 		<ion-icon name="search"></ion-icon>
 	</ion-button>
-    <ion-searchbar ionBlur="hideSearchBar()" id="srchbar" hidden></ion-searchbar>
+    <ion-searchbar (ionBlur)="hideSearchBar()" id="srchbar" hidden></ion-searchbar>
   </ion-toolbar>
 </ion-header>
-
+	<ion-list>
+		<ion-item-group>
+			<ion-item-divider><strong>A</strong></ion-item-divider>
+			<ion-item button (click)="CpaFai()">
+				<ion-label>
+					<h3>Placehoder Nom</h3>
+					<p>placeholder prenom</p>
+				</ion-label>
+				 <ion-checkbox slot="end"></ion-checkbox>
+			</ion-item>
+		</ion-item-group>
+		<ion-item-group>
+			<ion-item-divider><strong>B</strong></ion-item-divider>
+			<ion-item button (click)="CpaFai()">
+				<ion-label>
+					<h3>Placehoder Nom</h3>
+					<p>placeholder prenom</p>
+				</ion-label>
+				 <ion-checkbox slot="end"></ion-checkbox>
+			</ion-item>
+		</ion-item-group>
+	</ion-list>
 <ion-content padding>
 
 </ion-content>

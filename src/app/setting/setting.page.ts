@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-setting',
@@ -8,16 +8,11 @@ import {Router, ActivatedRoute} from '@angular/router';
 })
 export class SettingPage implements OnInit {
 	
-	public prev_page: String = '/home';
 	
-	constructor(private router:Router, private route: ActivatedRoute) 
+	
+	constructor(private router:Router) 
 	{
-		this.route.params.subscribe(params => {
-			if (params.back)
-			{
-				this.prev_page = params.back;
-			}
-		}) 
+		
 	}
 
 	ngOnInit() 
@@ -25,14 +20,9 @@ export class SettingPage implements OnInit {
 	
 	}
 	
-	public retourArriere()
-	{
-		this.router.navigate([this.prev_page]);
-	}
-	
 	public goToObserver()
 	{
-		this.router.navigate(['/choose-observer',{back: '/setting'}])
+		this.router.navigate(['/choose-observer'])
 	}
 	
 	public CpaFai()

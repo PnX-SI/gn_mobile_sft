@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-choose-observer',
@@ -8,16 +7,9 @@ import {Router, ActivatedRoute} from '@angular/router';
 })
 export class ChooseObserverPage implements OnInit {
 
-  	public prev_page: String = '/home';
-	
-	constructor(private router:Router, private route: ActivatedRoute) 
+	constructor() 
 	{
-		this.route.params.subscribe(params => {
-			if (params.back)
-			{
-				this.prev_page = params.back;
-			}
-		}) 
+
 	}
 
 	ngOnInit() 
@@ -39,10 +31,9 @@ export class ChooseObserverPage implements OnInit {
 		document.getElementById('srchbtn').removeAttribute("hidden");
 		document.getElementById('title').removeAttribute("hidden");
 	}
-	
-	public retourArriere()
+		
+	public CpaFai()
 	{
-		this.router.navigate([this.prev_page]);
+		console.log("t'as pas géré ça connard")
 	}
-
 }

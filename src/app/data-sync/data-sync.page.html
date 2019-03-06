@@ -1,9 +1,36 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>dataSync</ion-title>
+  	<ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Data synchronization</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-
+	<ion-list>
+		<ion-item-group>
+			<ion-item-divider><strong>SERVER STATUS</strong></ion-item-divider>
+			<ion-item>
+				<ion-icon name="cloud"></ion-icon>
+				<ion-text slot="end">Placeholder</ion-text>
+			</ion-item>
+		</ion-item-group>
+		<ion-item-group>
+			<ion-item-divider><strong>UPLOAD DATA</strong></ion-item-divider>
+			<ion-item>
+			<ion-icon name="phone-portrait"></ion-icon>
+			<ion-progress-bar></ion-progress-bar>
+			<ion-icon name="cloud-upload"></ion-icon>
+			</ion-item>
+		</ion-item-group>
+		<ion-item-group>
+			<ion-item-divider><strong>DATA TRANSFER (FROM SERVER)</strong></ion-item-divider>
+			<ion-item>
+			<ion-icon name="cloud-download"></ion-icon>
+			<ion-progress-bar></ion-progress-bar>
+			<ion-icon name="phone-portrait"></ion-icon>
+			</ion-item>
+		</ion-item-group>
+	</ion-list>
 </ion-content>

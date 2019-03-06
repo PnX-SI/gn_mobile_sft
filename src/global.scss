@@ -64,4 +64,24 @@
 		--background: var(--ion-color-primary);
 		--color: var(--ion-color-light);
 	}
+	
+	ion-checkbox{
+		--border-color: var(--ion-color-light);
+	}
+	
+	ion-title{
+		font-weight:bold;
+	}
+	
+	ion-item{
+		--border-color: var(--ion-color-light);
+	}
+	
+	ion-icon{
+		color: var(--ion-color-light);
+	}
+	
+	ion-button{
+		--box-shadow: no;
+	}
 }
