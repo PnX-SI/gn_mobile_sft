@@ -8,7 +8,7 @@ import {Router} from '@angular/router';
 })
 export class HomePage {
 	constructor(private router:Router) 
-	{ 
+	{
 	}
 
 	ngOnInit() 
@@ -23,5 +23,10 @@ export class HomePage {
 	public goToSync()
 	{
 		this.router.navigate(['/data-sync'])
+	}
+	
+	public goToInput()
+	{
+		this.router.navigate(['/input-osb-et-date'])
 	}
 }

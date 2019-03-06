@@ -82,6 +82,8 @@
 	}
 	
 	ion-button{
+		--background: var(--ion-color-medium);
 		--box-shadow: no;
+		font-weight:bold;
 	}
 }
