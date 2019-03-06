@@ -25,6 +25,21 @@ export class ChooseObserverPage implements OnInit {
 	
 	}
 	
+	public showSearchBar()
+	{
+		document.getElementById('srchbtn').setAttribute("hidden", null);
+		document.getElementById('title').setAttribute("hidden", null);
+		document.getElementById('srchbar').removeAttribute("hidden");
+		
+	}
+	
+	public hideSearchBar()
+	{
+		document.getElementById('srchbar').setAttribute("hidden", null);
+		document.getElementById('srchbtn').removeAttribute("hidden");
+		document.getElementById('title').removeAttribute("hidden");
+	}
+	
 	public retourArriere()
 	{
 		this.router.navigate([this.prev_page]);
