@@ -7,6 +7,7 @@ const routes: Routes = [
   { path: 'setting', loadChildren: './setting/setting.module#SettingPageModule' },
   { path: 'data-sync', loadChildren: './data-sync/data-sync.module#DataSyncPageModule' },
   { path: 'choose-observer', loadChildren: './choose-observer/choose-observer.module#ChooseObserverPageModule' },
+  { path: 'start-input', loadChildren: './start-input/start-input.module#StartInputPageModule' },
 ];
 
 @NgModule({
