@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Flora</ion-title>
+    <ion-title>Flore</ion-title>
     <ion-button color="primary" size="small" shape="round" slot="end" (click)="goToSetting()">
     	<ion-icon slot="icon-only" name="settings"></ion-icon>
     </ion-button>
@@ -9,23 +9,23 @@
 
 <ion-content padding>
 	<ion-item-group>
-		<ion-item-divider><strong>DEVICE STATUS</strong></ion-item-divider>
+		<ion-item-divider><strong>Etat de l'appareil</strong></ion-item-divider>
 		<ion-item>
 			<ion-label>
-				<h3>Last synchronization</h3>
+				<h3>dernière synchronisation</h3>
 				<p>Placeholder date</p>
 			</ion-label>
 		</ion-item>
 		<ion-item>
 			<ion-label>
-				<h3>Input not synchronized</h3>
-				<p>Placeholder Number</p>
+				<h3>entrées non synchronisées</h3>
+				<p>Placeholder nombre</p>
 			</ion-label>
 		</ion-item>
 	</ion-item-group>
-  	<ion-button expand="block" (click)="goToSync()">Start synchronization</ion-button>
+  	<ion-button expand="block" (click)="goToSync()">Synchroniser</ion-button>
 </ion-content>
 
 <ion-footer>
-	<ion-button expand="block" (click)="goToInput()">Start input</ion-button>
+	<ion-button expand="block" (click)="goToInput()">nouvelle entrée</ion-button>
 </ion-footer>
