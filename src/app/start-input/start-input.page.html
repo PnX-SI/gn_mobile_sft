@@ -1,15 +1,19 @@
 <ion-header>
-  <ion-toolbar>
-  	<ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>startInput</ion-title>
-    <ion-buttons slot="start">
-      <ion-menu-button menu="zone-de-prospection"></ion-menu-button>
-    </ion-buttons>
-  </ion-toolbar>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-back-button></ion-back-button>
+		</ion-buttons>
+		<ion-title>startInput</ion-title>
+		<ion-buttons slot="end">
+			<ion-button (click)="reload()" slot="end">
+				<ion-icon name="refresh"></ion-icon>
+			</ion-button>
+			<ion-menu-button menu="zone-de-prospection"></ion-menu-button>
+		</ion-buttons>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-	<div id="map" style="width:100; height:100%;"></div>
+	<div id="map" style="width:100; height:100%;">
+	</div>
 </ion-content>
