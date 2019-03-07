@@ -3,17 +3,59 @@
 		<ion-buttons slot="start">
 			<ion-back-button></ion-back-button>
 		</ion-buttons>
-		<ion-title>startInput</ion-title>
+		<ion-title>Zone de prospection</ion-title>
 		<ion-buttons slot="end">
 			<ion-button (click)="reload()" slot="end">
 				<ion-icon name="refresh"></ion-icon>
 			</ion-button>
-			<ion-menu-button menu="zone-de-prospection"></ion-menu-button>
+			<ion-menu-button menu="this"></ion-menu-button>
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-	<div id="map" style="width:100; height:100%;">
-	</div>
+	<div id="map" style="width:100; height:100%; z-index:0;"></div>
 </ion-content>
+
+<ion-split-pane>
+	<ion-menu side="end" menuId="this">
+	  <ion-header>
+		<ion-toolbar color="primary">
+		  <ion-title>Start Menu</ion-title>
+		</ion-toolbar>
+	  </ion-header>
+	  <ion-content>
+  		<ion-item-group>
+			<ion-item-divider>
+				<ion-label>Filtres</ion-label>
+			</ion-item-divider>
+			<ion-item>
+				<ion-label>Taxon:</ion-label>
+				<ion-input placeholder="ex:marguerite"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label>Année de visite:</ion-label>
+				<ion-input type="date"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label>Organisme</ion-label>
+				<ion-input type="date"></ion-input>
+			</ion-item>
+		</ion-item-group>
+		<ion-list>
+			<ion-list-header>
+				<ion-label>Affichage</ion-label>
+			</ion-list-header>
+			<ion-item>
+				<ion-label>
+				<h3>placeholder taxon</h3>
+				<p>nb visite: placeholder nombre visite</p>
+				<p>dernière visite: placeholder dernière visite</p>
+				<p>organisme: placeholder organisme</p>
+				</ion-label>
+			</ion-item>
+		</ion-list>
+	  </ion-content>
+	</ion-menu>
+	<ion-router-outlet main></ion-router-outlet>
+</ion-split-pane>
