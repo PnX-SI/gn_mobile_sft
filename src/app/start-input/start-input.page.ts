@@ -31,6 +31,11 @@ export class StartInputPage implements OnInit {
 			
 	}
 	
+	test()
+	{
+		console.log("test");
+	}
+
 	reload()
 	{
 		this.map.invalidateSize();
