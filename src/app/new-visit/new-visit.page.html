@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+    <ion-title>Nouvelle Visite</ion-title>
+    <ion-buttons slot="end">
+        <ion-button (click)="reload()" slot="end">
+          <ion-icon name="refresh"></ion-icon>
+        </ion-button>
+        <ion-menu-button menu="NewVisit"></ion-menu-button>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="mapVisit" style="width:100; height:100%;"></div>
+
+</ion-content>

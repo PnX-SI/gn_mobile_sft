@@ -1,4 +1,5 @@
 <ion-app>
+  <ion-router-outlet main></ion-router-outlet>  
     <ion-menu side="end" menuId="VisuTaxon" swipe-gesture="false">
         <ion-header>
         <ion-toolbar color="primary">
@@ -6,37 +7,49 @@
         </ion-toolbar>
         </ion-header>
         <ion-content>
-        <ion-item-group>
-          <ion-list-header>
-            <ion-label>Filtres</ion-label>
-          </ion-list-header>
-          <ion-item>
-            <ion-label>Taxon:</ion-label>
-            <ion-input placeholder="ex:marguerite"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>Année de visite:</ion-label>
-            <ion-input type="date"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>Organisme</ion-label>
-            <ion-input placeholder="ex:PNE"></ion-input>
-          </ion-item>
-        </ion-item-group>
-        <ion-list>
-          <ion-list-header>
-            <ion-label>Affichage</ion-label>
-          </ion-list-header>
-          <ion-item>
-            <ion-label>
-            <h3>placeholder taxon</h3>
-            <p>nb visite: placeholder nombre visite</p>
-            <p>dernière visite: placeholder dernière visite</p>
-            <p>organisme: placeholder organisme</p>
-            </ion-label>
-          </ion-item>
-        </ion-list>
+          <ion-item-group>
+            <ion-list-header>
+              <ion-label>Filtres</ion-label>
+            </ion-list-header>
+            <ion-item>
+              <ion-label>Taxon:</ion-label>
+              <ion-input placeholder="ex:marguerite"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Année de visite:</ion-label>
+              <ion-input type="date"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Organisme</ion-label>
+              <ion-input placeholder="ex:PNE"></ion-input>
+            </ion-item>
+          </ion-item-group>
+          <ion-list>
+            <ion-list-header>
+              <ion-label>Affichage</ion-label>
+            </ion-list-header>
+            <ion-item button (click)="GoToNewVisit()">
+              <ion-label>
+              <h3>Taxon: placeholder taxon</h3>
+              <p>nb visite: placeholder nombre visite</p>
+              <p>dernière visite: placeholder dernière visite</p>
+              <p>organisme: placeholder organisme</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
         </ion-content>
       </ion-menu>
-  <ion-router-outlet main></ion-router-outlet>
+
+      <ion-menu side="end" menuId="NewVisit" swipe-gesture="false">
+          <ion-header>
+          <ion-toolbar color="primary">
+            <ion-title>IHM</ion-title>
+          </ion-toolbar>
+          </ion-header>
+          <ion-content>
+          
+          </ion-content>
+        </ion-menu>
+
+  
 </ion-app>

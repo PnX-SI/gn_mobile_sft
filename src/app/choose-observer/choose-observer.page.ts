@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IonSearchbar } from '@ionic/angular';
 
 @Component({
   selector: 'app-choose-observer',
@@ -22,7 +23,6 @@ export class ChooseObserverPage implements OnInit {
 		document.getElementById('srchbtn').setAttribute("hidden", null);
 		document.getElementById('title').setAttribute("hidden", null);
 		document.getElementById('srchbar').removeAttribute("hidden");
-		
 	}
 	
 	public hideSearchBar()

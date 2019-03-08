@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuController } from '@ionic/angular';
+
 import * as L from 'leaflet';
 
 @Component({
@@ -9,13 +11,18 @@ import * as L from 'leaflet';
 export class StartInputPage implements OnInit {
 	
 	map:L.Map;
-	
-	constructor() {
+
+	constructor(
+		private menu: MenuController, 
+		
+		) 
+	{
+		
 	}
 
-	ngOnInit() 
+	ionViewDidEnter()
 	{
-		this.map = new L.Map('map');
+		this.menu.enable(true, "VisuTaxon");
 		this.map.locate({
 		setView: true, 
 		maxZoom: 11
@@ -28,17 +35,17 @@ export class StartInputPage implements OnInit {
 		  attribution: '&copy; OpenStreetMap',
 		  maxZoom: 18
 		}).addTo(this.map);
-			
 	}
 	
-	test()
+	ngOnInit() 
 	{
-		console.log("test");
+		this.map = new L.Map('mapProspec');
 	}
-
+	
 	reload()
 	{
 		this.map.invalidateSize();
+		this.menu.enable(true, "VisuTaxon");
 	}
 	
 	onLocationFound(e) {

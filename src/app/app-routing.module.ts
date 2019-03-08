@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'data-sync', loadChildren: './data-sync/data-sync.module#DataSyncPageModule' },
   { path: 'choose-observer', loadChildren: './choose-observer/choose-observer.module#ChooseObserverPageModule' },
   { path: 'start-input', loadChildren: './start-input/start-input.module#StartInputPageModule' },
+  { path: 'new-visit', loadChildren: './new-visit/new-visit.module#NewVisitPageModule' },
 ];
 
 @NgModule({
