@@ -8,56 +8,16 @@
 			<ion-button (click)="reload()" slot="end">
 				<ion-icon name="refresh"></ion-icon>
 			</ion-button>
-			<ion-menu-button menu="this"></ion-menu-button>
+			<ion-menu-button menu="VisuTaxon"></ion-menu-button>
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-		<ion-button (click)="test()">toto</ion-button>
 		<div id="map" style="width:100; height:100%; z-index:0;"></div>
 
 </ion-content>
 
 
-<ion-menu side="end" menuId="this">
-  <ion-header>
-	<ion-toolbar color="primary">
-	  <ion-title>Gestion des données</ion-title>
-	</ion-toolbar>
-  </ion-header>
-  <ion-content>
-	<ion-item-group>
-		<ion-list-header>
-			<ion-label>Filtres</ion-label>
-		</ion-list-header>
-		<ion-item>
-			<ion-label>Taxon:</ion-label>
-			<ion-input placeholder="ex:marguerite"></ion-input>
-		</ion-item>
-		<ion-item>
-			<ion-label>Année de visite:</ion-label>
-			<ion-input type="date"></ion-input>
-		</ion-item>
-		<ion-item>
-			<ion-label>Organisme</ion-label>
-			<ion-input type="date"></ion-input>
-		</ion-item>
-	</ion-item-group>
-	<ion-list>
-		<ion-list-header>
-			<ion-label>Affichage</ion-label>
-		</ion-list-header>
-		<ion-item>
-			<ion-label>
-			<h3>placeholder taxon</h3>
-			<p>nb visite: placeholder nombre visite</p>
-			<p>dernière visite: placeholder dernière visite</p>
-			<p>organisme: placeholder organisme</p>
-			</ion-label>
-		</ion-item>
-	</ion-list>
-  </ion-content>
-</ion-menu>
-<ion-router-outlet main></ion-router-outlet>
+
 
