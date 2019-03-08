@@ -54,8 +54,8 @@ export class StartInputPage implements OnInit {
 	}
 	
 	onLocationError(e) {
-    	alert(e.message + "\rWe'll show default map");
-    	this.map.setView(
+		alert(e.message + "\rWe'll show default map");
+		this.map.setView(
 		/*centre*/[46.52863469527167, 2.43896484375],
 		/*zoom*/6
 		);

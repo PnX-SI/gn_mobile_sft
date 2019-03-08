@@ -14,21 +14,21 @@ export class NewVisitPage implements OnInit {
   map:L.Map;
 
   constructor(
-    private router:Router, 
-    private route: ActivatedRoute, 
-    private menu: MenuController,
-    
-    ) 
+	private router:Router, 
+	private route: ActivatedRoute, 
+	private menu: MenuController,
+	
+	) 
   {
-    this.route.params.subscribe(params =>{
-      console.log(params);
-    })
+	this.route.params.subscribe(params =>{
+	  console.log(params);
+	})
   }
 
   ionViewDidEnter()
 	{
-    this.menu.enable(true, "NewVisit"); 
-    this.map.setView([46.52863469527167, 2.43896484375], 18);
+	this.menu.enable(true, "NewVisit"); 
+	this.map.setView([46.52863469527167, 2.43896484375], 18);
 				
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		   // tslint:disable-next-line
@@ -39,7 +39,7 @@ export class NewVisitPage implements OnInit {
 
   ngOnInit() 
 	{
-    this.map = new L.Map('mapVisit');
+	this.map = new L.Map('mapVisit');
   }
   
 	reload()
