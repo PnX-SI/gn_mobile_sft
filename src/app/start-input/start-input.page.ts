@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 import * as L from 'leaflet';
 
@@ -14,7 +15,7 @@ export class StartInputPage implements OnInit {
 
 	constructor(
 		private menu: MenuController, 
-		
+		private router: Router
 		) 
 	{
 		
@@ -58,5 +59,10 @@ export class StartInputPage implements OnInit {
 		/*centre*/[46.52863469527167, 2.43896484375],
 		/*zoom*/6
 		);
+	}
+
+	GoToHome()
+	{
+		this.router.navigate(['/home']);
 	}
 }

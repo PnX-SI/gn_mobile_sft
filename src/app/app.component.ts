@@ -34,4 +34,10 @@ export class AppComponent {
   {
       this.router.navigate(['/new-visit',{taxon:'taxon'}])
   }
+
+  CancelVisit()
+  {
+    // code pour annuler la saisie
+    this.router.navigate(['/home'])
+  }
 }

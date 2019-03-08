@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +8,10 @@ import {Router} from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-	constructor(private router:Router) 
+	constructor(
+		private router:Router,
+		private menu: MenuController
+		) 
 	{
 	}
 
@@ -15,6 +19,13 @@ export class HomePage {
 	{
 	
 	}
+
+	ionViewDidEnter()
+	{
+		this.menu.enable(false, "NewVisit");
+		this.menu.enable(false, "VisuTaxon");
+	}
+
 	public goToSetting()
 	{
 		this.router.navigate(['/setting'])

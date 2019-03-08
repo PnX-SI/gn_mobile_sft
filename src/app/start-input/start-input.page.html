@@ -1,7 +1,9 @@
 <ion-header>
 	<ion-toolbar>
 		<ion-buttons slot="start">
-			<ion-back-button></ion-back-button>
+				<ion-button (click)="GoToHome()" slot="end">
+					<ion-icon name="arrow-back"></ion-icon>
+				</ion-button>
 		</ion-buttons>
 		<ion-title>Prospection</ion-title>
 		<ion-buttons slot="end">

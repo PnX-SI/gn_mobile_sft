@@ -45,6 +45,5 @@ export class NewVisitPage implements OnInit {
 	reload()
 	{
 		this.map.invalidateSize();
-	}
-	
+  }	
 }
