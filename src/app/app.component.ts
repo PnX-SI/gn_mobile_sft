@@ -15,29 +15,29 @@ import * as L from 'leaflet';
 export class AppComponent {
   
   constructor(
-    private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
-    private router: Router
+	private platform: Platform,
+	private splashScreen: SplashScreen,
+	private statusBar: StatusBar,
+	private router: Router
   ) {
-    this.initializeApp();
+	this.initializeApp();
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
+	this.platform.ready().then(() => {
+	  this.statusBar.styleDefault();
+	  this.splashScreen.hide();
+	});
   }
 
   GoToNewVisit()
   {
-      this.router.navigate(['/new-visit',{taxon:'taxon'}])
+	  this.router.navigate(['/new-visit',{taxon:'taxon'}])
   }
 
   CancelVisit()
   {
-    // code pour annuler la saisie
-    this.router.navigate(['/home'])
+	// code pour annuler la saisie
+	this.router.navigate(['/home'])
   }
 }
