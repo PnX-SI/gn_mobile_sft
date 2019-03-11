@@ -1,3 +1,4 @@
+import { NetworkService, ConnectionStatus } from './services/network.service';
 import { Component } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
@@ -6,7 +7,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import {Router} from '@angular/router';
 
-import * as L from 'leaflet';
+import { OfflineManagerService } from './services/offline-manager.service';
+
 
 @Component({
   selector: 'app-root',
@@ -18,7 +20,9 @@ export class AppComponent {
 	private platform: Platform,
 	private splashScreen: SplashScreen,
 	private statusBar: StatusBar,
-	private router: Router
+  private router: Router,
+  private offlineManager: OfflineManagerService,
+  private networkService: NetworkService
   ) {
 	this.initializeApp();
   }
@@ -26,7 +30,12 @@ export class AppComponent {
   initializeApp() {
 	this.platform.ready().then(() => {
 	  this.statusBar.styleDefault();
-	  this.splashScreen.hide();
+    this.splashScreen.hide();
+    this.networkService.onNetworkChange().subscribe((status: ConnectionStatus) => {
+      if (status == ConnectionStatus.Online) {
+        this.offlineManager.checkForEvents().subscribe();
+      }
+    });
 	});
   }
 
