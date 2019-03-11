@@ -87,9 +87,6 @@
 87
 88
 89
-90
-91
-92
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Observable, from, of, forkJoin } from 'rxjs';
@@ -182,3 +179,6 @@ export class OfflineManagerService {
     return forkJoin(obs);
   }
 }
+92
+91
+90
