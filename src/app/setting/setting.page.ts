@@ -22,7 +22,7 @@ export class SettingPage implements OnInit {
 
 	ngOnInit() 
 	{
-		console.log(this.appPreferences.show());
+		this.appPreferences.fetch ('key').then ((res) => console.log(res));
 	}
 	
 	public goToObserver()
