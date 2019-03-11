@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import { AppPreferences } from '@ionic-native/app-preferences/ngx';
+import { AngularFrameworkDelegate } from '@ionic/angular/dist/providers/angular-delegate';
 
 @Component({
   selector: 'app-setting',
@@ -8,13 +8,10 @@ import { AppPreferences } from '@ionic-native/app-preferences/ngx';
   styleUrls: ['./setting.page.scss'],
 })
 export class SettingPage implements OnInit {
-	
-	
-	
+		
 	constructor
 	(
-		private router:Router,
-		private appPreferences: AppPreferences
+		private router:Router
 	) 
 	{
 		
@@ -22,16 +19,21 @@ export class SettingPage implements OnInit {
 
 	ngOnInit() 
 	{
-		this.appPreferences.fetch ('key').then ((res) => console.log(res));
+		
 	}
-	
-	public goToObserver()
-	{
-		this.router.navigate(['/choose-observer'])
-	}
-	
+		
 	public CpaFai()
 	{
 		console.log("t'as pas géré ça connard")
+	}
+
+	ok(value)
+	{
+		alert("ok:"+value);
+	}
+
+	fail (error)
+	{
+		console.error("ERREUR:"+error);
 	}
 }
