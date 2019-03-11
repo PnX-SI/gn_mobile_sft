@@ -7,25 +7,34 @@ import { Observable, from } from 'rxjs';
 import { tap, map, catchError } from "rxjs/operators";
  
 const API_STORAGE_KEY = 'specialkey';
-const API_URL = 'https://reqres.in/api';
+const API_URL = 'http://demo.geonature.fr/geonature/api/sft';
  
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
  
-  constructor(private http: HttpClient, private networkService: NetworkService, private storage: Storage, private offlineManager: OfflineManagerService) { }
+  constructor
+  (
+    private http: HttpClient, 
+    private networkService: NetworkService, 
+    private storage: Storage, 
+    private offlineManager: OfflineManagerService
+    ) { }
  
-  getUsers(forceRefresh: boolean = false): Observable<any[]> {
+  getData(forceRefresh: boolean = false): Observable<any[]> {
     if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh) {
       // Return the cached data from Storage
-      return from(this.getLocalData('users'));
+      //return from(this.getLocalData('users'));
     } else {      
       // Return real API data and store it locally
-      return this.http.get(`${API_URL}/users?per_page=2&page=1`).pipe(
-        map(res => res['data']),
+      console.log("load data")
+      return this.http.get(`${API_URL}/sites?id_application=6&id_area_type=25`).pipe(
+        map(res => 
+          res['features']
+        ),
         tap(res => {
-          this.setLocalData('users', res);
+          this.setLocalData('data', res);
         })
       )
     }

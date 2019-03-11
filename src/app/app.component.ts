@@ -8,6 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {Router} from '@angular/router';
 
 import { OfflineManagerService } from './services/offline-manager.service';
+import { ApiService } from './services/api.service';
 
 
 
@@ -17,6 +18,8 @@ import { OfflineManagerService } from './services/offline-manager.service';
 })
 export class AppComponent {
   
+  data =[];
+
   constructor(
 	private platform: Platform,
 	private splashScreen: SplashScreen,
@@ -24,8 +27,10 @@ export class AppComponent {
   private router: Router,
   private offlineManager: OfflineManagerService,
   private networkService: NetworkService,
-  ) {
-	this.initializeApp();
+  private apiService: ApiService
+  ) 
+  {
+	  this.initializeApp();
   }
 
   initializeApp() {
@@ -37,12 +42,25 @@ export class AppComponent {
         this.offlineManager.checkForEvents().subscribe();
       }
     });
+    this.loadData(true);
+    
+
 	});
   }
 
-  GoToNewVisit()
+  loadData(refresh = false, refresher?) {
+    this.apiService.getData(refresh).subscribe(res => {
+      this.data = res;
+      console.log(this.data);
+      if (refresher) {
+        refresher.target.complete();
+      }
+    });
+  }
+
+  GoToNewVisit(id)
   {
-	  this.router.navigate(['/new-visit',{taxon:'taxon'}])
+	  this.router.navigate(['/new-visit',{id:id}])
   }
 
   CancelVisit()
