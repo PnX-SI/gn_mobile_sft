@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import { AppPreferences } from '@ionic-native/app-preferences/ngx';
 
 @Component({
   selector: 'app-setting',
@@ -10,14 +11,18 @@ export class SettingPage implements OnInit {
 	
 	
 	
-	constructor(private router:Router) 
+	constructor
+	(
+		private router:Router,
+		private appPreferences: AppPreferences
+	) 
 	{
 		
 	}
 
 	ngOnInit() 
 	{
-	
+		console.log(this.appPreferences.show());
 	}
 	
 	public goToObserver()

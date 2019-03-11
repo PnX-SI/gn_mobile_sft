@@ -8,7 +8,6 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {Router} from '@angular/router';
 
 import { OfflineManagerService } from './services/offline-manager.service';
-import { AppPreferences } from '@ionic-native/app-preferences/ngx';
 
 
 
@@ -25,7 +24,6 @@ export class AppComponent {
   private router: Router,
   private offlineManager: OfflineManagerService,
   private networkService: NetworkService,
-  private appPreferences: AppPreferences
   ) {
 	this.initializeApp();
   }
@@ -38,11 +36,6 @@ export class AppComponent {
       if (status == ConnectionStatus.Online) {
         this.offlineManager.checkForEvents().subscribe();
       }
-    this.appPreferences.fetch('key').then((res) =>
-    {
-      alert(res);
-    })
-
     });
 	});
   }
