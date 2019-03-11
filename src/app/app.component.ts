@@ -51,7 +51,6 @@ export class AppComponent {
   loadData(refresh = false, refresher?) {
     this.apiService.getData(refresh).subscribe(res => {
       this.data = res;
-      console.log(this.data);
       if (refresher) {
         refresher.target.complete();
       }
