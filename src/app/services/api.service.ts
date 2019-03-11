@@ -20,12 +20,9 @@ export class ApiService {
     if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh) {
       // Return the cached data from Storage
       return from(this.getLocalData('users'));
-    } else {
-      // Just to get some "random" data
-      let page = Math.floor(Math.random() * Math.floor(6));
-      
+    } else {      
       // Return real API data and store it locally
-      return this.http.get(`${API_URL}/users?per_page=2&page=${page}`).pipe(
+      return this.http.get(`${API_URL}/users?per_page=2&page=1`).pipe(
         map(res => res['data']),
         tap(res => {
           this.setLocalData('users', res);
