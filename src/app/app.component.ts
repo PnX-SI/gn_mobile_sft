@@ -59,6 +59,11 @@ export class AppComponent {
     });
   }
 
+  watchArea(id)
+  {
+    console.log(id)	 
+  }
+
   GoToNewVisit(id)
   {
     this.router.navigate(['/new-visit',{id:id}]);	 

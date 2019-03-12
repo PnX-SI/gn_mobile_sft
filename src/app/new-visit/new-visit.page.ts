@@ -27,14 +27,14 @@ export class NewVisitPage implements OnInit {
 
   ionViewDidEnter()
 	{
-	this.menu.enable(true, "NewVisit"); 
-	this.map.setView([46.52863469527167, 2.43896484375], 18);
-				
-		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		   // tslint:disable-next-line
-		  attribution: '&copy; OpenStreetMap',
-		  maxZoom: 18
-		}).addTo(this.map);
+		this.menu.enable(true, "NewVisit"); 
+		this.map.setView([46.52863469527167, 2.43896484375], 18);
+					
+			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+				// tslint:disable-next-line
+				attribution: '&copy; OpenStreetMap',
+				maxZoom: 18
+			}).addTo(this.map);
 	}
 
   ngOnInit() 
