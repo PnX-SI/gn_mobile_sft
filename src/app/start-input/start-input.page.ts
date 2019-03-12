@@ -27,7 +27,7 @@ export class StartInputPage implements OnInit {
 	{
 		this.menu.enable(true, "VisuTaxon");
 		this.map.locate({
-		setView: true, 
+		setView: false, 
 		maxZoom: 11
 		});
 				
@@ -38,7 +38,7 @@ export class StartInputPage implements OnInit {
 		}).addTo(this.map);
 
 		L.geoJSON(data).addTo(this.map);
-
+		console.log(data)
 		this.map.on('locationfound', (e)=> {this.onLocationFound(e)});
 		this.map.on('locationerror', (e)=> {this.onLocationError(e)});
 		
@@ -53,20 +53,122 @@ export class StartInputPage implements OnInit {
 	reload()
 	{
 		this.map.invalidateSize();
+		this.map.setView(
+			/*centre*/[44.5682846, 6.0634622],
+			/*zoom*/11
+			);
 		this.menu.enable(true, "VisuTaxon");
 	}
 	
 	onLocationFound(e) {
-		console.log("localisation trouvée");
-		this.map.setZoom(15);
+		console.log(e);
+		var confirmation = confirm("Vous avez été géolocaliser.\rVoulez vous que l'appli vérifie si vous êtes a proximité d'un lieu a visiter? (cela peut prendre du temps)")
+		if(confirmation)
+		{
+			var longitude = NaN
+			var latitude = NaN
+			for (var i=0;i<data.length;i++)
+			{
+				var thisLength = data[i]["geometry"]["coordinates"][0][0].length
+				var lonMin = data[i]["geometry"]["coordinates"][0][0][0][0]
+				var lonMax = data[i]["geometry"]["coordinates"][0][0][thisLength-1][0]
+				for (var j=0;j<data[i]["geometry"]["coordinates"][0][0].length;j++)
+				{
+					var min = j
+					var max = data[i]["geometry"]["coordinates"][0][0].length-1
+					
+					for(var h=j+1;h<data[i]["geometry"]["coordinates"][0][0].length;h++)
+					{
+						if(data[i]["geometry"]["coordinates"][0][0][h][0]<data[i]["geometry"]["coordinates"][0][0][min][0])
+						{
+							min = h
+						}
+						else if (data[i]["geometry"]["coordinates"][0][0][h][0]>data[i]["geometry"]["coordinates"][0][0][max][0])
+						{
+							max = h
+						}
+					}
+					if(min != j)
+					{
+						lonMin = data[i]["geometry"]["coordinates"][0][0][min][0]
+						
+					}
+					if(max != data[i]["geometry"]["coordinates"][0][0].length-1)
+					{
+						lonMax = data[i]["geometry"]["coordinates"][0][0][max][0]
+						
+					}
+					
+				}
+				var latMin = data[i]["geometry"]["coordinates"][0][0][0][1]
+				var latMax = data[i]["geometry"]["coordinates"][0][0][thisLength-1][1]
+				for (var j=0;j<data[i]["geometry"]["coordinates"][0][0].length;j++)
+				{
+					var min = j
+					var max = data[i]["geometry"]["coordinates"][0][0].length-1
+					
+					for(var h=j+1;h<data[i]["geometry"]["coordinates"][0][0].length;h++)
+					{
+						if(data[i]["geometry"]["coordinates"][0][0][h][1]<data[i]["geometry"]["coordinates"][0][0][min][1])
+						{
+							min = h
+						}
+						else if (data[i]["geometry"]["coordinates"][0][0][h][1]>data[i]["geometry"]["coordinates"][0][0][max][1])
+						{
+							max = h
+						}
+					}
+					if(min != j)
+					{
+						latMin = data[i]["geometry"]["coordinates"][0][0][min][1]
+						
+					}
+					if(max != data[i]["geometry"]["coordinates"][0][0].length-1)
+					{
+						latMax = data[i]["geometry"]["coordinates"][0][0][max][1]
+						
+					}
+					
+				}
+				if (lonMin <= e["longitude"] && e["longitude"]<=lonMax && latMin <= e["latitude"] && e["latitude"] <= latMax)
+					{
+						longitude = e["longitude"];
+						latitude = e["latitude"]
+						break
+					}
+				
+				
+			}
+			if (latitude && longitude )
+			{
+				this.map.setView(
+					/*centre*/[latitude, longitude],
+					/*zoom*/11
+					);
+			}
+			else
+			{
+				this.map.setView(
+					/*centre*/[44.5682846, 6.0634622],
+					/*zoom*/11
+					);
+			}
+		}
+		else
+		{
+			this.map.setView(
+				/*centre*/[44.5682846, 6.0634622],
+				/*zoom*/11
+				);
+		}
 	}
 	
 	onLocationError(e) {
 		console.error(e.message)
 		alert(e.message + "\rWe'll show default map");
 		this.map.setView(
-		/*centre*/[46.52863469527167, 2.43896484375],
-		/*zoom*/6
+		/*centre*/[44.5682846, 6.0634622],
+		/*zoom*/11
 		);
 	}
 
