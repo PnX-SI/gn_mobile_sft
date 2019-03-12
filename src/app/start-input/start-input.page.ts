@@ -30,8 +30,6 @@ export class StartInputPage implements OnInit {
 		setView: true, 
 		maxZoom: 11
 		});
-		this.map.on('locationfound', (e)=> {this.onLocationFound(e)});
-		this.map.on('locationerror', (e)=> {this.onLocationError(e)});
 				
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		   // tslint:disable-next-line
@@ -39,7 +37,12 @@ export class StartInputPage implements OnInit {
 		  maxZoom: 18
 		}).addTo(this.map);
 
-		console.log(data)
+		L.geoJSON(data).addTo(this.map);
+
+		this.map.on('locationfound', (e)=> {this.onLocationFound(e)});
+		this.map.on('locationerror', (e)=> {this.onLocationError(e)});
+		
+
 	}
 	
 	ngOnInit() 
@@ -55,6 +58,7 @@ export class StartInputPage implements OnInit {
 	
 	onLocationFound(e) {
 		console.log("localisation trouvée");
+		this.map.setZoom(15);
 	}
 	
 	onLocationError(e) {

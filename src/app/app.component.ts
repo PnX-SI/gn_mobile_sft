@@ -19,7 +19,7 @@ import { ApiService } from './services/api.service';
 export class AppComponent {
   
   data =[];
-  identifiant = 0;
+  identifiant;
 
   constructor(
 	private platform: Platform,
@@ -61,15 +61,13 @@ export class AppComponent {
 
   GoToNewVisit(id)
   {
-	this.router.navigate(['/new-visit',{id:id}]);	  
-	this.identifiant = id;
-
+    this.router.navigate(['/new-visit',{id:id}]);	 
   }
 
   CancelVisit()
   {
-	// code pour annuler la saisie
-	this.router.navigate(['/start-input'])
+    // code pour annuler la saisie
+    this.router.navigate(['/start-input']);
   }
 }
 
