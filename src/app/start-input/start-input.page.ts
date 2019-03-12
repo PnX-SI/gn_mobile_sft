@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 
 import * as L from 'leaflet';
 
+import  {data} from '../app.component'
+
 @Component({
   selector: 'app-start-input',
   templateUrl: './start-input.page.html',
@@ -36,6 +38,8 @@ export class StartInputPage implements OnInit {
 		  attribution: '&copy; OpenStreetMap',
 		  maxZoom: 18
 		}).addTo(this.map);
+
+		console.log(data)
 	}
 	
 	ngOnInit() 
@@ -54,6 +58,7 @@ export class StartInputPage implements OnInit {
 	}
 	
 	onLocationError(e) {
+		console.error(e.message)
 		alert(e.message + "\rWe'll show default map");
 		this.map.setView(
 		/*centre*/[46.52863469527167, 2.43896484375],

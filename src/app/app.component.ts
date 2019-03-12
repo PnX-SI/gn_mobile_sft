@@ -24,10 +24,10 @@ export class AppComponent {
 	private platform: Platform,
 	private splashScreen: SplashScreen,
 	private statusBar: StatusBar,
-  private router: Router,
-  private offlineManager: OfflineManagerService,
-  private networkService: NetworkService,
-  private apiService: ApiService
+	private router: Router,
+	private offlineManager: OfflineManagerService,
+	private networkService: NetworkService,
+	private apiService: ApiService
   ) 
   {
 	  this.initializeApp();
@@ -50,7 +50,8 @@ export class AppComponent {
 
   loadData(refresh = false, refresher?) {
     this.apiService.getData(refresh).subscribe(res => {
-      this.data = res;
+	  data = res;
+	  this.data = data;
       if (refresher) {
         refresher.target.complete();
       }
@@ -65,6 +66,8 @@ export class AppComponent {
   CancelVisit()
   {
 	// code pour annuler la saisie
-	this.router.navigate(['/home'])
+	this.router.navigate(['/start-input'])
   }
 }
+
+export var data
