@@ -37,7 +37,7 @@ export class AppComponent {
   initializeApp() {
 	this.platform.ready().then(() => {
 	  this.statusBar.styleDefault();
-    this.splashScreen.hide();
+    this.splashScreen.hide(); 
     this.networkService.onNetworkChange().subscribe((status: ConnectionStatus) => {
       if (status == ConnectionStatus.Online) {
         this.offlineManager.checkForEvents().subscribe();
@@ -61,7 +61,8 @@ export class AppComponent {
 
   watchArea(id)
   {
-    console.log(id)	 
+    console.log(id)
+    
   }
 
   GoToNewVisit(id)
