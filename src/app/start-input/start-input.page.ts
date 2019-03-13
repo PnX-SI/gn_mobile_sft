@@ -17,7 +17,8 @@ export class StartInputPage implements OnInit {
 
 	constructor(
 		private menu: MenuController, 
-		private router: Router
+		private router: Router,
+		
 		) 
 	{
 		

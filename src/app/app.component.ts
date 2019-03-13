@@ -28,7 +28,7 @@ export class AppComponent {
 	private router: Router,
 	private offlineManager: OfflineManagerService,
 	private networkService: NetworkService,
-	private apiService: ApiService
+  private apiService: ApiService
   ) 
   {
 	  this.initializeApp();
