@@ -64,11 +64,6 @@ export class AppComponent {
     this.router.navigate(['/visionnage',{id:id}]);	
   }
 
-  GoToNewVisit(id)
-  {
-    this.router.navigate(['/new-visit',{id:id}]);	 
-  }
-
   CancelVisit()
   {
     // code pour annuler la saisie

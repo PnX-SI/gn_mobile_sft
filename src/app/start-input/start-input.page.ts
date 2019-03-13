@@ -39,7 +39,6 @@ export class StartInputPage implements OnInit {
 		}).addTo(this.map);
 
 		L.geoJSON(data).addTo(this.map);
-		console.log(data)
 		this.map.on('locationfound', (e)=> {this.onLocationFound(e)});
 		this.map.on('locationerror', (e)=> {this.onLocationError(e)});
 		
@@ -62,7 +61,6 @@ export class StartInputPage implements OnInit {
 	}
 	
 	onLocationFound(e) {
-		//console.log(e);
 		var confirmation = confirm("Vous avez été géolocaliser.\rVoulez vous que l'appli vérifie si vous êtes a proximité d'un lieu a visiter? (cela peut prendre du temps)")
 		if(confirmation)
 		{

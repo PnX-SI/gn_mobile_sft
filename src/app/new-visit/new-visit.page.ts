@@ -20,8 +20,8 @@ export class NewVisitPage implements OnInit {
 	
 	) 
   {
-	this.route.params.subscribe(params =>{
-	  console.log(params);
+		this.route.params.subscribe(params =>{
+			console.log(params);
 	})
   }
 
@@ -35,6 +35,7 @@ export class NewVisitPage implements OnInit {
 				attribution: '&copy; OpenStreetMap',
 				maxZoom: 18
 			}).addTo(this.map);
+			
 	}
 
   ngOnInit() 
