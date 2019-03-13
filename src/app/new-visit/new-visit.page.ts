@@ -13,11 +13,11 @@ const iconDefault = L.icon({
   iconRetinaUrl,
   iconUrl,
   shadowUrl,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
+  iconSize: [12, 20],
+  iconAnchor: [6, 20],
   popupAnchor: [1, -34],
   tooltipAnchor: [16, -28],
-  shadowSize: [41, 41]
+  shadowSize: [20, 20]
 });
 L.Marker.prototype.options.icon = iconDefault;
 
