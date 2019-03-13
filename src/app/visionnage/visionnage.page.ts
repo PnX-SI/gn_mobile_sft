@@ -114,8 +114,8 @@ export class VisionnagePage implements OnInit {
 		this.map.invalidateSize();
   }	
 
-  GoToNewVisit(id)
+  GoToNewVisit()
   {
-    this.router.navigate(['/new-visit',{id:id}]);	 
+    this.router.navigate(['/new-visit',{id:this.id,latitude:this.latitude,longitude:this.longitude}]);	 
   }
 }

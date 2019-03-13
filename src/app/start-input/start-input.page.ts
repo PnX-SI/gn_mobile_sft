@@ -27,11 +27,7 @@ export class StartInputPage implements OnInit {
 	ionViewDidEnter()
 	{
 		this.menu.enable(true, "VisuTaxon");
-		this.map.locate({
-		setView: false, 
-		maxZoom: 11
-		});
-				
+						
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		   // tslint:disable-next-line
 		  attribution: '&copy; OpenStreetMap',
@@ -39,8 +35,7 @@ export class StartInputPage implements OnInit {
 		}).addTo(this.map);
 
 		L.geoJSON(data).addTo(this.map);
-		this.map.on('locationfound', (e)=> {this.onLocationFound(e)});
-		this.map.on('locationerror', (e)=> {this.onLocationError(e)});
+		
 		
 
 	}
@@ -48,6 +43,12 @@ export class StartInputPage implements OnInit {
 	ngOnInit() 
 	{
 		this.map = new L.Map('mapProspec');
+		this.map.locate({
+			setView: false, 
+			maxZoom: 11
+			});
+		this.map.on('locationfound', (e)=> {this.onLocationFound(e)});
+		this.map.on('locationerror', (e)=> {this.onLocationError(e)});
 	}
 	
 	reload()
