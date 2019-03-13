@@ -11,7 +11,10 @@ import * as L from 'leaflet';
 })
 export class NewVisitPage implements OnInit {
 
-  map:L.Map;
+	map:L.Map;
+	id
+	latitude;
+	longitude;
 
   constructor(
 	private router:Router, 
@@ -21,14 +24,18 @@ export class NewVisitPage implements OnInit {
 	) 
   {
 		this.route.params.subscribe(params =>{
-			console.log(params);
+			//console.log(params);
+			this.id = params.id;
+			this.latitude = params.latitude;
+			this.longitude = params.longitude;
+
 	})
   }
 
   ionViewDidEnter()
 	{
 		this.menu.enable(true, "NewVisit"); 
-		this.map.setView([46.52863469527167, 2.43896484375], 18);
+		this.map.setView([this.latitude, this.longitude], 16);
 					
 			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				// tslint:disable-next-line

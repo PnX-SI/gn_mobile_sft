@@ -26,7 +26,7 @@ export class VisionnagePage implements OnInit {
     this.route.params.subscribe(
       params=>
       {
-        console.log(params);
+        //console.log(params);
         this.id = params.id
       });
   }
