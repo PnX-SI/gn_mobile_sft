@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import { MenuController } from '@ionic/angular';
 
+import  {data} from '../app.component'
+
 import * as L from 'leaflet';
 
 const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
@@ -61,7 +63,8 @@ export class NewVisitPage implements OnInit {
 			attribution: '&copy; OpenStreetMap',
 			maxZoom: 18
 		}).addTo(this.map);
-			
+
+		L.geoJSON(data[this.id-1]).addTo(this.map);			
 	}
 
   ngOnInit() 
