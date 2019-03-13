@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: 'choose-observer', loadChildren: './choose-observer/choose-observer.module#ChooseObserverPageModule' },
   { path: 'start-input', loadChildren: './start-input/start-input.module#StartInputPageModule' },
   { path: 'new-visit', loadChildren: './new-visit/new-visit.module#NewVisitPageModule' },
+  { path: 'visionnage', loadChildren: './visionnage/visionnage.module#VisionnagePageModule' },
 ];
 
 @NgModule({

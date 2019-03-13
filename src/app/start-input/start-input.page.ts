@@ -62,12 +62,11 @@ export class StartInputPage implements OnInit {
 	}
 	
 	onLocationFound(e) {
-		console.log(e);
+		//console.log(e);
 		var confirmation = confirm("Vous avez été géolocaliser.\rVoulez vous que l'appli vérifie si vous êtes a proximité d'un lieu a visiter? (cela peut prendre du temps)")
 		if(confirmation)
 		{
-			var longitude = NaN
-			var latitude = NaN
+			var identifiant = NaN
 			for (var i=0;i<data.length;i++)
 			{
 				var thisLength = data[i]["geometry"]["coordinates"][0][0].length
@@ -133,22 +132,30 @@ export class StartInputPage implements OnInit {
 				}
 				if (lonMin <= e["longitude"] && e["longitude"]<=lonMax && latMin <= e["latitude"] && e["latitude"] <= latMax)
 					{
-						longitude = e["longitude"];
-						latitude = e["latitude"]
+						identifiant = data[i]["id"];
 						break
 					}
 				
 				
 			}
-			if (latitude && longitude )
+			
+			/*//outil de débug
+			//décommantez si vous voulez vérifier que la redirection ce fait bien
+			var debug = confirm("Debug?")
+			if(debug)
 			{
-				this.map.setView(
-					/*centre*/[latitude, longitude],
-					/*zoom*/11
-					);
+				identifiant = parseInt(prompt("entrez un idendifiant", "2"));
+			}
+			*/
+
+			if (identifiant)
+			{
+				alert("Nous avons trouvé une zone a visualiser autour de vous.\r Redirection.")
+				this.router.navigate(['/visionnage',{id:identifiant}]);	
 			}
 			else
 			{
+				alert("Nous n'avons pas trouvé de zone a visualiser autour de vous.")
 				this.map.setView(
 					/*centre*/[44.5682846, 6.0634622],
 					/*zoom*/11

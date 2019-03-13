@@ -32,15 +32,14 @@
 			</ion-list-header>
 			<ion-list *ngFor="let item of data">
 				<ion-item>
-					<ion-button (click)="watchArea(item.id)"><ion-icon name="eye"></ion-icon></ion-button>
 					<ion-label text-wrap>
 					<h3>Taxon: {{item.properties.nom_taxon}}</h3>
 					<h3>Lieu: {{item.properties.nom_commune}}</h3>
 					<p>nb visite: {{item.properties.nb_visit}}</p>
 					<p>dernière visite: {{item.properties.date_max}}</p>
 					<p>organisme: {{item.properties.organisme}}</p>
-					</ion-label>		
-					<ion-button (click)="GoToNewVisit(item.id)"><ion-icon name="create"></ion-icon></ion-button>
+					</ion-label>
+					<ion-button (click)="watchArea(item.id)"><ion-icon name="eye"></ion-icon></ion-button>		
 				</ion-item>
 		  </ion-list>
 		</ion-content>

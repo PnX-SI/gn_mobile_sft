@@ -61,8 +61,7 @@ export class AppComponent {
 
   watchArea(id)
   {
-    console.log(id)
-    
+    this.router.navigate(['/visionnage',{id:id}]);	
   }
 
   GoToNewVisit(id)
