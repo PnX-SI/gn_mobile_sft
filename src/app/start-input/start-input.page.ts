@@ -6,11 +6,29 @@ import * as L from 'leaflet';
 
 import  {data} from '../app.component'
 
+
+const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
+const iconUrl = 'assets/leaflet/marker-icon.png';
+const shadowUrl = 'assets/leaflet/marker-shadow.png';
+const iconDefault = L.icon({
+  iconRetinaUrl,
+  iconUrl,
+  shadowUrl,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  tooltipAnchor: [16, -28],
+  shadowSize: [41, 41]
+});
+L.Marker.prototype.options.icon = iconDefault;
+
 @Component({
   selector: 'app-start-input',
   templateUrl: './start-input.page.html',
   styleUrls: ['./start-input.page.scss'],
 })
+
+
 export class StartInputPage implements OnInit {
 	
 	map:L.Map;
@@ -38,9 +56,6 @@ export class StartInputPage implements OnInit {
 		}).addTo(this.map);
 
 		L.geoJSON(data).addTo(this.map);
-		
-		
-
 	}
 	
 	ngOnInit() 
@@ -163,7 +178,6 @@ export class StartInputPage implements OnInit {
 					/*zoom*/11
 					);
 			}
-			L.marker(e["latlng"]).addTo(this.map)
 		}
 		else
 		{
@@ -173,6 +187,7 @@ export class StartInputPage implements OnInit {
 				/*zoom*/11
 				);
 		}
+		L.marker(e["latlng"],L.Icon.Default).addTo(this.map)
 	}
 	
 	onLocationError(e) {

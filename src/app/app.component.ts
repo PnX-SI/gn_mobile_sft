@@ -10,12 +10,11 @@ import {Router} from '@angular/router';
 import { OfflineManagerService } from './services/offline-manager.service';
 import { ApiService } from './services/api.service';
 
-
-
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
+
 export class AppComponent {
   
   data =[];
