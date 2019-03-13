@@ -80,6 +80,6 @@ export class NewVisitPage implements OnInit {
 	
 	onLocationFound(e)
   {
-    L.marker(e["latlng"],L.Icon.Default).addTo(this.map)
+    var marque = L.marker(e["latlng"],L.Icon.Default).addTo(this.map)
   }
 }

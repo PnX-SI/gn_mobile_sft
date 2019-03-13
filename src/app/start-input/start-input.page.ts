@@ -6,7 +6,6 @@ import * as L from 'leaflet';
 
 import  {data} from '../app.component'
 
-
 const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
 const iconUrl = 'assets/leaflet/marker-icon.png';
 const shadowUrl = 'assets/leaflet/marker-shadow.png';
@@ -187,7 +186,7 @@ export class StartInputPage implements OnInit {
 				/*zoom*/11
 				);
 		}
-		L.marker(e["latlng"],L.Icon.Default).addTo(this.map)
+		var marque = L.marker(e["latlng"],L.Icon.Default).addTo(this.map)
 	}
 	
 	onLocationError(e) {
