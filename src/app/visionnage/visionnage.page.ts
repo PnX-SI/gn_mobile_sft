@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 import  {data} from '../app.component'
 
@@ -35,7 +36,8 @@ export class VisionnagePage implements OnInit {
   constructor
   (
     private router:Router, 
-	  private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private menu: MenuController
   ) 
   { 
     this.route.params.subscribe(
@@ -47,6 +49,8 @@ export class VisionnagePage implements OnInit {
   }
   ionViewDidEnter()
 	{ 
+    this.menu.enable(false, "NewVisit");
+		this.menu.enable(false, "VisuTaxon");
     var thisLength = data[this.id-1]["geometry"]["coordinates"][0][0].length
     var lonMin = data[this.id-1]["geometry"]["coordinates"][0][0][0][0]
     var lonMax = data[this.id-1]["geometry"]["coordinates"][0][0][thisLength-1][0]
