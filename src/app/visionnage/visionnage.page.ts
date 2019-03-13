@@ -118,4 +118,8 @@ export class VisionnagePage implements OnInit {
   {
     this.router.navigate(['/new-visit',{id:this.id,latitude:this.latitude,longitude:this.longitude}]);	 
   }
+  GoBack()
+  {
+    this.router.navigate(['/start-input']);
+  }
 }

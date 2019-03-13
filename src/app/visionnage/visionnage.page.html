@@ -1,5 +1,10 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="GoBack()" slot="end">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+  </ion-buttons>
     <ion-title>Visionnage</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="reload()" slot="end">

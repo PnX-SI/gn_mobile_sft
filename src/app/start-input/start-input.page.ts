@@ -54,10 +54,6 @@ export class StartInputPage implements OnInit {
 	reload()
 	{
 		this.map.invalidateSize();
-		this.map.setView(
-			/*centre*/[44.5682846, 6.0634622],
-			/*zoom*/11
-			);
 		this.menu.enable(true, "VisuTaxon");
 	}
 	
@@ -144,27 +140,32 @@ export class StartInputPage implements OnInit {
 			if(debug)
 			{
 				identifiant = parseInt(prompt("entrez un idendifiant", "2"));
-			}
-			*/
+			}*/
+			
 
 			if (identifiant)
 			{
-				alert("Nous avons trouvé une zone a visualiser autour de vous.\r Redirection.")
+				alert("Nous avons trouvé une zone a visualiser autour de vous.\rRedirection.")
+				this.map.setView(
+					/*centre*/[e["latitude"], e["longitude"]],
+					/*zoom*/11
+					);
 				this.router.navigate(['/visionnage',{id:identifiant}]);	
 			}
 			else
 			{
-				alert("Nous n'avons pas trouvé de zone a visualiser autour de vous.")
+				alert("Nous n'avons pas trouvé de zone a visualiser autour de vous.\rNous allons afficher les environs autour de vous")
 				this.map.setView(
-					/*centre*/[44.5682846, 6.0634622],
+					/*centre*/[e["latitude"], e["longitude"]],
 					/*zoom*/11
 					);
 			}
 		}
 		else
 		{
+			alert("Nous allons afficher les environs autour de vous")
 			this.map.setView(
-				/*centre*/[44.5682846, 6.0634622],
+				/*centre*/[e["latitude"], e["longitude"]],
 				/*zoom*/11
 				);
 		}
@@ -172,7 +173,7 @@ export class StartInputPage implements OnInit {
 	
 	onLocationError(e) {
 		console.error(e.message)
-		alert(e.message + "\rWe'll show default map");
+		alert(e.message + "\rNous allons afficher la carte par défaut");
 		this.map.setView(
 		/*centre*/[44.5682846, 6.0634622],
 		/*zoom*/11
