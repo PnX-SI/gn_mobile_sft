@@ -41,13 +41,13 @@ export class StartInputPage implements OnInit {
 		  attribution: '&copy; OpenStreetMap',
 		  maxZoom: 18
 		}).addTo(this.map);
-		L.control.scale("metric").addTo(this.map);
+		
 	}
 	
 	ngOnInit() 
 	{
 		this.map = new L.Map('mapProspec');
-		
+		L.control.scale("metric").addTo(this.map);
 		this.map.on('locationfound', (e)=> {this.onLocationFound(e)});
 		this.map.on('locationerror', (e)=> {this.onLocationError(e)});
 		
