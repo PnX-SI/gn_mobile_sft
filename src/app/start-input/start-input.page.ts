@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import * as L from 'leaflet';
 
 import  {data} from '../app.component'
-import { LiteralArrayExpr } from '@angular/compiler';
+import { LiteralArrayExpr, ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-start-input',
@@ -41,11 +41,13 @@ export class StartInputPage implements OnInit {
 		  attribution: '&copy; OpenStreetMap',
 		  maxZoom: 18
 		}).addTo(this.map);
+		L.control.scale("metric").addTo(this.map);
 	}
 	
 	ngOnInit() 
 	{
 		this.map = new L.Map('mapProspec');
+		
 		this.map.on('locationfound', (e)=> {this.onLocationFound(e)});
 		this.map.on('locationerror', (e)=> {this.onLocationError(e)});
 		

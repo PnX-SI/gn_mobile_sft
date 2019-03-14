@@ -38,12 +38,14 @@ export class NewVisitPage implements OnInit {
 			// tslint:disable-next-line
 			attribution: '&copy; OpenStreetMap',
 			maxZoom: 18
-		}).addTo(this.map);		
+		}).addTo(this.map);	
+		L.control.scale("metric").addTo(this.map);	
 	}
 
   ngOnInit() 
 	{
 		this.map = new L.Map('mapVisit');
+		
 		this.map.on('locationfound', (e)=> {this.onLocationFound(e)});
   }
   
