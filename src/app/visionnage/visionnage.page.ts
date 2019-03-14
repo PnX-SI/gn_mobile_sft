@@ -5,6 +5,7 @@ import { MenuController } from '@ionic/angular';
 import  {data} from '../app.component'
 
 import * as L from 'leaflet';
+import { ResourceLoader } from '@angular/compiler';
 
 const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
 const iconUrl = 'assets/leaflet/marker-icon.png';
@@ -32,6 +33,7 @@ export class VisionnagePage implements OnInit {
   map:L.Map;
   public latitude;
   public longitude;
+  marque
 
   constructor
   (
@@ -51,6 +53,25 @@ export class VisionnagePage implements OnInit {
 	{ 
     this.menu.enable(false, "NewVisit");
 		this.menu.enable(false, "VisuTaxon");
+    
+    this.reload()
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      // tslint:disable-next-line
+      attribution: '&copy; OpenStreetMap',
+      maxZoom: 18
+    }).addTo(this.map);
+   
+	}
+
+  ngOnInit() 
+	{
+    this.map = new L.Map('mapVisio');
+    this.map.on('locationfound', (e)=> {this.onLocationFound(e)});
+  }
+  
+	reload()
+	{
+    this.map.invalidateSize();
     var thisLength = data[this.id-1]["geometry"]["coordinates"][0][0].length
     var lonMin = data[this.id-1]["geometry"]["coordinates"][0][0][0][0]
     var lonMax = data[this.id-1]["geometry"]["coordinates"][0][0][thisLength-1][0]
@@ -115,27 +136,15 @@ export class VisionnagePage implements OnInit {
     this.latitude = (latMin + latMax)/2
     this.longitude =  (lonMin + lonMax)/2
     this.map.setView([this.latitude, this.longitude], 16);		
+    if(this.marque)
+    {
+      this.marque.remove();
+    }
     this.map.locate({
 			setView: false, 
 			maxZoom: 11
       });	
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      // tslint:disable-next-line
-      attribution: '&copy; OpenStreetMap',
-      maxZoom: 18
-    }).addTo(this.map);
     L.geoJSON(data[this.id-1]).addTo(this.map);
-	}
-
-  ngOnInit() 
-	{
-    this.map = new L.Map('mapVisio');
-    this.map.on('locationfound', (e)=> {this.onLocationFound(e)});
-  }
-  
-	reload()
-	{
-		this.map.invalidateSize();
   }	
 
   GoToNewVisit()
@@ -149,6 +158,6 @@ export class VisionnagePage implements OnInit {
 
   onLocationFound(e)
   {
-    var marque = L.marker(e["latlng"],L.Icon.Default).addTo(this.map)
+    this.marque = L.marker(e["latlng"],L.Icon.Default).addTo(this.map)
   }
 }

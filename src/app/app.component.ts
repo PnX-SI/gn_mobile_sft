@@ -50,8 +50,8 @@ export class AppComponent {
 
   loadData(refresh = false, refresher?) {
     this.apiService.getData(refresh).subscribe(res => {
-	  data = res;
-	  this.data = data;
+    data = res;
+    this.data = data;
       if (refresher) {
         refresher.target.complete();
       }

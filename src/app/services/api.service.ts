@@ -29,7 +29,6 @@ export class ApiService {
       //return from(this.getLocalData('users'));
     } else {      
       // Return real API data and store it locally
-      console.log("load data")
       return this.http.get(`${API_URL}/sites?id_application=7&id_area_type=25`).pipe(
         map(res => 
           res['features']

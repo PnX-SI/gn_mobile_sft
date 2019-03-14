@@ -32,6 +32,7 @@ export class NewVisitPage implements OnInit {
 	id
 	latitude;
 	longitude;
+	marque
 
   constructor(
 	private router:Router, 
@@ -50,21 +51,13 @@ export class NewVisitPage implements OnInit {
   }
 
   ionViewDidEnter()
-	{
-		this.menu.enable(true, "NewVisit"); 
-		this.map.setView([this.latitude, this.longitude], 16);
-		this.map.locate({
-			setView: false, 
-			maxZoom: 11
-      });	
-				
+	{	
+		this.reload();
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			// tslint:disable-next-line
 			attribution: '&copy; OpenStreetMap',
 			maxZoom: 18
-		}).addTo(this.map);
-
-		L.geoJSON(data[this.id-1]).addTo(this.map);			
+		}).addTo(this.map);		
 	}
 
   ngOnInit() 
@@ -76,10 +69,21 @@ export class NewVisitPage implements OnInit {
 	reload()
 	{
 		this.map.invalidateSize();
+		this.menu.enable(true, "NewVisit"); 
+		this.map.setView([this.latitude, this.longitude], 16);
+		if(this.marque)
+		{
+			this.marque.remove()
+		}
+		this.map.locate({
+			setView: false, 
+			maxZoom: 11
+      });	
+		L.geoJSON(data[this.id-1]).addTo(this.map);	
 	}	
 	
 	onLocationFound(e)
   {
-    var marque = L.marker(e["latlng"],L.Icon.Default).addTo(this.map)
+    this.marque = L.marker(e["latlng"],L.Icon.Default).addTo(this.map)
   }
 }

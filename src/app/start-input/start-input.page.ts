@@ -6,21 +6,6 @@ import * as L from 'leaflet';
 
 import  {data} from '../app.component'
 
-const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
-const iconUrl = 'assets/leaflet/marker-icon.png';
-const shadowUrl = 'assets/leaflet/marker-shadow.png';
-const iconDefault = L.icon({
-  iconRetinaUrl,
-  iconUrl,
-  shadowUrl,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  tooltipAnchor: [16, -28],
-  shadowSize: [41, 41]
-});
-L.Marker.prototype.options.icon = iconDefault;
-
 @Component({
   selector: 'app-start-input',
   templateUrl: './start-input.page.html',
@@ -31,30 +16,24 @@ L.Marker.prototype.options.icon = iconDefault;
 export class StartInputPage implements OnInit {
 	
 	map:L.Map;
+	marque
 
 	constructor(
 		private menu: MenuController, 
 		private router: Router,
-		
 		) 
 	{
 		
 	}
 
 	ionViewDidEnter()
-	{
-		this.menu.enable(true, "VisuTaxon");
-		this.map.locate({
-			setView: false, 
-			maxZoom: 11
-			});				
+	{			
+		this.reload();
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		   // tslint:disable-next-line
 		  attribution: '&copy; OpenStreetMap',
 		  maxZoom: 18
 		}).addTo(this.map);
-
-		L.geoJSON(data).addTo(this.map);
 	}
 	
 	ngOnInit() 
@@ -66,12 +45,33 @@ export class StartInputPage implements OnInit {
 	
 	reload()
 	{
+		const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
+		const iconUrl = 'assets/leaflet/marker-icon.png';
+		const shadowUrl = 'assets/leaflet/marker-shadow.png';
+		const iconDefault = L.icon({
+		iconRetinaUrl,
+		iconUrl,
+		shadowUrl,
+		iconSize: [25, 41],
+		iconAnchor: [12, 41],
+		popupAnchor: [1, -34],
+		tooltipAnchor: [16, -28],
+		shadowSize: [41, 41]
+		});
+		L.Marker.prototype.options.icon = iconDefault;
+		if (this.marque)
+		{
+			this.marque.remove();
+		}
+		document.getElementById("affichChargement").removeAttribute("hidden");
 		this.map.invalidateSize();
 		this.map.locate({
 			setView: false, 
 			maxZoom: 11
 			});
 		this.menu.enable(true, "VisuTaxon");
+		L.geoJSON(data).addTo(this.map);
+		document.getElementById("affichChargement").setAttribute("hidden",null);
 	}
 	
 	onLocationFound(e) {
@@ -79,6 +79,7 @@ export class StartInputPage implements OnInit {
 		if(confirmation)
 		{
 			var identifiant = NaN
+			document.getElementById("affichChargement").removeAttribute("hidden");
 			for (var i=0;i<data.length;i++)
 			{
 				var thisLength = data[i]["geometry"]["coordinates"][0][0].length
@@ -147,10 +148,8 @@ export class StartInputPage implements OnInit {
 						identifiant = data[i]["id"];
 						break
 					}
-				
-				
 			}
-			
+			document.getElementById("affichChargement").setAttribute("hidden",null);
 			/*//outil de débug
 			//décommantez si vous voulez vérifier que la redirection ce fait bien
 			var debug = confirm("Debug?")
@@ -186,7 +185,8 @@ export class StartInputPage implements OnInit {
 				/*zoom*/11
 				);
 		}
-		var marque = L.marker(e["latlng"],L.Icon.Default).addTo(this.map)
+		this.marque = L.marker(e["latlng"],L.Icon.Default).addTo(this.map);
+
 	}
 	
 	onLocationError(e) {
