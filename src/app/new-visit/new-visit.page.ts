@@ -15,8 +15,6 @@ export class NewVisitPage implements OnInit {
 
 	map:L.Map;
 	id
-	latitude;
-	longitude;
 	marque
 
   constructor(
@@ -29,8 +27,6 @@ export class NewVisitPage implements OnInit {
 		this.route.params.subscribe(params =>{
 			//console.log(params);
 			this.id = params.id;
-			this.latitude = params.latitude;
-			this.longitude = params.longitude;
 
 	})
   }
@@ -71,7 +67,6 @@ export class NewVisitPage implements OnInit {
 		});
 		L.Marker.prototype.options.icon = iconDefault; 
 		
-		this.map.setView([this.latitude, this.longitude], 16);
 		if(this.marque)
 		{
 			this.marque.remove()
@@ -80,7 +75,8 @@ export class NewVisitPage implements OnInit {
 			setView: false, 
 			maxZoom: 11
       });	
-		L.geoJSON(data[this.id-1]).addTo(this.map);	
+		var objet = L.geoJSON(data[this.id-1]).addTo(this.map);	
+		this.map.setView(objet.getBounds().getCenter(), 16);
 	}	
 	
 	onLocationFound(e)
