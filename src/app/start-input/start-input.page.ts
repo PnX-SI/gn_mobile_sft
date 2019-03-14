@@ -45,6 +45,10 @@ export class StartInputPage implements OnInit {
 	
 	reload()
 	{
+		document.getElementById("affichChargement").removeAttribute("hidden");
+		this.menu.enable(true, "VisuTaxon");
+		this.map.invalidateSize();
+
 		const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
 		const iconUrl = 'assets/leaflet/marker-icon.png';
 		const shadowUrl = 'assets/leaflet/marker-shadow.png';
@@ -59,17 +63,15 @@ export class StartInputPage implements OnInit {
 		shadowSize: [41, 41]
 		});
 		L.Marker.prototype.options.icon = iconDefault;
+		
 		if (this.marque)
 		{
 			this.marque.remove();
 		}
-		document.getElementById("affichChargement").removeAttribute("hidden");
-		this.map.invalidateSize();
 		this.map.locate({
 			setView: false, 
 			maxZoom: 11
 			});
-		this.menu.enable(true, "VisuTaxon");
 		L.geoJSON(data).addTo(this.map);
 		document.getElementById("affichChargement").setAttribute("hidden",null);
 	}

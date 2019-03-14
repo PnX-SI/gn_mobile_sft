@@ -6,21 +6,6 @@ import  {data} from '../app.component'
 
 import * as L from 'leaflet';
 
-const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
-const iconUrl = 'assets/leaflet/marker-icon.png';
-const shadowUrl = 'assets/leaflet/marker-shadow.png';
-const iconDefault = L.icon({
-  iconRetinaUrl,
-  iconUrl,
-  shadowUrl,
-  iconSize: [12, 20],
-  iconAnchor: [6, 20],
-  popupAnchor: [1, -34],
-  tooltipAnchor: [16, -28],
-  shadowSize: [20, 20]
-});
-L.Marker.prototype.options.icon = iconDefault;
-
 @Component({
   selector: 'app-new-visit',
   templateUrl: './new-visit.page.html',
@@ -69,7 +54,23 @@ export class NewVisitPage implements OnInit {
 	reload()
 	{
 		this.map.invalidateSize();
-		this.menu.enable(true, "NewVisit"); 
+		this.menu.enable(true, "NewVisit");
+
+		const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
+		const iconUrl = 'assets/leaflet/marker-icon.png';
+		const shadowUrl = 'assets/leaflet/marker-shadow.png';
+		const iconDefault = L.icon({
+			iconRetinaUrl,
+			iconUrl,
+			shadowUrl,
+			iconSize: [12, 20],
+			iconAnchor: [6, 20],
+			popupAnchor: [1, -34],
+			tooltipAnchor: [16, -28],
+			shadowSize: [20, 20]
+		});
+		L.Marker.prototype.options.icon = iconDefault; 
+		
 		this.map.setView([this.latitude, this.longitude], 16);
 		if(this.marque)
 		{

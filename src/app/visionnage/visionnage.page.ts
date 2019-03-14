@@ -5,22 +5,6 @@ import { MenuController } from '@ionic/angular';
 import  {data} from '../app.component'
 
 import * as L from 'leaflet';
-import { ResourceLoader } from '@angular/compiler';
-
-const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
-const iconUrl = 'assets/leaflet/marker-icon.png';
-const shadowUrl = 'assets/leaflet/marker-shadow.png';
-const iconDefault = L.icon({
-  iconRetinaUrl,
-  iconUrl,
-  shadowUrl,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  tooltipAnchor: [16, -28],
-  shadowSize: [41, 41]
-});
-L.Marker.prototype.options.icon = iconDefault;
 
 @Component({
   selector: 'app-visionnage',
@@ -50,10 +34,7 @@ export class VisionnagePage implements OnInit {
       });
   }
   ionViewDidEnter()
-	{ 
-    this.menu.enable(false, "NewVisit");
-		this.menu.enable(false, "VisuTaxon");
-    
+	{  
     this.reload()
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       // tslint:disable-next-line
@@ -72,6 +53,24 @@ export class VisionnagePage implements OnInit {
 	reload()
 	{
     this.map.invalidateSize();
+    this.menu.enable(false, "NewVisit");
+    this.menu.enable(false, "VisuTaxon");
+    
+    const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
+    const iconUrl = 'assets/leaflet/marker-icon.png';
+    const shadowUrl = 'assets/leaflet/marker-shadow.png';
+    const iconDefault = L.icon({
+      iconRetinaUrl,
+      iconUrl,
+      shadowUrl,
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      tooltipAnchor: [16, -28],
+      shadowSize: [41, 41]
+    });
+    L.Marker.prototype.options.icon = iconDefault;
+
     var thisLength = data[this.id-1]["geometry"]["coordinates"][0][0].length
     var lonMin = data[this.id-1]["geometry"]["coordinates"][0][0][0][0]
     var lonMax = data[this.id-1]["geometry"]["coordinates"][0][0][thisLength-1][0]
