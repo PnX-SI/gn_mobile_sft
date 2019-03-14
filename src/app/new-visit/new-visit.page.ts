@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import { MenuController } from '@ionic/angular';
 
-import  {data} from '../app.component'
+import { ApiService } from '../services/api.service';
 
 import * as L from 'leaflet';
+import { delay } from 'q';
 
 @Component({
   selector: 'app-new-visit',
@@ -16,24 +17,35 @@ export class NewVisitPage implements OnInit {
 	map:L.Map;
 	id
 	marque
+	data = []
 
   constructor(
-	private router:Router, 
-	private route: ActivatedRoute, 
-	private menu: MenuController,
-	
+		private router:Router, 
+		private route: ActivatedRoute, 
+		private menu: MenuController,
+		private apiService: ApiService
 	) 
   {
 		this.route.params.subscribe(params =>{
 			//console.log(params);
 			this.id = params.id;
-
-	})
+			
+		});
+		 this.loadData(true, "maille",this.id);
+	}
+	
+	loadData(refresh = false,type = "base",id = 0, refresher?) {
+		this.apiService.getData(refresh,type,id).subscribe(res => {
+			this.data = res;
+			if (refresher) {
+        refresher.target.complete();
+      }
+			});
   }
 
   ionViewDidEnter()
 	{	
-		this.reload();
+		
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			// tslint:disable-next-line
 			attribution: '&copy; OpenStreetMap',
@@ -44,9 +56,11 @@ export class NewVisitPage implements OnInit {
 
   ngOnInit() 
 	{
+
 		this.map = new L.Map('mapVisit');
 		L.control.scale("metric").addTo(this.map);	
 		this.map.on('locationfound', (e)=> {this.onLocationFound(e)});
+		this.reload();
   }
   
 	reload()
@@ -77,7 +91,9 @@ export class NewVisitPage implements OnInit {
 			setView: false, 
 			maxZoom: 11
       });	
-		var objet = L.geoJSON(data[this.id-1]).addTo(this.map);	
+		var objet = L.geoJSON(this.data).addTo(this.map);	
+		console.log(objet.getBounds().getCenter())
+		//this.map.setView([44.5682846, 6.0634622], 16);
 		this.map.setView(objet.getBounds().getCenter(), 16);
 	}	
 	

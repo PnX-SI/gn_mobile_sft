@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import * as L from 'leaflet';
 
 import  {data} from '../app.component'
-import { LiteralArrayExpr, ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-start-input',
