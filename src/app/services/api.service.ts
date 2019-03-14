@@ -7,8 +7,8 @@ import { Observable, from } from 'rxjs';
 import { tap, map, catchError } from "rxjs/operators";
  
 const API_STORAGE_KEY = 'specialkey';
-//const API_URL = 'http://demo.geonature.fr/geonature/api/sft';
-const API_URL = 'http://51.75.122.69/geonature/api/suivi_flore_territoire';
+const API_URL = 'http://demo.geonature.fr/geonature/api/sft';
+//const API_URL = 'http://51.75.122.69/geonature/api/suivi_flore_territoire';
  
 @Injectable({
   providedIn: 'root'
