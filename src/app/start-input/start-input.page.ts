@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import * as L from 'leaflet';
 
 import  {data} from '../app.component'
+import { LiteralArrayExpr } from '@angular/compiler';
 
 @Component({
   selector: 'app-start-input',
@@ -17,6 +18,7 @@ export class StartInputPage implements OnInit {
 	
 	map:L.Map;
 	marque
+	testeur = 0
 
 	constructor(
 		private menu: MenuController, 
@@ -28,7 +30,12 @@ export class StartInputPage implements OnInit {
 
 	ionViewDidEnter()
 	{			
-		this.reload();
+		if(this.testeur == 0)
+		{
+			this.reload();
+			this.testeur = 1;
+		}
+		this.menu.enable(true, "VisuTaxon");
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		   // tslint:disable-next-line
 		  attribution: '&copy; OpenStreetMap',
@@ -41,6 +48,7 @@ export class StartInputPage implements OnInit {
 		this.map = new L.Map('mapProspec');
 		this.map.on('locationfound', (e)=> {this.onLocationFound(e)});
 		this.map.on('locationerror', (e)=> {this.onLocationError(e)});
+		
 	}
 	
 	reload()
@@ -72,7 +80,17 @@ export class StartInputPage implements OnInit {
 			setView: false, 
 			maxZoom: 11
 			});
-		L.geoJSON(data).addTo(this.map);
+		L.geoJSON(data, 
+			{
+			onEachFeature: (feature, layer) => 
+			{
+				layer.on("click", () =>
+				{
+					this.router.navigate(['/visionnage',{id:feature.id}]);
+				}) 
+			} 
+		}).addTo(this.map);
+		
 	}
 	
 	onLocationFound(e) {
