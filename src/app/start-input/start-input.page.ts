@@ -63,7 +63,7 @@ export class StartInputPage implements OnInit {
 		shadowSize: [41, 41]
 		});
 		L.Marker.prototype.options.icon = iconDefault;
-		
+
 		if (this.marque)
 		{
 			this.marque.remove();
@@ -73,7 +73,6 @@ export class StartInputPage implements OnInit {
 			maxZoom: 11
 			});
 		L.geoJSON(data).addTo(this.map);
-		document.getElementById("affichChargement").setAttribute("hidden",null);
 	}
 	
 	onLocationFound(e) {
@@ -81,7 +80,6 @@ export class StartInputPage implements OnInit {
 		if(confirmation)
 		{
 			var identifiant = NaN
-			document.getElementById("affichChargement").removeAttribute("hidden");
 			for (var i=0;i<data.length;i++)
 			{
 				var thisLength = data[i]["geometry"]["coordinates"][0][0].length
@@ -151,7 +149,6 @@ export class StartInputPage implements OnInit {
 						break
 					}
 			}
-			document.getElementById("affichChargement").setAttribute("hidden",null);
 			/*//outil de débug
 			//décommantez si vous voulez vérifier que la redirection ce fait bien
 			var debug = confirm("Debug?")
@@ -188,7 +185,7 @@ export class StartInputPage implements OnInit {
 				);
 		}
 		this.marque = L.marker(e["latlng"],L.Icon.Default).addTo(this.map);
-
+		document.getElementById("affichChargement").setAttribute("hidden",null);
 	}
 	
 	onLocationError(e) {
@@ -198,6 +195,7 @@ export class StartInputPage implements OnInit {
 		/*centre*/[44.5682846, 6.0634622],
 		/*zoom*/11
 		);
+		document.getElementById("affichChargement").setAttribute("hidden",null);
 	}
 
 	GoToHome()
