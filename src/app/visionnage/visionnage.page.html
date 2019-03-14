@@ -5,12 +5,15 @@
         <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
   </ion-buttons>
-    <ion-title>Visionnage</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="reload()" slot="end">
-        <ion-icon name="refresh"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+  <ion-label>
+    <h2><strong>{{objet.properties.nom_commune}}</strong></h2>
+    <h3>{{objet.properties.nom_taxon}}</h3>
+  </ion-label>
+  <ion-buttons slot="end">
+    <ion-button (click)="reload()" slot="end">
+      <ion-icon name="refresh"></ion-icon>
+    </ion-button>
+  </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

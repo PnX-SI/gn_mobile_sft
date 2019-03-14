@@ -16,6 +16,7 @@ export class VisionnagePage implements OnInit {
   public id;
   map:L.Map;
   marque
+  objet = []
 
   constructor
   (
@@ -29,6 +30,7 @@ export class VisionnagePage implements OnInit {
       {
         //console.log(params);
         this.id = params.id
+        this.objet = data[this.id-1]
       });
   }
   ionViewDidEnter()
@@ -77,6 +79,7 @@ export class VisionnagePage implements OnInit {
 			maxZoom: 11
       });	
     var objet = L.geoJSON(data[this.id-1]).addTo(this.map);
+    console.log(data[this.id-1])
     this.map.setView(objet.getBounds().getCenter(), 16);
   }	
 
