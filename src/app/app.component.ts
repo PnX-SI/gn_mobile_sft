@@ -18,7 +18,6 @@ import { ApiService } from './services/api.service';
 export class AppComponent {
   
   data =[];
-  identifiant;
 
   constructor(
 	private platform: Platform,
