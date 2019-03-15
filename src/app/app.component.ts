@@ -16,9 +16,10 @@ import { ApiService } from './services/api.service';
 })
 
 export class AppComponent {
-  
+  //variable de la page pour qu'on lise les données
   data =[];
-
+  
+  //chargement des imports
   constructor(
 	private platform: Platform,
 	private splashScreen: SplashScreen,
@@ -33,24 +34,27 @@ export class AppComponent {
   }
 
   initializeApp() {
-	this.platform.ready().then(() => {
-	  this.statusBar.styleDefault();
+  //a l'initialisation
+	this.platform.ready().then(() => {//on attend que la plateforme soit prête
+    //on préshot tout ce qui doit être load
+    this.statusBar.styleDefault();
     this.splashScreen.hide(); 
     this.networkService.onNetworkChange().subscribe((status: ConnectionStatus) => {
       if (status == ConnectionStatus.Online) {
         this.offlineManager.checkForEvents().subscribe();
       }
     });
-    this.loadData(true);
+    this.loadData(true);//on charge des données
     
 
 	});
   }
 
   loadData(refresh = false, refresher?) {
+    //on part chercher des données dans l'API
     this.apiService.getData(refresh).subscribe(res => {
-    data = res;
-    this.data = data;
+    data = res;//on fait que la variable exporté soit égale aux données
+    this.data = data; //on fait que la variable interne le soit aussi
       if (refresher) {
         refresher.target.complete();
       }
@@ -59,12 +63,13 @@ export class AppComponent {
 
   watchArea(id)
   {
+    //au clique du bouton, envoi sur la page visionnage
     this.router.navigate(['/visionnage',{id:id}]);	
   }
 
   CancelVisit()
   {
-    // code pour annuler la saisie
+    // TODO:code pour annuler la saisie
     this.router.navigate(['/start-input']);
   }
 }
