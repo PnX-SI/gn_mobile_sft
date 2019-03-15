@@ -107,7 +107,16 @@ export class NewVisitPage implements OnInit {
 		
 		if(this.data.length >0)//si la donnée a pu se charger
 		{
-			var objet = L.geoJSON(this.data).addTo(this.map);	
+			console.log(this.data)
+			var objet = L.geoJSON(this.data,{
+				onEachFeature: (feature, layer) => 
+				{
+					layer.on("click", () => //au clique, envoi sur la page visionnage qui correspond
+					{
+						console.log(feature.id)
+					}) 
+				} 
+			}).addTo(this.map);	
 			this.map.setView(objet.getBounds().getCenter(), 16);
 		}
 		else//sinon
