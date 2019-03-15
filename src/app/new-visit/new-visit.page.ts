@@ -60,7 +60,7 @@ export class NewVisitPage implements OnInit {
 		this.map = new L.Map('mapVisit');
 		L.control.scale("metric").addTo(this.map);	
 		this.map.on('locationfound', (e)=> {this.onLocationFound(e)});
-		this.reload();
+		setTimeout(() => this.reload(),1000) ;
   }
   
 	reload()
@@ -90,11 +90,16 @@ export class NewVisitPage implements OnInit {
 		this.map.locate({
 			setView: false, 
 			maxZoom: 11
-      });	
-		var objet = L.geoJSON(this.data).addTo(this.map);	
-		console.log(objet.getBounds().getCenter())
-		//this.map.setView([44.5682846, 6.0634622], 16);
-		this.map.setView(objet.getBounds().getCenter(), 16);
+			});	
+		if(this.data.length >0)
+		{
+			var objet = L.geoJSON(this.data).addTo(this.map);	
+			this.map.setView(objet.getBounds().getCenter(), 16);
+		}
+		else
+		{
+			alert ("nous n'avons pas réussi a récupérer les données. Veuillez appuyer sur le bouton de rafraichissement.")
+		}
 	}	
 	
 	onLocationFound(e)
