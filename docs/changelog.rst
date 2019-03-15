@@ -13,7 +13,6 @@ Prototype minimal n'incluant que l'affichage des données.
 
 **Fonctionnalités**
 
-* Interface mobile basée sur les premières versions de l'appli, et l'interface web existante
 * Connexion à l'API du module GeoNature pour récupérer les données (http://demo.geonature.fr/geonature)
 * Affichage des sites sur la carte Leaflet et dans une liste
 * Selection d'un site, recentrage sur celui-ci et affichage de ses mailles
