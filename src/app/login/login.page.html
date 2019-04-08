@@ -1,0 +1,11 @@
+<ion-header>
+  
+</ion-header>
+
+<ion-content padding style="text-align: center;">
+  <ion-input id="login" type="text" placeholder="login"></ion-input>
+  <ion-input id="password" type="password" placeholder="password"></ion-input>
+  <ion-label id="erreur" hidden color="danger">invalid login or password</ion-label>
+  <ion-button expand="full" (click)="goToOnline()">log in</ion-button>
+  <ion-label (click)="goToOffline()">mode hors connexion</ion-label>
+</ion-content>

@@ -114,7 +114,6 @@ export class NewVisitPage implements OnInit {
 		
 		if(this.data.length >0)//si la donnée a pu se charger
 		{
-			console.log(this.data)
 			var objet = L.geoJSON(this.data,{
 				onEachFeature: (feature, layer) => 
 				{
@@ -144,7 +143,6 @@ export class NewVisitPage implements OnInit {
 		{
 			this.compteReload ++;
 			setTimeout(() => this.reload(),100); 
-			console.log("nombre de fois où on a attendu la donnée:" + this.compteReload)
 		}
 		else//Si ça répond pas au bout des X fois
 		{

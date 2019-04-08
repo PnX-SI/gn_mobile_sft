@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'home', loadChildren: './home/home.module#HomePageModule' },
   { path: 'setting', loadChildren: './setting/setting.module#SettingPageModule' },
   { path: 'data-sync', loadChildren: './data-sync/data-sync.module#DataSyncPageModule' },
@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'start-input', loadChildren: './start-input/start-input.module#StartInputPageModule' },
   { path: 'new-visit', loadChildren: './new-visit/new-visit.module#NewVisitPageModule' },
   { path: 'visionnage', loadChildren: './visionnage/visionnage.module#VisionnagePageModule' },
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
 ];
 
 @NgModule({
