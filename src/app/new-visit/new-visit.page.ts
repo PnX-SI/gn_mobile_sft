@@ -49,7 +49,7 @@ export class NewVisitPage implements OnInit {
 	{	
 		//on montre qu'on charge des truc
 		document.getElementById("affichChargement").removeAttribute("hidden");
-		setTimeout(() => this.reload(),200) ;//on appel un chargement de page, mais on attend un peu que la données soit chargée
+		setTimeout(() => this.reload(),100); //on appel un chargement de page
 		//on fait en sorte que la carte soit affiché
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			// tslint:disable-next-line
@@ -126,13 +126,13 @@ export class NewVisitPage implements OnInit {
 			this.map.setView(objet.getBounds().getCenter(), 16);
 			document.getElementById("affichChargement").setAttribute("hidden",null);
 		}
-		else if (this.compteReload < 10)
+		else if (this.compteReload < 10)//sinon, on demande a recharger jusqu'à X fois
 		{
 			this.compteReload ++;
-			setTimeout(() => this.reload(),200);
+			setTimeout(() => this.reload(),100); 
 			console.log("nombre de fois où on a attendu la donnée:" + this.compteReload)
 		}
-		else//sinon
+		else//Si ça répond pas au bout des X fois
 		{
 			alert ("nous n'avons pas réussi a récupérer les données. Veuillez appuyer sur le bouton de rafraichissement.")
 			document.getElementById("affichChargement").setAttribute("hidden",null);
