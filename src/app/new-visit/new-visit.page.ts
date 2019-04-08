@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import { MenuController } from '@ionic/angular';
 
 import { ApiService } from '../services/api.service';
 
@@ -18,12 +17,12 @@ export class NewVisitPage implements OnInit {
 	id
 	marque
 	data = []
+	compteReload = 0
 
 	//chargement des imports
 	constructor(
 			private router:Router, 
-			private route: ActivatedRoute, 
-			private menu: MenuController,
+			private route: ActivatedRoute,
 			private apiService: ApiService
 		) 
 	{
@@ -48,7 +47,9 @@ export class NewVisitPage implements OnInit {
 
   	ionViewDidEnter()//quand on rentre dans la page
 	{	
-		setTimeout(() => this.reload(),1000) ;//on appel un chargement de page, mais on attend un peu que la données soit chargée
+		//on montre qu'on charge des truc
+		document.getElementById("affichChargement").removeAttribute("hidden");
+		setTimeout(() => this.reload(),200) ;//on appel un chargement de page, mais on attend un peu que la données soit chargée
 		//on fait en sorte que la carte soit affiché
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			// tslint:disable-next-line
@@ -71,10 +72,14 @@ export class NewVisitPage implements OnInit {
   
 	reload()//fonction de (re)chargement
 	{
+		if (document.getElementById('affic').style.display != "none")
+		{
+			document.getElementById('affic').style.display = "none";
+		}
+		//on montre qu'on charge des truc
+		document.getElementById("affichChargement").removeAttribute("hidden");
 		//on recharge rapidement la carte
 		this.map.invalidateSize();
-		//on active le bon menu
-		this.menu.enable(true, "NewVisit");
 
 		//on réafirme les paramêtre des marqueurs, et on change leur taille (pour simplifier la vie de l'utilisateur)
 		const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
@@ -119,10 +124,18 @@ export class NewVisitPage implements OnInit {
 				} 
 			}).addTo(this.map);	
 			this.map.setView(objet.getBounds().getCenter(), 16);
+			document.getElementById("affichChargement").setAttribute("hidden",null);
+		}
+		else if (this.compteReload < 10)
+		{
+			this.compteReload ++;
+			setTimeout(() => this.reload(),200);
+			console.log("nombre de fois où on a attendu la donnée:" + this.compteReload)
 		}
 		else//sinon
 		{
 			alert ("nous n'avons pas réussi a récupérer les données. Veuillez appuyer sur le bouton de rafraichissement.")
+			document.getElementById("affichChargement").setAttribute("hidden",null);
 		}
 	}	
 	
@@ -144,4 +157,5 @@ export class NewVisitPage implements OnInit {
 			document.getElementById('affic').style.display = "none";
 		}
 	}
+	
 }

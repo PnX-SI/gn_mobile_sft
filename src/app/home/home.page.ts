@@ -25,7 +25,6 @@ export class HomePage {
 	ionViewDidEnter()//quand on rentre dans la page
 	{
 		//désactivation de tout les menus car pas pertinents
-		this.menu.enable(false, "NewVisit");
 		this.menu.enable(false, "VisuTaxon");
 	}
 

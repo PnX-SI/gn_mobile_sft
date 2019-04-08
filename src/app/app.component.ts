@@ -66,12 +66,6 @@ export class AppComponent {
     //au clique du bouton, envoi sur la page visionnage
     this.router.navigate(['/visionnage',{id:id}]);	
   }
-
-  CancelVisit()
-  {
-    // TODO:code pour annuler la saisie
-    this.router.navigate(['/start-input']);
-  }
 }
 
 export var data

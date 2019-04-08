@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
+
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-affichage',
@@ -7,8 +10,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AffichageComponent implements OnInit {
 
-  constructor() { }
+  constructor
+  (
+    private router: Router,
+    private route: ActivatedRoute,
+			private apiService: ApiService
+  ) 
+  { 
+    
+  }
 
   ngOnInit() {}
 
+  CancelVisit()
+	{
+		// TODO:code pour annuler la saisie
+		this.router.navigate(['/start-input']);
+	}
 }
