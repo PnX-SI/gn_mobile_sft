@@ -135,7 +135,6 @@ export class NewVisitPage implements OnInit {
 
 	toggleAffichage()
 	{
-		console.log(document.getElementById('affic').style.display)
 		if (document.getElementById('affic').style.display == "none")
 		{
 			document.getElementById('affic').style.display = "block";
