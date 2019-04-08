@@ -5,6 +5,7 @@ import { ApiService } from '../services/api.service';
 
 import * as L from 'leaflet';
 
+
 @Component({
   selector: 'app-new-visit',
   templateUrl: './new-visit.page.html',
@@ -119,12 +120,25 @@ export class NewVisitPage implements OnInit {
 				{
 					layer.on("click", () => //au clique, envoi sur la page visionnage qui correspond
 					{
-						console.log(feature.id)
+						console.log(feature.id);
+						if(layer.options.color.valueOf() == "#3388ff")
+						{
+							layer.setStyle({color:"#00FF00"});
+						}
+						else if (layer.options.color.valueOf() =="#00FF00")
+						{
+							layer.setStyle({color:"#FF0000"});
+						}
+						else
+						{
+							layer.setStyle({color:"#3388ff"});
+						}
 					}) 
 				} 
 			}).addTo(this.map);	
 			this.map.setView(objet.getBounds().getCenter(), 16);
 			document.getElementById("affichChargement").setAttribute("hidden",null);
+			this.compteReload = 0;
 		}
 		else if (this.compteReload < 10)//sinon, on demande a recharger jusqu'à X fois
 		{
@@ -136,6 +150,7 @@ export class NewVisitPage implements OnInit {
 		{
 			alert ("nous n'avons pas réussi a récupérer les données. Veuillez appuyer sur le bouton de rafraichissement.")
 			document.getElementById("affichChargement").setAttribute("hidden",null);
+			this.compteReload = 0;
 		}
 	}	
 	
