@@ -5,11 +5,15 @@ import { NetworkService, ConnectionStatus } from './network.service';
 import { Storage } from '@ionic/storage';
 import { Observable, from } from 'rxjs';
 import { tap, map, catchError } from "rxjs/operators";
+import { SessionService } from './session.service';
  
 const API_STORAGE_KEY = 'specialkey';
-const API_URL = 'http://demo.geonature.fr/geonature/api';
-//const API_URL = 'http://51.75.122.69/geonature/api';
- 
+const API_URL = 'http://demo.geonature.fr/geonature/api'; //API test
+//const API_URL = 'http://51.75.122.69/geonature/api'; //API prod
+const API_REPO = 'sft' //API test
+//const API_REPO = 'suivi_flore_territoire' //API prod
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,34 +24,36 @@ export class ApiService {
     private http: HttpClient, 
     private networkService: NetworkService, 
     private storage: Storage, 
-    private offlineManager: OfflineManagerService
+    private offlineManager: OfflineManagerService,
+    private session : SessionService
     ) { }
  
   getData(forceRefresh: boolean = false, requeteType: string = "base", id: number = 0): Observable<any[]> {
     if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh) {
       // Return the cached data from Storage
-      //return from(this.getLocalData('users'));
+      
+      if (requeteType == "base")
+      {
+        return from(this.getLocalData('base'));
+      }
+      else if (requeteType == "maille")
+      {
+        return from(this.getLocalData('maille'));
+      }
+
     } else {      
       // Return real API data and store it locally
       
       if (requeteType == "base")
       {
-        return this.http.get(`${API_URL}/sft/sites?id_application=7&id_area_type=25`).pipe(
+        return this.http.get(`${API_URL}/${API_REPO}/sites?id_application=7&id_area_type=25`).pipe(
           map(res => 
             res['features']
           ),
           tap(res => {
-            this.setLocalData('data', res);
+            this.setLocalData('base', res);
           })
         )
-        /*return this.http.get(`${API_URL}/suivi_flore_territoire/sites?id_application=7&id_area_type=25`).pipe(
-          map(res => 
-            res['features']
-          ),
-          tap(res => {
-            this.setLocalData('data', res);
-          })
-        )*/
       }
       else if (requeteType == "maille")
       {
@@ -56,7 +62,7 @@ export class ApiService {
             res['features']
           ),
           tap(res => {
-            this.setLocalData('data', res);
+            this.setLocalData('maille', res);
           })
         )
       }
@@ -64,7 +70,7 @@ export class ApiService {
     }
   }
  
-  updateUser(user, data): Observable<any> {
+  /*updateUser(user, data): Observable<any> {
     let url = `${API_URL}/users/${user}`;
     if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline) {
       return from(this.offlineManager.storeRequest(url, 'PUT', data));
@@ -76,6 +82,16 @@ export class ApiService {
         })
       );
     }
+  }*/
+
+  LogInAPI()
+  {
+    const user = {
+      login:this.session.getLogin(),
+      password:this.session.getPassword(),
+      id_application: 3
+    }
+    return this.http.post(`${API_URL}/auth/login`,user)
   }
  
   // Save result of API requests

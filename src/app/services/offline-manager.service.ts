@@ -90,6 +90,3 @@ export class OfflineManagerService {
     return forkJoin(obs);
   }
 }
-92
-91
-90
