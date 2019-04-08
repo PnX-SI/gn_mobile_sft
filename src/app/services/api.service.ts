@@ -84,6 +84,7 @@ export class ApiService {
     }
   }*/
 
+  //TODO: Faire que ça marche
   LogInAPI()
   {
     const user = {

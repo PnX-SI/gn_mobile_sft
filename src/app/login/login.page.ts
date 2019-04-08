@@ -42,14 +42,13 @@ export class LoginPage implements OnInit {
     {
       this.session.setLogin(this.login);
       this.session.setPassword(this.password);
+      //TODO: faire que ça marche
       var logToAPI = this.apiService.LogInAPI();
       console.log(logToAPI)
       if(false)
       {
-        
         document.getElementById("erreur").setAttribute("hidden",null);
         this.router.navigate([this.prev_page]);
-        
       }
       else
       {
