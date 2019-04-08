@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { NewVisitPage } from './new-visit.page';
+import { AffichageComponent } from '../affichage/affichage.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [NewVisitPage]
+  declarations: [NewVisitPage, 
+    AffichageComponent]
 })
 export class NewVisitPageModule {}

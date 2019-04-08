@@ -11,6 +11,7 @@ import * as L from 'leaflet';
   templateUrl: './new-visit.page.html',
   styleUrls: ['./new-visit.page.scss'],
 })
+
 export class NewVisitPage implements OnInit {
 	//variables de la page
 	map:L.Map;
@@ -59,7 +60,7 @@ export class NewVisitPage implements OnInit {
 
   	ngOnInit()  //quand on créé la page
 	{
-		//assiniation de la carte
+		//assignation de la carte
 		this.map = new L.Map('mapVisit');
 		//on fait en sorte que la carte ai une échelle (pour se repérer c'est cool)
 		L.control.scale("metric").addTo(this.map);
@@ -130,5 +131,18 @@ export class NewVisitPage implements OnInit {
 	{
 		//on pose un marqueur sur sa position
 		this.marque = L.marker(e["latlng"],L.Icon.Default).addTo(this.map)
+	}
+
+	toggleAffichage()
+	{
+		console.log(document.getElementById('affic').style.display)
+		if (document.getElementById('affic').style.display == "none")
+		{
+			document.getElementById('affic').style.display = "block";
+		}
+		else
+		{
+			document.getElementById('affic').style.display = "none";
+		}
 	}
 }
