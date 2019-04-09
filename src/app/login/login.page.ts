@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import { NetworkService, ConnectionStatus } from '../services/network.service';
 import {ApiService} from '../services/api.service'
-import { async } from '@angular/core/testing';
+
 
 @Component({
   selector: 'app-login',
