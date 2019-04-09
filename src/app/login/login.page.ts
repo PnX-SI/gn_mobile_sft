@@ -75,7 +75,6 @@ export class LoginPage implements OnInit {
     if (this.apiService.getLocalData("token"))
     {
       document.getElementById("erreur").setAttribute("hidden",null);
-      console.log(this.apiService.getLocalData("token"))
       this.router.navigate([this.prev_page]);
     }
     else if (this.essai < 10)
