@@ -7,6 +7,5 @@
   <ion-input [(ngModel)]="password" type="password" placeholder="password"></ion-input>
   <ion-label id="erreur" hidden color="danger"></ion-label>
   <ion-button expand="full" (click)="goToOnline()">log in</ion-button>
-  <ion-label (click)="goToOffline()">mode hors connexion</ion-label>
-  <br/><ion-label color="warning">/!\ pour l'instant, log in ne vérifie pas que le token a été bien généré, du coup, il fait pareil que mode hors connexion</ion-label>
+  <ion-label tappable (click)="goToOffline()">mode hors connexion</ion-label>
 </ion-content>

@@ -38,7 +38,7 @@ export class LoginPage implements OnInit {
 
   ionViewDidEnter()//quand on rentre dans la page
   {
-    
+    this.apiService.getLocalData("token").then((val)=>(console.log(val)));
   }
 
   public goToOnline()
@@ -71,25 +71,26 @@ export class LoginPage implements OnInit {
   
   public tryToLogin()
   {
-    
-    if (this.apiService.getLocalData("token"))
-    {
-      document.getElementById("erreur").setAttribute("hidden",null);
-      this.router.navigate([this.prev_page]);
-    }
-    else if (this.essai < 10)
-    {
-      this.essai++;
-      setTimeout(()=>this.tryToLogin(),100);
-      
-    }
-    else
-    {
-      this.login = "";
-      this.password = "";
-      document.getElementById("erreur").removeAttribute("hidden");
-      document.getElementById("erreur").innerHTML = "login ou password invalide";
-    }
+    this.apiService.getLocalData("token").then((val)=>{
+      console.log(val)
+      if (val)
+      {
+        document.getElementById("erreur").setAttribute("hidden",null);
+        this.router.navigate([this.prev_page]);
+      }
+      else if (this.essai <10)
+      {
+        setTimeout(()=>this.tryToLogin(),100);
+      }
+      else
+      {
+        this.login = "";
+        this.password = "";
+        document.getElementById("erreur").removeAttribute("hidden");
+        document.getElementById("erreur").innerHTML = "login ou password invalide";
+      }
 
+    })
+    
   }
 }
