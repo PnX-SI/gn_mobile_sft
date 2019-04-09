@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {SessionService} from '../services/session.service';
 import { NetworkService, ConnectionStatus } from '../services/network.service';
 import {ApiService} from '../services/api.service'
 import { async } from '@angular/core/testing';
@@ -22,7 +21,6 @@ export class LoginPage implements OnInit {
   (
     private router:Router,
     private route:ActivatedRoute,
-    private session: SessionService,
     private networkService: NetworkService, 
     private apiService: ApiService
   ) 
@@ -40,10 +38,7 @@ export class LoginPage implements OnInit {
 
   ionViewDidEnter()//quand on rentre dans la page
   {
-    if(this.session.getToken())
-    {
-      setTimeout(() =>this.router.navigate([this.prev_page]),100)
-    }
+    
   }
 
   public goToOnline()
@@ -51,7 +46,8 @@ export class LoginPage implements OnInit {
     //au clique du bouton, renvoi a l'ancienne page ou, a défaut, sur home, avec des identifiants
     if(this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Online)
     {
-      //TODO: faire que ça marche
+      //TODO: améliorer ça pour plus avoir a tricher sur le token
+      this.apiService.LogInAPI(this.login,this.password);
       setTimeout(()=>this.tryToLogin(),100);
     }
     else
@@ -75,11 +71,11 @@ export class LoginPage implements OnInit {
   
   public tryToLogin()
   {
-    this.apiService.LogInAPI(this.login,this.password);
-    if (this.session.getToken())
+    
+    if (this.apiService.getLocalData("token"))
     {
       document.getElementById("erreur").setAttribute("hidden",null);
-      console.log(this.session.getToken())
+      console.log(this.apiService.getLocalData("token"))
       this.router.navigate([this.prev_page]);
     }
     else if (this.essai < 10)

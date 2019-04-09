@@ -20,11 +20,13 @@ import { Network } from '@ionic-native/network/ngx';
     IonicModule.forRoot(), 
     AppRoutingModule, 
     IonicStorageModule.forRoot(), 
-    HttpClientModule],
+    HttpClientModule,
+  ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: RouteReuseStrategy, 
+      useClass: IonicRouteStrategy },
     Network
   ],
   bootstrap: [AppComponent]

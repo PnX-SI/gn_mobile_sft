@@ -5,9 +5,9 @@ import { NetworkService, ConnectionStatus } from './network.service';
 import { Storage } from '@ionic/storage';
 import { Observable, from } from 'rxjs';
 import { tap, map, catchError } from "rxjs/operators";
-import {SessionService} from '../services/session.service';
+//import { CookieService } from 'ng2-cookies';
  
-const API_STORAGE_KEY = 'specialkey';
+//const API_STORAGE_KEY = 'specialkey';
 const API_URL = 'http://demo.geonature.fr/geonature/api'; //API test
 //const API_URL = 'http://51.75.122.69/geonature/api'; //API prod
 const API_REPO = 'sft' //API test
@@ -25,7 +25,7 @@ export class ApiService {
     private networkService: NetworkService, 
     private storage: Storage, 
     private offlineManager: OfflineManagerService,
-    private session: SessionService
+    
     ) { }
  
   getData(forceRefresh: boolean = false, requeteType: string = "base", id: number = 0): Observable<any[]> {
@@ -85,7 +85,7 @@ export class ApiService {
   }*/
 
   //TODO: Faire que ça marche
-  LogInAPI(log, pswd)
+  public LogInAPI(log, pswd)
   {
     const user = {
       login:log,
@@ -94,17 +94,19 @@ export class ApiService {
     }
     this.http.post(`${API_URL}/auth/login`,user)
     .subscribe(data=>{
-      this.session.setToken(data);
+      this.setLocalData("token",data);
     })
   }
  
   // Save result of API requests
   private setLocalData(key, data) {
-    this.storage.set(`${API_STORAGE_KEY}-${key}`, data);
+    //this.storage.set(`${API_STORAGE_KEY}-${key}`, data);
+    this.storage.set(`${key}`, data);
   }
  
   // Get cached API result
-  private getLocalData(key) {
-    return this.storage.get(`${API_STORAGE_KEY}-${key}`);
+  public getLocalData(key) {
+    //return this.storage.get(`${API_STORAGE_KEY}-${key}`);
+    return this.storage.get(`${key}`);
   }
 }
