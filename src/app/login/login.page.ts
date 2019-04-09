@@ -76,10 +76,10 @@ export class LoginPage implements OnInit {
   public tryToLogin()
   {
     this.apiService.LogInAPI(this.login,this.password);
-    ;
     if (this.session.getToken())
     {
       document.getElementById("erreur").setAttribute("hidden",null);
+      console.log(this.session.getToken())
       this.router.navigate([this.prev_page]);
     }
     else if (this.essai < 10)
