@@ -31,7 +31,7 @@ export class ApiService {
   getData(forceRefresh: boolean = false, requeteType: string = "base", id: number = 0): Observable<any[]> {
     if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh) {
       // Return the cached data from Storage
-      
+      /*
       if (requeteType == "base")
       {
         return from(this.getLocalData('base'));
@@ -39,7 +39,7 @@ export class ApiService {
       else if (requeteType == "maille")
       {
         return from(this.getLocalData('maille'));
-      }
+      }*/
 
     } else {      
       // Return real API data and store it locally
@@ -49,10 +49,10 @@ export class ApiService {
         return this.http.get(`${API_URL}/${API_REPO}/sites?id_application=7&id_area_type=25`).pipe(
           map(res => 
             res['features']
-          ),
+          )/*,
           tap(res => {
             this.setLocalData('base', res);
-          })
+          })*/
         )
       }
       else if (requeteType == "maille")
@@ -60,10 +60,10 @@ export class ApiService {
         return this.http.get(`${API_URL}/gn_monitoring/siteareas/${id}?id_area_type=32`).pipe(
           map(res => 
             res['features']
-          ),
+          )/*,
           tap(res => {
             this.setLocalData('maille', res);
-          })
+          })*/
         )
       }
       
