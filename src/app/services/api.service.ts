@@ -5,7 +5,6 @@ import { NetworkService, ConnectionStatus } from './network.service';
 import { Storage } from '@ionic/storage';
 import { Observable, from } from 'rxjs';
 import { tap, map, catchError } from "rxjs/operators";
-import { SessionService } from './session.service';
  
 const API_STORAGE_KEY = 'specialkey';
 const API_URL = 'http://demo.geonature.fr/geonature/api'; //API test
@@ -25,7 +24,6 @@ export class ApiService {
     private networkService: NetworkService, 
     private storage: Storage, 
     private offlineManager: OfflineManagerService,
-    private session : SessionService
     ) { }
  
   getData(forceRefresh: boolean = false, requeteType: string = "base", id: number = 0): Observable<any[]> {
@@ -85,14 +83,18 @@ export class ApiService {
   }*/
 
   //TODO: Faire que ça marche
-  LogInAPI()
+  LogInAPI(log, pswd)
   {
     const user = {
-      login:this.session.getLogin(),
-      password:this.session.getPassword(),
+      login:log,
+      password:pswd,
       id_application: 3
     }
     return this.http.post(`${API_URL}/auth/login`,user)
+    .subscribe(data=>{
+      console.log(data);
+      return data;
+    })
   }
  
   // Save result of API requests

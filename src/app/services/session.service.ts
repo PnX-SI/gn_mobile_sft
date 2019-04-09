@@ -5,30 +5,19 @@ import { Injectable } from '@angular/core';
 })
 export class SessionService {
 
-  private login: String;
-  private password: String;
+  private token;
 
   constructor() {
 
   }
 
-  setLogin(login:String)
+  setToken(token)
   {
-    this.login =login;
+    this.token = token;
   }
 
-  setPassword(password:String)
+  getToken()
   {
-    this.password = password;
-  }
-  
-  getLogin()
-  {
-    return this.login;
-  }
-
-  getPassword()
-  {
-    return this.password;
+    return this.token;
   }
 }

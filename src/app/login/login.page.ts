@@ -3,6 +3,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {SessionService} from '../services/session.service';
 import { NetworkService, ConnectionStatus } from '../services/network.service';
 import {ApiService} from '../services/api.service'
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,8 @@ export class LoginPage implements OnInit {
 
   public login: String;
   public password: String;
+
+  public essai = 0;
   constructor
   (
     private router:Router,
@@ -25,7 +28,7 @@ export class LoginPage implements OnInit {
   ) 
   {
     this.route.params.subscribe(params =>{
-      console.log(params)
+      //console.log(params)
       if (params.back){
         this.prev_page = params.back;
       }
@@ -35,30 +38,34 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
-  public goToOnline()
+  ionViewDidEnter()//quand on rentre dans la page
+  {
+
+  }
+
+  public async goToOnline()
 	{
     //au clique du bouton, renvoi a l'ancienne page ou, a défaut, sur home, avec des identifiants
     if(this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Online)
     {
-      this.session.setLogin(this.login);
-      this.session.setPassword(this.password);
-      //TODO: faire que ça marche
-      var logToAPI = this.apiService.LogInAPI();
-      console.log(logToAPI)
-      if(false)
+      //TODO: faire que ça marche       
+      var token = this.apiService.LogInAPI(this.login,this.password)
+      console.log(token)
+      this.session.setToken(token);
+      if(this.session.getToken())
       {
         document.getElementById("erreur").setAttribute("hidden",null);
-        this.router.navigate([this.prev_page]);
+        //this.router.navigate([this.prev_page]);
+        console.log("ça marche")
       }
       else
       {
-        this.session.setLogin("");
-        this.session.setPassword("");
         this.login = "";
         this.password = "";
         document.getElementById("erreur").removeAttribute("hidden");
         document.getElementById("erreur").innerHTML = "login ou password invalide";
-      }
+      }  
+
     }
     else
     {
