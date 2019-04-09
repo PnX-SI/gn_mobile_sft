@@ -40,32 +40,19 @@ export class LoginPage implements OnInit {
 
   ionViewDidEnter()//quand on rentre dans la page
   {
-
+    if(this.session.getToken())
+    {
+      setTimeout(() =>this.router.navigate([this.prev_page]),100)
+    }
   }
 
-  public async goToOnline()
+  public goToOnline()
 	{
     //au clique du bouton, renvoi a l'ancienne page ou, a défaut, sur home, avec des identifiants
     if(this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Online)
     {
-      //TODO: faire que ça marche       
-      var token = this.apiService.LogInAPI(this.login,this.password)
-      console.log(token)
-      this.session.setToken(token);
-      if(this.session.getToken())
-      {
-        document.getElementById("erreur").setAttribute("hidden",null);
-        //this.router.navigate([this.prev_page]);
-        console.log("ça marche")
-      }
-      else
-      {
-        this.login = "";
-        this.password = "";
-        document.getElementById("erreur").removeAttribute("hidden");
-        document.getElementById("erreur").innerHTML = "login ou password invalide";
-      }  
-
+      //TODO: faire que ça marche
+      setTimeout(()=>this.tryToLogin(),100);
     }
     else
     {
@@ -84,5 +71,30 @@ export class LoginPage implements OnInit {
       document.getElementById("erreur").setAttribute("hidden",null);
       this.router.navigate([this.prev_page])
     }
-	}
+  }
+  
+  public tryToLogin()
+  {
+    this.apiService.LogInAPI(this.login,this.password);
+    ;
+    if (this.session.getToken())
+    {
+      document.getElementById("erreur").setAttribute("hidden",null);
+      this.router.navigate([this.prev_page]);
+    }
+    else if (this.essai < 10)
+    {
+      this.essai++;
+      setTimeout(()=>this.tryToLogin(),100);
+      
+    }
+    else
+    {
+      this.login = "";
+      this.password = "";
+      document.getElementById("erreur").removeAttribute("hidden");
+      document.getElementById("erreur").innerHTML = "login ou password invalide";
+    }
+
+  }
 }
