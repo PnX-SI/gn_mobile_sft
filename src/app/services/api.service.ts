@@ -67,6 +67,17 @@ export class ApiService {
           })*/
         )
       }
+      else if (requeteType == "visite")
+      {
+        return this.http.get(`${API_URL}/${API_REPO}/visit/${id}`).pipe(
+          map(res =>
+            [res]
+          )/*,
+          tap(res => {
+            this.setLocalData('visite', res);
+          })*/
+        )
+      }
       
     }
   }
