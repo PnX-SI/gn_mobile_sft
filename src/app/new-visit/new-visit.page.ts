@@ -17,7 +17,8 @@ export class NewVisitPage implements OnInit {
 	map:L.Map;
 	id
 	marque
-	data = []
+	mailles = []
+	observer = []
 	compteReload = 0
 
 	//chargement des imports
@@ -33,18 +34,28 @@ export class NewVisitPage implements OnInit {
 			
 		});
 		//on call une lecture de données
-		this.loadData(true, "maille",this.id);
+		this.loadDataMailles(true, "maille",this.id);
+		this.loadDataObserver(true, "visite",this.id);
 	}
 	
-	//fonction de lecture de données
-	loadData(refresh = false,type = "base",id = 0, refresher?) {
+	/*fonctions de lecture de données*/
+	loadDataMailles(refresh = false,type = "base",id = 0, refresher?) {
 		this.apiService.getData(refresh,type,id).subscribe(res => {
-			this.data = res;
+			this.mailles = res;
 			if (refresher) {
         		refresher.target.complete();
       		}
 		});
- 	}
+	 }
+	 loadDataObserver(refresh = false,type = "base",id = 0, refresher?) {
+		this.apiService.getData(refresh,type,id).subscribe(res => {
+			this.mailles = res;
+			if (refresher) {
+        		refresher.target.complete();
+      		}
+		});
+	 }
+	 /**/
 
   	ionViewDidEnter()//quand on rentre dans la page
 	{	
@@ -73,9 +84,9 @@ export class NewVisitPage implements OnInit {
   
 	reload()//fonction de (re)chargement
 	{
-		if (document.getElementById('affic').style.display != "none")
+		if (document.getElementById('affichage').style.display != "none")
 		{
-			document.getElementById('affic').style.display = "none";
+			document.getElementById('affichage').style.display = "none";
 		}
 		//on montre qu'on charge des truc
 		document.getElementById("affichChargement").removeAttribute("hidden");
@@ -112,9 +123,9 @@ export class NewVisitPage implements OnInit {
 		});
 		
 		
-		if(this.data.length >0)//si la donnée a pu se charger
+		if(this.mailles.length >0)//si la donnée a pu se charger
 		{
-			var objet = L.geoJSON(this.data,{
+			var objet = L.geoJSON(this.mailles,{
 				onEachFeature: (feature, layer) => 
 				{
 					layer.on("click", () => //au clique, envoi sur la page visionnage qui correspond
@@ -161,14 +172,20 @@ export class NewVisitPage implements OnInit {
 
 	toggleAffichage()
 	{
-		if (document.getElementById('affic').style.display == "none")
+		if (document.getElementById('affichage').style.display == "none")
 		{
-			document.getElementById('affic').style.display = "block";
+			document.getElementById('affichage').style.display = "block";
 		}
 		else
 		{
-			document.getElementById('affic').style.display = "none";
+			document.getElementById('affichage').style.display = "none";
 		}
 	}
+
+	CancelVisit()
+	{
+		// TODO:code pour annuler la saisie
+		this.router.navigate(['/start-input']);
+ 	}	
 	
 }
