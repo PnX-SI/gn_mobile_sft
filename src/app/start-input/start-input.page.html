@@ -12,15 +12,62 @@
 			<ion-button (click)="reload()" slot="end">
 				<ion-icon name="refresh"></ion-icon>
 			</ion-button>
-			<ion-menu-button menu="VisuTaxon"></ion-menu-button>
+			<ion-button (click)="toggleAffichage()" slot="end">
+				<ion-icon name="menu"></ion-icon>
+			</ion-button>
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-	
+	<div id="affichageGeneral"
+	style="
+	display: none;
+	z-index: 3000; 
+	position: absolute; 
+	top: 0; left: 25%; 
+	bottom: 0; 
+	right: 0;
+	">
+		<ion-content>
+			<ion-item-group>
+				<ion-list-header>
+				<ion-label>Filtres /!\ WIP /!\</ion-label>
+				</ion-list-header>
+				<ion-item>
+				<ion-label>Taxon:</ion-label>
+				<ion-input placeholder="ex:marguerite"></ion-input>
+				</ion-item>
+				<ion-item>
+				<ion-label>Date de visite:</ion-label>
+				<ion-input type="date"></ion-input>
+				</ion-item>
+				<ion-item>
+				<ion-label>Organisme</ion-label>
+				<ion-select placeholder="Organisme">
+					<ion-select-option value="1">PNE</ion-select-option>
+					<ion-select-option value="2">Autre</ion-select-option>
+				</ion-select>
+				</ion-item>
+			</ion-item-group>
+				<ion-list-header>
+				<ion-label>Affichage</ion-label>
+				</ion-list-header>
+				<ion-list *ngFor="let item of data">
+					<ion-item>
+						<ion-label text-wrap>
+						<h3>Taxon: {{item.properties.nom_taxon}}</h3>
+						<h3>Lieu: {{item.properties.nom_commune}}</h3>
+						<p>nb visite: {{item.properties.nb_visit}}</p>
+						<p>dernière visite: {{item.properties.date_max}}</p>
+						<p>organisme: {{item.properties.organisme}}</p>
+						</ion-label>
+						<ion-button (click)="watchArea(item.id)"><ion-icon name="eye"></ion-icon></ion-button>		
+					</ion-item>
+			</ion-list>
+		</ion-content>
+	</div>
 	<div id="mapProspec" style="width:100; height:100%;"></div>
-	
 </ion-content>
 
 

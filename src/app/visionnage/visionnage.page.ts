@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import { MenuController } from '@ionic/angular';
 
-import  {data} from '../app.component'
-
 import * as L from 'leaflet';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-visionnage',
@@ -15,25 +14,37 @@ export class VisionnagePage implements OnInit {
 	//variables de la page
 	public id;
 	map:L.Map;
+	data = []
 	marque
-	objet = []
+	nomCommune
+	nomTaxon
 
   	//chargement des imports
 	constructor
 	(
 		private router:Router, 
 		private route: ActivatedRoute,
-		private menu: MenuController
+		private apiService: ApiService
 	) 
 	{ 
+		this.loadData(true);//on charge des données
 		//on lis les paramêtres qu'on a passé
 		this.route.params.subscribe(
 			params=>
 			{
 				this.id = params.id
-				this.objet = data[this.id-1]
 			});
 	}
+
+	loadData(refresh = false, refresher?) {
+		//on part chercher des données dans l'API
+		this.apiService.getData(refresh).subscribe(res => {
+		this.data = res;//on fait que la variable exporté soit égale aux données
+		  if (refresher) {
+			refresher.target.complete();
+		  }
+		});
+	  }
 
 	ionViewDidEnter()//quand on rentre dans la page
 	{  
@@ -62,10 +73,8 @@ export class VisionnagePage implements OnInit {
 	{
 		//on recharge rapidement la carte
 		this.map.invalidateSize();
-		//on désactive les menus
-		this.menu.enable(false, "NewVisit");
-		this.menu.enable(false, "VisuTaxon");
-		
+		this.nomCommune = this.data[this.id-1].properties.nom_commune
+		this.nomTaxon = this.data[this.id-1].properties.nom_taxon
 		//on réafirme les paramêtre des marqueurs
 		const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
 		const iconUrl = 'assets/leaflet/marker-icon.png';
@@ -96,7 +105,7 @@ export class VisionnagePage implements OnInit {
 		});	
 		
 		//on met les données sur la carte
-		var objet = L.geoJSON(data[this.id-1]).addTo(this.map);
+		var objet = L.geoJSON(this.data[this.id-1]).addTo(this.map);
 		//on centre l'utilisateur sur ce qui l'intéresse
 		this.map.setView(objet.getBounds().getCenter(), 16);
   	}	
@@ -106,6 +115,7 @@ export class VisionnagePage implements OnInit {
 		//on met l'utilisateur sur new visit avec la carte qui correspond
 		this.router.navigate(['/new-visit',{id:this.id}]);	 
 	}
+	
 	GoBack()
 	{
 		//on met l'utilisateur sur start-input

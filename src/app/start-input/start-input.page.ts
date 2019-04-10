@@ -3,8 +3,7 @@ import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 import * as L from 'leaflet';
-
-import  {data} from '../app.component'
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-start-input',
@@ -17,16 +16,28 @@ export class StartInputPage implements OnInit {
 	//variables de la page
 	map:L.Map;
 	marque
+	data = []
 	testeur = 0
 
 	//chargement des imports
 	constructor(
 		private menu: MenuController, 
 		private router: Router,
+		private apiService: ApiService
 		) 
 	{
-		
+		this.loadData(true);//on charge des données
 	}
+
+	loadData(refresh = false, refresher?) {
+		//on part chercher des données dans l'API
+		this.apiService.getData(refresh).subscribe(res => {
+		this.data = res;//on fait que la variable exporté soit égale aux données
+		  if (refresher) {
+			refresher.target.complete();
+		  }
+		});
+	  }
 
 	ionViewDidEnter()//quand on rentre dans la page
 	{			
@@ -104,7 +115,7 @@ export class StartInputPage implements OnInit {
 		});
 		
 		//on met les données sur la carte, et on y assigne une fonction
-		L.geoJSON(data, 
+		L.geoJSON(this.data, 
 			{
 			onEachFeature: (feature, layer) => 
 			{
@@ -125,70 +136,70 @@ export class StartInputPage implements OnInit {
 		{
 			//on utilise un algo de tri pour voir si l'utilisateur se trouve pas loin d'une visite
 			var identifiant = NaN
-			for (var i=0;i<data.length;i++) //lecture de la donnée stoquée en i
+			for (var i=0;i<this.data.length;i++) //lecture de la donnée stoquée en i
 			{
 				//préparation des données de bases
-				var thisLength = data[i]["geometry"]["coordinates"][0][0].length
-				var lonMin = data[i]["geometry"]["coordinates"][0][0][0][0]
-				var lonMax = data[i]["geometry"]["coordinates"][0][0][thisLength-1][0]
+				var thisLength = this.data[i]["geometry"]["coordinates"][0][0].length
+				var lonMin = this.data[i]["geometry"]["coordinates"][0][0][0][0]
+				var lonMax = this.data[i]["geometry"]["coordinates"][0][0][thisLength-1][0]
 				
 				//début algo de tri pour trouver la plus basse longitude
-				for (var j=0;j<data[i]["geometry"]["coordinates"][0][0].length;j++)
+				for (var j=0;j<this.data[i]["geometry"]["coordinates"][0][0].length;j++)
 				{
 					var min = j
-					var max = data[i]["geometry"]["coordinates"][0][0].length-1
+					var max = this.data[i]["geometry"]["coordinates"][0][0].length-1
 					
-					for(var h=j+1;h<data[i]["geometry"]["coordinates"][0][0].length;h++)
+					for(var h=j+1;h<this.data[i]["geometry"]["coordinates"][0][0].length;h++)
 					{
-						if(data[i]["geometry"]["coordinates"][0][0][h][0]<data[i]["geometry"]["coordinates"][0][0][min][0])
+						if(this.data[i]["geometry"]["coordinates"][0][0][h][0]<this.data[i]["geometry"]["coordinates"][0][0][min][0])
 						{
 							min = h
 						}
-						else if (data[i]["geometry"]["coordinates"][0][0][h][0]>data[i]["geometry"]["coordinates"][0][0][max][0])
+						else if (this.data[i]["geometry"]["coordinates"][0][0][h][0]>this.data[i]["geometry"]["coordinates"][0][0][max][0])
 						{
 							max = h
 						}
 					}
 					if(min != j)
 					{
-						lonMin = data[i]["geometry"]["coordinates"][0][0][min][0]
+						lonMin = this.data[i]["geometry"]["coordinates"][0][0][min][0]
 						
 					}
-					if(max != data[i]["geometry"]["coordinates"][0][0].length-1)
+					if(max != this.data[i]["geometry"]["coordinates"][0][0].length-1)
 					{
-						lonMax = data[i]["geometry"]["coordinates"][0][0][max][0]
+						lonMax = this.data[i]["geometry"]["coordinates"][0][0][max][0]
 						
 					}
 					
 				}//fin algo de tri pour trouver la plus basse longitude
 
-				var latMin = data[i]["geometry"]["coordinates"][0][0][0][1]
-				var latMax = data[i]["geometry"]["coordinates"][0][0][thisLength-1][1]
+				var latMin = this.data[i]["geometry"]["coordinates"][0][0][0][1]
+				var latMax = this.data[i]["geometry"]["coordinates"][0][0][thisLength-1][1]
 				//début algo de tri pour trouver la plus basse latitude
-				for (var j=0;j<data[i]["geometry"]["coordinates"][0][0].length;j++)
+				for (var j=0;j<this.data[i]["geometry"]["coordinates"][0][0].length;j++)
 				{
 					var min = j
-					var max = data[i]["geometry"]["coordinates"][0][0].length-1
+					var max = this.data[i]["geometry"]["coordinates"][0][0].length-1
 					
-					for(var h=j+1;h<data[i]["geometry"]["coordinates"][0][0].length;h++)
+					for(var h=j+1;h<this.data[i]["geometry"]["coordinates"][0][0].length;h++)
 					{
-						if(data[i]["geometry"]["coordinates"][0][0][h][1]<data[i]["geometry"]["coordinates"][0][0][min][1])
+						if(this.data[i]["geometry"]["coordinates"][0][0][h][1]<this.data[i]["geometry"]["coordinates"][0][0][min][1])
 						{
 							min = h
 						}
-						else if (data[i]["geometry"]["coordinates"][0][0][h][1]>data[i]["geometry"]["coordinates"][0][0][max][1])
+						else if (this.data[i]["geometry"]["coordinates"][0][0][h][1]>this.data[i]["geometry"]["coordinates"][0][0][max][1])
 						{
 							max = h
 						}
 					}
 					if(min != j)
 					{
-						latMin = data[i]["geometry"]["coordinates"][0][0][min][1]
+						latMin = this.data[i]["geometry"]["coordinates"][0][0][min][1]
 						
 					}
-					if(max != data[i]["geometry"]["coordinates"][0][0].length-1)
+					if(max != this.data[i]["geometry"]["coordinates"][0][0].length-1)
 					{
-						latMax = data[i]["geometry"]["coordinates"][0][0][max][1]
+						latMax = this.data[i]["geometry"]["coordinates"][0][0][max][1]
 						
 					}
 					
@@ -197,7 +208,7 @@ export class StartInputPage implements OnInit {
 				//si on trouve une correspondance, on arrete l'algo plus tot
 				if (lonMin <= e["longitude"] && e["longitude"]<=lonMax && latMin <= e["latitude"] && e["latitude"] <= latMax)
 				{
-					identifiant = data[i]["id"];
+					identifiant = this.data[i]["id"];
 					break
 				}
 			} // fin de lecture de donnée
@@ -264,5 +275,23 @@ export class StartInputPage implements OnInit {
 	{
 		//on envoi l'utilisateur sur la page d'acceuil
 		this.router.navigate(['/home']);
+	}
+
+	watchArea(id)
+	{
+		//au clique du bouton, envoi sur la page visionnage
+		this.router.navigate(['/visionnage',{id:id}]);	
+	}
+
+	toggleAffichage()
+	{
+		if (document.getElementById('affichageGeneral').style.display == "none")
+		{
+			document.getElementById('affichageGeneral').style.display = "block";
+		}
+		else
+		{
+			document.getElementById('affichageGeneral').style.display = "none";
+		}
 	}
 }
