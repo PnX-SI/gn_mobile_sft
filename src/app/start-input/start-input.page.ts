@@ -15,9 +15,11 @@ import { ApiService } from '../services/api.service';
 export class StartInputPage implements OnInit {
 	//variables de la page
 	map:L.Map;
-	marque
-	data = []
-	testeur = 0
+	marque;
+	data = [];
+	testeur = 0;
+	modif = 100;
+	eventInterval
 
 	//chargement des imports
 	constructor(
@@ -52,8 +54,9 @@ export class StartInputPage implements OnInit {
 			this.reload(); //on appel un chargement de page
 			this.testeur = 1;
 		}
-		//on active le menu correspondant
-		this.menu.enable(true, "VisuTaxon");
+		//on ferme l'affichage
+		clearInterval(this.eventInterval)
+		this.eventInterval = setInterval(() => this.animAffic(true),1);
 		//on fait en sorte que la carte soit affiché
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		   // tslint:disable-next-line
@@ -80,6 +83,9 @@ export class StartInputPage implements OnInit {
 	{
 		//on montre qu'on charge des truc
 		document.getElementById("affichChargement").removeAttribute("hidden");
+		//on ferme l'affichage
+		clearInterval(this.eventInterval)
+		this.eventInterval = setInterval(() => this.animAffic(true),1);
 		//on active le bon menu
 		this.menu.enable(true, "VisuTaxon");
 		//on recharge rapidement la carte
@@ -285,14 +291,36 @@ export class StartInputPage implements OnInit {
 
 	toggleAffichage()
 	{
-		if (document.getElementById('affichageGeneral').style.display == "none")
+		if (this.modif > 25)
 		{
-			document.getElementById('affichageGeneral').style.display = "block";
+			clearInterval(this.eventInterval)
+			this.eventInterval = setInterval(() => this.animAffic(false),1);
 		}
 		else
 		{
-			document.getElementById('affichageGeneral').style.display = "none";
+			clearInterval(this.eventInterval)
+			this.eventInterval = setInterval(() => this.animAffic(true),1);
 		}
 	}
 
+	animAffic(reverse:Boolean)
+	{
+		if (this.modif >= 25 && !reverse)
+		{
+			document.getElementById('affichageGeneral').style.left = this.modif+"%"
+			document.getElementById('affichageGeneral').style.right = (25-this.modif)+"%"
+			this.modif--
+		}
+		else if (this.modif <= 100 && reverse)
+		{
+			document.getElementById('affichageGeneral').style.left = this.modif+"%"
+			document.getElementById('affichageGeneral').style.right = (25-this.modif)+"%"
+			this.modif++
+		}
+		else 
+		{
+			clearInterval(this.eventInterval)
+		}
+		
+	}
 }

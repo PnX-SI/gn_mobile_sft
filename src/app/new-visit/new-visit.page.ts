@@ -20,6 +20,8 @@ export class NewVisitPage implements OnInit {
 	mailles = []
 	observer = []
 	compteReload = 0
+	modif = 100;
+	eventInterval
 
 	//chargement des imports
 	constructor(
@@ -84,12 +86,12 @@ export class NewVisitPage implements OnInit {
   
 	reload()//fonction de (re)chargement
 	{
-		if (document.getElementById('affichage').style.display != "none")
-		{
-			document.getElementById('affichage').style.display = "none";
-		}
+		
 		//on montre qu'on charge des truc
 		document.getElementById("affichChargement").removeAttribute("hidden");
+		//on ferme l'affichage
+		clearInterval(this.eventInterval)
+		this.eventInterval = setInterval(() => this.animAffic(true),1);
 		//on recharge rapidement la carte
 		this.map.invalidateSize();
 
@@ -172,13 +174,15 @@ export class NewVisitPage implements OnInit {
 
 	toggleAffichage()
 	{
-		if (document.getElementById('affichage').style.display == "none")
+		if (this.modif > 25)
 		{
-			document.getElementById('affichage').style.display = "block";
+			clearInterval(this.eventInterval)
+			this.eventInterval = setInterval(() => this.animAffic(false),1);
 		}
 		else
 		{
-			document.getElementById('affichage').style.display = "none";
+			clearInterval(this.eventInterval)
+			this.eventInterval = setInterval(() => this.animAffic(true),1);
 		}
 	}
 
@@ -186,6 +190,27 @@ export class NewVisitPage implements OnInit {
 	{
 		// TODO:code pour annuler la saisie
 		this.router.navigate(['/start-input']);
- 	}	
+	}	
+	 
+	animAffic(reverse:Boolean)
+	{
+		if (this.modif >= 25 && !reverse)
+		{
+			document.getElementById('affichage').style.left = this.modif+"%"
+			document.getElementById('affichage').style.right = (25-this.modif)+"%"
+			this.modif--
+		}
+		else if (this.modif <= 100 && reverse)
+		{
+			document.getElementById('affichage').style.left = this.modif+"%"
+			document.getElementById('affichage').style.right = (25-this.modif)+"%"
+			this.modif++
+		}
+		else 
+		{
+			clearInterval(this.eventInterval)
+		}
+		
+	}
 	
 }
