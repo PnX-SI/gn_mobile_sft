@@ -12,9 +12,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http';
 import { Network } from '@ionic-native/network/ngx';
+import { TaxonPipe } from './filtre/taxon.pipe';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, TaxonPipe],
   entryComponents: [],
   imports: [BrowserModule, 
     IonicModule.forRoot(), 

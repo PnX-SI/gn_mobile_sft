@@ -294,4 +294,5 @@ export class StartInputPage implements OnInit {
 			document.getElementById('affichageGeneral').style.display = "none";
 		}
 	}
+
 }
