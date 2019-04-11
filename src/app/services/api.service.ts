@@ -54,6 +54,17 @@ export class ApiService {
           })*/
         )
       }
+      else if (requeteType == "visite")
+      {
+        return this.http.get(`${API_URL}/${API_REPO}/sites?id_base_site=${id}`).pipe(
+          map(res => 
+            res['features']
+          )/*,
+          tap(res => {
+            this.setLocalData('base', res);
+          })*/
+        )
+      }
       else if (requeteType == "maille")
       {
         return this.http.get(`${API_URL}/gn_monitoring/siteareas/${id}?id_area_type=32`).pipe(

@@ -27,18 +27,18 @@ export class VisionnagePage implements OnInit {
 		private apiService: ApiService
 	) 
 	{ 
-		this.loadData(true);//on charge des données
 		//on lis les paramêtres qu'on a passé
 		this.route.params.subscribe(
 			params=>
 			{
 				this.id = params.id
+				this.loadData(true,"visite",this.id);//on charge des données
 			});
 	}
 
-	loadData(refresh = false, refresher?) {
+	loadData(refresh = false,type = "base",id = 0, refresher?) {
 		//on part chercher des données dans l'API
-		this.apiService.getData(refresh).subscribe(res => {
+		this.apiService.getData(refresh,type,id).subscribe(res => {
 		this.data = res;//on fait que la variable exporté soit égale aux données
 		  if (refresher) {
 			refresher.target.complete();
@@ -73,8 +73,8 @@ export class VisionnagePage implements OnInit {
 	{
 		//on recharge rapidement la carte
 		this.map.invalidateSize();
-		this.nomCommune = this.data[this.id-1].properties.nom_commune
-		this.nomTaxon = this.data[this.id-1].properties.nom_taxon
+		this.nomCommune = this.data[0]["properties"]["nom_commune"]
+		this.nomTaxon = this.data[0]["properties"]["nom_taxon"]
 		//on réafirme les paramêtre des marqueurs
 		const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
 		const iconUrl = 'assets/leaflet/marker-icon.png';
@@ -105,7 +105,7 @@ export class VisionnagePage implements OnInit {
 		});	
 		
 		//on met les données sur la carte
-		var objet = L.geoJSON(this.data[this.id-1]).addTo(this.map);
+		var objet = L.geoJSON(this.data[0]).addTo(this.map);
 		//on centre l'utilisateur sur ce qui l'intéresse
 		this.map.setView(objet.getBounds().getCenter(), 16);
   	}	

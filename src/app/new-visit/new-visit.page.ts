@@ -17,6 +17,7 @@ export class NewVisitPage implements OnInit {
 	map:L.Map;
 	id
 	marque
+	visite = []
 	mailles = []
 	observer = []
 	compteReload = 0
@@ -41,6 +42,14 @@ export class NewVisitPage implements OnInit {
 	}
 	
 	/*fonctions de lecture de données*/
+	loadDataBase(refresh = false,type = "base",id = 0, refresher?) {
+		this.apiService.getData(refresh,type,id).subscribe(res => {
+			this.visite = res;
+			if (refresher) {
+        		refresher.target.complete();
+      		}
+		});
+	 }
 	loadDataMailles(refresh = false,type = "base",id = 0, refresher?) {
 		this.apiService.getData(refresh,type,id).subscribe(res => {
 			this.mailles = res;
