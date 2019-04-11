@@ -37,14 +37,16 @@ export class NewVisitPage implements OnInit {
 			
 		});
 		//on call une lecture de données
+		this.loadDataVisite(true,"visite",this.id)
 		this.loadDataMailles(true, "maille",this.id);
-		this.loadDataObserver(true, "visite",this.id);
+		this.loadDataObserver(true, "observeur",this.id);
 	}
 	
 	/*fonctions de lecture de données*/
-	loadDataBase(refresh = false,type = "base",id = 0, refresher?) {
+	loadDataVisite(refresh = false,type = "base",id = 0, refresher?) {
 		this.apiService.getData(refresh,type,id).subscribe(res => {
-			this.visite = res;
+			this.visite = res[0];
+			console.log(res[0])
 			if (refresher) {
         		refresher.target.complete();
       		}
@@ -53,6 +55,7 @@ export class NewVisitPage implements OnInit {
 	loadDataMailles(refresh = false,type = "base",id = 0, refresher?) {
 		this.apiService.getData(refresh,type,id).subscribe(res => {
 			this.mailles = res;
+			console.log(res)
 			if (refresher) {
         		refresher.target.complete();
       		}
@@ -60,7 +63,8 @@ export class NewVisitPage implements OnInit {
 	 }
 	 loadDataObserver(refresh = false,type = "base",id = 0, refresher?) {
 		this.apiService.getData(refresh,type,id).subscribe(res => {
-			this.mailles = res;
+			this.observer = res[0];
+			console.log(res[0])
 			if (refresher) {
         		refresher.target.complete();
       		}

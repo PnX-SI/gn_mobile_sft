@@ -61,7 +61,7 @@ export class ApiService {
             res['features']
           )/*,
           tap(res => {
-            this.setLocalData('base', res);
+            this.setLocalData('visite', res);
           })*/
         )
       }
@@ -76,9 +76,9 @@ export class ApiService {
           })*/
         )
       }
-      else if (requeteType == "visite")
+      else if (requeteType == "observeur")
       {
-        return this.http.get(`${API_URL}/${API_REPO}/visit/${id}`).pipe(
+        return this.http.get(`${API_URL}/users/menu/1`).pipe(
           map(res =>
             [res]
           )/*,
