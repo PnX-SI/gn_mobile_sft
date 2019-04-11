@@ -54,9 +54,6 @@ export class StartInputPage implements OnInit {
 			this.reload(); //on appel un chargement de page
 			this.testeur = 1;
 		}
-		//on ferme l'affichage
-		clearInterval(this.eventInterval)
-		this.eventInterval = setInterval(() => this.animAffic(true),1);
 		//on fait en sorte que la carte soit affiché
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		   // tslint:disable-next-line
@@ -77,6 +74,14 @@ export class StartInputPage implements OnInit {
 		this.map.on('locationfound', (e)=> {this.onLocationFound(e)});
 		this.map.on('locationerror', (e)=> {this.onLocationError(e)});
 		
+	}
+
+	ionViewDidLeave()
+	{
+		//on ferme l'affichage
+		document.getElementById('affichageGeneral').style.left = "100%"
+			document.getElementById('affichageGeneral').style.right = "-75%"
+		this.modif = 100;
 	}
 	
 	reload() //fonction de (re)chargement

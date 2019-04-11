@@ -82,7 +82,15 @@ export class NewVisitPage implements OnInit {
 		//on setup ce qu'il se passe si on géolocalise l'utilisateur (on s'en fout de pas le trouver)	
 		this.map.on('locationfound', (e)=> {this.onLocationFound(e)});
 		
-  	}
+	}
+	
+	ionViewDidLeave()
+	{
+		//on ferme l'affichage
+		document.getElementById('affichage').style.left = "100%"
+		document.getElementById('affichage').style.right = "-75%"
+		this.modif = 100;
+	}
   
 	reload()//fonction de (re)chargement
 	{
