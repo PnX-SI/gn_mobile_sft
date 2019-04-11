@@ -83,7 +83,7 @@ export class ApiService {
             [res]
           )/*,
           tap(res => {
-            this.setLocalData('visite', res);
+            this.setLocalData('observeur', res);
           })*/
         )
       }
@@ -94,7 +94,7 @@ export class ApiService {
             res['values']
           )/*,
           tap(res => {
-            this.setLocalData('visite', res);
+            this.setLocalData('perturbations', res);
           })*/
         )
       }
