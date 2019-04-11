@@ -49,7 +49,6 @@ export class NewVisitPage implements OnInit {
 	loadDataVisite(refresh = false,type = "base",id = 0, refresher?) {
 		this.apiService.getData(refresh,type,id).subscribe(res => {
 			this.visite = res[0];
-			console.log(res[0])
 			if (refresher) {
         		refresher.target.complete();
       		}
@@ -58,7 +57,7 @@ export class NewVisitPage implements OnInit {
 	loadDataMailles(refresh = false,type = "base",id = 0, refresher?) {
 		this.apiService.getData(refresh,type,id).subscribe(res => {
 			this.mailles = res;
-			//console.log(res)
+			console.log(res)
 			if (refresher) {
         		refresher.target.complete();
       		}
