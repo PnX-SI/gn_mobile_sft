@@ -5,8 +5,6 @@ import { NetworkService, ConnectionStatus } from './network.service';
 import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs';
 import { tap, map, catchError } from "rxjs/operators";
-import { validateConfig } from '@angular/router/src/config';
-import { resolveComponentResources } from '@angular/core/src/metadata/resource_loading';
  
 //const API_STORAGE_KEY = 'specialkey';
 const API_URL = 'http://demo.geonature.fr/geonature/api'; //API test

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,8 @@ export class HomePage {
 	//chargement des imports
 	constructor(
 		private router:Router,
-		private menu: MenuController
+		private menu: MenuController,
+		private storage: Storage
 		) 
 	{
 	}
@@ -37,12 +39,19 @@ export class HomePage {
 	public goToSync()
 	{
 		//au clique du bouton, envoi sur la page data-sync
-		this.router.navigate(['/data-sync'])
+		this.router.navigate(['/data-sync']);
 	}
 	
 	public goToInput()
 	{
 		//au clique du bouton, envoi sur la page start input
-		this.router.navigate(['/start-input'])
+		this.router.navigate(['/start-input']);
+	}
+
+	public disconnect()
+	{
+		//au click, enlève de la mémoire de l'appareil l'utilisateur stocké, et ramène au login
+		this.storage.remove("token");
+		this.router.navigate(['/login',{back:"home"}]);
 	}
 }

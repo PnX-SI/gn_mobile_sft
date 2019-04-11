@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Flore</ion-title>
+		<ion-buttons slot="start">
+			<ion-button (click)="disconnect()">
+					<ion-icon name="power"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+		<ion-title>Flore</ion-title>
     <ion-button color="primary" size="small" shape="round" slot="end" (click)="goToSetting()">
     	<ion-icon slot="icon-only" name="settings"></ion-icon>
     </ion-button>
