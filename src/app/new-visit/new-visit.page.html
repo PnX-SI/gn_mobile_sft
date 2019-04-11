@@ -43,14 +43,13 @@
 			<ion-item>
 				<ion-label>Observateur(s)</ion-label>
 				<ion-select multiple="true" >
-					<ion-select-option *ngFor="let item of observer" value="{{item.id_role}}">{{item.nom_complet}}</ion-select-option>
+					<ion-select-option *ngFor="let item of observer; let i = index" value="{{i}}">{{item.nom_complet}}</ion-select-option>
 				</ion-select>
 			</ion-item>
 			<ion-item>
 				<ion-label>Perturbation(s)</ion-label>
 				<ion-select multiple="true">
-					<ion-select-option value="1">prt 1</ion-select-option>
-					<ion-select-option value="2">prt 2</ion-select-option>
+					<ion-select-option *ngFor="let item of perturbations; let i = index" value="{{i}}">{{item.label_fr}}</ion-select-option>
 				</ion-select>
 			</ion-item>
 			<ion-item>

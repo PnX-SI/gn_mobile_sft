@@ -87,6 +87,17 @@ export class ApiService {
           })*/
         )
       }
+      else if (requeteType == "perturbations")
+      {
+        return this.http.get(`${API_URL}/nomenclatures/nomenclature/TYPE_PERTURBATION?regne=&group2_inpn=&orderby=label_default`).pipe(
+          map(res =>
+            res['values']
+          )/*,
+          tap(res => {
+            this.setLocalData('visite', res);
+          })*/
+        )
+      }
       
     }
   }

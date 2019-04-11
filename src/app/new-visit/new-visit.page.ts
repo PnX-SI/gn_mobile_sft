@@ -20,6 +20,7 @@ export class NewVisitPage implements OnInit {
 	visite = []
 	mailles = []
 	observer = []
+	perturbations = []
 	compteReload = 0
 	modif = 100;
 	eventInterval
@@ -40,13 +41,14 @@ export class NewVisitPage implements OnInit {
 		this.loadDataVisite(true,"visite",this.id)
 		this.loadDataMailles(true, "maille",this.id);
 		this.loadDataObserver(true, "observeur",this.id);
+		this.loadDataPerturbations(true, "perturbations",this.id);
 	}
 	
 	/*fonctions de lecture de données*/
 	loadDataVisite(refresh = false,type = "base",id = 0, refresher?) {
 		this.apiService.getData(refresh,type,id).subscribe(res => {
 			this.visite = res[0];
-			console.log(res[0])
+			//console.log(res[0])
 			if (refresher) {
         		refresher.target.complete();
       		}
@@ -55,7 +57,7 @@ export class NewVisitPage implements OnInit {
 	loadDataMailles(refresh = false,type = "base",id = 0, refresher?) {
 		this.apiService.getData(refresh,type,id).subscribe(res => {
 			this.mailles = res;
-			console.log(res)
+			//console.log(res)
 			if (refresher) {
         		refresher.target.complete();
       		}
@@ -64,13 +66,22 @@ export class NewVisitPage implements OnInit {
 	 loadDataObserver(refresh = false,type = "base",id = 0, refresher?) {
 		this.apiService.getData(refresh,type,id).subscribe(res => {
 			this.observer = res[0];
-			console.log(res[0])
+			//console.log(res[0])
 			if (refresher) {
         		refresher.target.complete();
       		}
 		});
 	 }
-	 /**/
+	 loadDataPerturbations(refresh = false,type = "base",id = 0, refresher?) {
+		this.apiService.getData(refresh,type,id).subscribe(res => {
+			this.perturbations = res;
+			//console.log(res)
+			if (refresher) {
+        		refresher.target.complete();
+      		}
+		});
+	 }
+	 /*****************************/
 
   	ionViewDidEnter()//quand on rentre dans la page
 	{	
