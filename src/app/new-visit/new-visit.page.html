@@ -38,7 +38,7 @@
 			</ion-item>
 			<ion-item>
 				<ion-label>Date de visite:</ion-label>
-				<ion-input type="date"></ion-input>
+				<ion-input type="date" min="{{visite.properties.date_max}}"></ion-input>
 			</ion-item>
 			<ion-item>
 				<ion-label>Observateur(s)</ion-label>
@@ -54,7 +54,7 @@
 			</ion-item>
 			<ion-item>
 				<ion-label>Commentaires</ion-label>
-				<ion-textarea position="floating"></ion-textarea>
+				<ion-textarea position="floating" spellcheck="true"></ion-textarea>
 			</ion-item>
 			<ion-item>
 				<ion-label>

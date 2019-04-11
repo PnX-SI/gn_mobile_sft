@@ -4,6 +4,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import { ApiService } from '../services/api.service';
 
 import * as L from 'leaflet';
+import { formatDate } from '@angular/common';
 
 
 @Component({
@@ -48,7 +49,7 @@ export class NewVisitPage implements OnInit {
 	loadDataVisite(refresh = false,type = "base",id = 0, refresher?) {
 		this.apiService.getData(refresh,type,id).subscribe(res => {
 			this.visite = res[0];
-			//console.log(res[0])
+			console.log(res[0])
 			if (refresher) {
         		refresher.target.complete();
       		}
