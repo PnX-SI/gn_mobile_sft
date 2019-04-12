@@ -24,60 +24,62 @@
 	right: -75%;
 	">
 		<ion-content>
-			<ion-item>
-				<ion-label>
-					<h3>Zone de prospection</h3>
-					<p>{{id}}</p>
-				</ion-label>
-			</ion-item>			
-			<ion-item>
-				<ion-label>
-				<h3>Espèce propectée</h3>
-				<p>{{visite.properties.nom_taxon}}</p>
-				</ion-label>
-			</ion-item>
-			<ion-item>
-				<ion-label>Date de visite:</ion-label>
-				<ion-input type="date" min="{{visite.properties.date_max}}"></ion-input>
-			</ion-item>
-			<ion-item>
-				<ion-label>Observateur(s)</ion-label>
-				<ion-select multiple="true" >
-					<ion-select-option *ngFor="let item of observer; let i = index" value="{{i}}">{{item.nom_complet}}</ion-select-option>
-				</ion-select>
-			</ion-item>
-			<ion-item>
-				<ion-label>Perturbation(s)</ion-label>
-				<ion-select multiple="true">
-					<ion-select-option *ngFor="let item of perturbations; let i = index" value="{{i}}">{{item.label_fr}}</ion-select-option>
-				</ion-select>
-			</ion-item>
-			<ion-item>
-				<ion-label>Commentaires</ion-label>
-				<ion-textarea position="floating" spellcheck="true"></ion-textarea>
-			</ion-item>
-			<ion-item>
-				<ion-label>
-					<h3>Maille(s) de présence</h3>
-					<p>placehoder nombre</p>
-				</ion-label>
-			</ion-item>
-			<ion-item>
-				<ion-label>
-					<h3>Maille(s) d'absence</h3>
-					<p>placehoder nombre</p>
-				</ion-label>
-			</ion-item>
-			<ion-item>
-				<ion-label>
-					<h3>Maille(s) non visitée(s)</h3>
-					<p>placehoder nombre</p>
-				</ion-label>
-			</ion-item>
-			<ion-item>
-				<ion-button (click)="CancelVisit()" color="danger">Annuler</ion-button>
-				<ion-button color="success">Valider</ion-button>
-			</ion-item>
+			<form onsubmit="">
+				<ion-item>
+						<ion-label>
+							<h3>Zone de prospection</h3>
+							<p>{{id}}</p>
+						</ion-label>
+					</ion-item>			
+					<ion-item>
+						<ion-label>
+						<h3>Espèce propectée</h3>
+						<p>{{visite.properties.nom_taxon}}</p>
+						</ion-label>
+					</ion-item>
+					<ion-item>
+						<ion-label>Date de visite: </ion-label>
+						<ion-input type="date" min="{{visite.properties.date_max}}"></ion-input>
+					</ion-item>
+					<ion-item>
+						<ion-label>Observateur(s)</ion-label>
+						<ion-select multiple="true" >
+							<ion-select-option *ngFor="let item of observer; let i = index" value="{{i}}">{{item.nom_complet}}</ion-select-option>
+						</ion-select>
+					</ion-item>
+					<ion-item>
+						<ion-label>Perturbation(s)</ion-label>
+						<ion-select multiple="true">
+							<ion-select-option *ngFor="let item of perturbations; let i = index" value="{{i}}">{{item.label_fr}}</ion-select-option>
+						</ion-select>
+					</ion-item>
+					<ion-item>
+						<ion-label>Commentaires</ion-label>
+						<ion-textarea position="floating" spellcheck="true"></ion-textarea>
+					</ion-item>
+					<ion-item>
+						<ion-label>
+							<h3>Maille(s) de présence</h3>
+							<p>placehoder nombre</p>
+						</ion-label>
+					</ion-item>
+					<ion-item>
+						<ion-label>
+							<h3>Maille(s) d'absence</h3>
+							<p>placehoder nombre</p>
+						</ion-label>
+					</ion-item>
+					<ion-item>
+						<ion-label>
+							<h3>Maille(s) non visitée(s)</h3>
+							<p>placehoder nombre</p>
+						</ion-label>
+					</ion-item>
+					<ion-item>
+						<ion-button (click)="CancelVisit()" color="danger">Annuler</ion-button>
+						<ion-button type="submit" color="success">Valider</ion-button>
+					</ion-item>
+			</form>
 		</ion-content>
 	</div>
 

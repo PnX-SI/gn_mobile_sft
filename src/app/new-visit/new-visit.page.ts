@@ -4,7 +4,6 @@ import {Router, ActivatedRoute} from '@angular/router';
 import { ApiService } from '../services/api.service';
 
 import * as L from 'leaflet';
-import { formatDate } from '@angular/common';
 
 
 @Component({
@@ -26,6 +25,8 @@ export class NewVisitPage implements OnInit {
 	modif = 100;
 	eventInterval
 
+	dataSend = {}
+	
 	//chargement des imports
 	constructor(
 			private router:Router, 
@@ -49,6 +50,8 @@ export class NewVisitPage implements OnInit {
 	loadDataVisite(refresh = false,type = "base",id = 0, refresher?) {
 		this.apiService.getData(refresh,type,id).subscribe(res => {
 			this.visite = res[0];
+			console.log("visite:");
+			console.log(res[0]);
 			if (refresher) {
         		refresher.target.complete();
       		}
@@ -57,7 +60,8 @@ export class NewVisitPage implements OnInit {
 	loadDataMailles(refresh = false,type = "base",id = 0, refresher?) {
 		this.apiService.getData(refresh,type,id).subscribe(res => {
 			this.mailles = res;
-			console.log(res)
+			console.log("mailles:");
+			console.log(res);
 			if (refresher) {
         		refresher.target.complete();
       		}
@@ -66,7 +70,8 @@ export class NewVisitPage implements OnInit {
 	 loadDataObserver(refresh = false,type = "base",id = 0, refresher?) {
 		this.apiService.getData(refresh,type,id).subscribe(res => {
 			this.observer = res[0];
-			//console.log(res[0])
+			console.log("observers:");
+			console.log(res[0]);
 			if (refresher) {
         		refresher.target.complete();
       		}
@@ -75,7 +80,8 @@ export class NewVisitPage implements OnInit {
 	 loadDataPerturbations(refresh = false,type = "base",id = 0, refresher?) {
 		this.apiService.getData(refresh,type,id).subscribe(res => {
 			this.perturbations = res;
-			//console.log(res)
+			console.log("perturbations:");
+			console.log(res);
 			if (refresher) {
         		refresher.target.complete();
       		}
@@ -243,6 +249,14 @@ export class NewVisitPage implements OnInit {
 			clearInterval(this.eventInterval)
 		}
 		
+	}
+
+	SubmitVisit()
+	{
+		//TODO: Fout les données dans this.dataSend
+		console.log("pas encore géré")
+		//this.apiService.setLocalData("visiteSite"+this.id,this.dataSend);
+		this.router.navigate(['/start-input']);
 	}
 	
 }
