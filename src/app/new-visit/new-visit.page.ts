@@ -270,7 +270,7 @@ export class NewVisitPage implements OnInit {
 		//TODO: Fout les données dans this.dataSend
 		console.log("pas encore géré")
 		//this.apiService.setLocalData("visiteSite"+this.id,this.dataSend);
-		this.router.navigate(['/start-input']);
+		this.router.navigate(['/home']);
 	}
 	
 }
