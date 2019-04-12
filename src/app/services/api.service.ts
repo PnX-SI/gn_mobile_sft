@@ -131,7 +131,7 @@ export class ApiService {
   }
  
   // Save result of API requests
-  private setLocalData(key, data) {
+  public setLocalData(key, data) {
     //this.storage.set(`${API_STORAGE_KEY}-${key}`, data);
     this.storage.set(`${key}`, data);
   }
