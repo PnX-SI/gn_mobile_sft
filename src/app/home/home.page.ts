@@ -10,6 +10,8 @@ import { Storage } from '@ionic/storage';
 })
 export class HomePage {
 	
+	donneesStockee = []
+
 	//chargement des imports
 	constructor(
 		private router:Router,
@@ -17,6 +19,7 @@ export class HomePage {
 		private storage: Storage
 		) 
 	{
+		
 	}
 
 	ngOnInit() 
@@ -26,8 +29,18 @@ export class HomePage {
 
 	ionViewDidEnter()//quand on rentre dans la page
 	{
-		//désactivation de tout les menus car pas pertinents
-		this.menu.enable(false, "VisuTaxon");
+		//récupération du nombre de visites non synchronisées
+		this.donneesStockee = [] //reset pour éviter un faux positif
+		for (var i = 0;i <=99;i++)
+		{
+			this.storage.get("visiteSite"+i).then ((res)=>{
+				if(res)
+				{
+					this.donneesStockee.push(res)
+				}
+			})
+		}
+		console.log(this.donneesStockee.length)
 	}
 
 	public goToSetting()

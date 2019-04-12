@@ -268,8 +268,8 @@ export class NewVisitPage implements OnInit {
 	SubmitVisit()
 	{
 		//TODO: Fout les données dans this.dataSend
-		console.log("pas encore géré")
-		//this.apiService.setLocalData("visiteSite"+this.id,this.dataSend);
+		console.log("pas encore géré: envoi des données vides")
+		this.apiService.setLocalData("visiteSite"+this.id,this.dataSend);
 		this.router.navigate(['/home']);
 	}
 	
