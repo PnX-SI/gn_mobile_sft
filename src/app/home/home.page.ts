@@ -10,6 +10,8 @@ import { Storage } from '@ionic/storage';
 })
 export class HomePage {
 	
+	donneesStockee = []
+
 	//chargement des imports
 	constructor(
 		private router:Router,
@@ -17,6 +19,16 @@ export class HomePage {
 		private storage: Storage
 		) 
 	{
+		for (var i = 0;i <=99;i++)
+		{
+			this.storage.get("visiteSite"+i).then ((res)=>{
+				if(res)
+				{
+					this.donneesStockee.push(res)
+				}
+			})
+		}
+		console.log(this.donneesStockee.length)
 	}
 
 	ngOnInit() 
