@@ -39,40 +39,40 @@
 					</ion-item>
 					<ion-item>
 						<ion-label>Date de visite: </ion-label>
-						<ion-input type="date" min="{{visite.properties.date_max}}"></ion-input>
+						<ion-input id="date" type="date" min="{{visite.properties.date_max}}"></ion-input>
 					</ion-item>
 					<ion-item>
 						<ion-label>Observateur(s)</ion-label>
-						<ion-select multiple="true" >
-							<ion-select-option *ngFor="let item of observer; let i = index" value="{{i}}">{{item.nom_complet}}</ion-select-option>
+						<ion-select id="observers" multiple="true" >
+							<ion-select-option *ngFor="let item of observer;" value="{{item}}">{{item.nom_complet}}</ion-select-option>
 						</ion-select>
 					</ion-item>
 					<ion-item>
 						<ion-label>Perturbation(s)</ion-label>
-						<ion-select multiple="true">
-							<ion-select-option *ngFor="let item of perturbations; let i = index" value="{{i}}">{{item.label_fr}}</ion-select-option>
+						<ion-select id="perturbations" multiple="true">
+							<ion-select-option *ngFor="let item of perturbations;" value="{{item}}">{{item.label_fr}}</ion-select-option>
 						</ion-select>
 					</ion-item>
 					<ion-item>
 						<ion-label>Commentaires</ion-label>
-						<ion-textarea position="floating" spellcheck="true"></ion-textarea>
+						<ion-textarea id="commentaires" position="floating" spellcheck="true"></ion-textarea>
 					</ion-item>
 					<ion-item>
 						<ion-label>
 							<h3>Maille(s) de présence</h3>
-							<p>placehoder nombre</p>
+							<p>{{maillesPresence}}</p>
 						</ion-label>
 					</ion-item>
 					<ion-item>
 						<ion-label>
 							<h3>Maille(s) d'absence</h3>
-							<p>placehoder nombre</p>
+							<p>{{maillesAbsence}}</p>
 						</ion-label>
 					</ion-item>
 					<ion-item>
 						<ion-label>
 							<h3>Maille(s) non visitée(s)</h3>
-							<p>placehoder nombre</p>
+							<p>{{maillesNonVisite}}</p>
 						</ion-label>
 					</ion-item>
 					<ion-button (click)="CancelVisit()" color="danger">Annuler</ion-button>

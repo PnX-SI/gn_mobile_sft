@@ -15,15 +15,20 @@ import * as L from 'leaflet';
 export class NewVisitPage implements OnInit {
 	//variables de la page
 	map:L.Map;
-	id
-	marque
-	visite = []
-	mailles = []
-	observer = []
-	perturbations = []
-	compteReload = 0
+	id;
+	marque;
+	visite = [];
+	mailles = [];
+	observer = [];
+	perturbations = [];
+	compteReload = 0;
 	modif = 100;
-	eventInterval
+	eventInterval;
+
+	totalMailles = 0;
+	maillesNonVisite = 0;
+	maillesPresence = 0;
+	maillesAbsence = 0;
 
 	dataSend = {}
 	
@@ -40,7 +45,7 @@ export class NewVisitPage implements OnInit {
 			
 		});
 		//on call une lecture de données
-		this.loadDataVisite(true,"visite",this.id)
+		this.loadDataVisite(true,"visite",this.id);
 		this.loadDataMailles(true, "maille",this.id);
 		this.loadDataObserver(true, "observeur",this.id);
 		this.loadDataPerturbations(true, "perturbations",this.id);
@@ -62,6 +67,10 @@ export class NewVisitPage implements OnInit {
 			this.mailles = res;
 			console.log("mailles:");
 			console.log(res);
+			
+			this.totalMailles = res.length;
+			this.maillesNonVisite = this.totalMailles;
+
 			if (refresher) {
         		refresher.target.complete();
       		}
@@ -174,15 +183,20 @@ export class NewVisitPage implements OnInit {
 						if(layer.options.color.valueOf() == "#3388ff")
 						{
 							layer.setStyle({color:"#00FF00"});
+							this.maillesPresence ++;
 						}
 						else if (layer.options.color.valueOf() =="#00FF00")
 						{
 							layer.setStyle({color:"#FF0000"});
+							this.maillesAbsence ++;
+							this.maillesPresence --;
 						}
 						else
 						{
 							layer.setStyle({color:"#3388ff"});
+							this.maillesAbsence --;
 						}
+						this.maillesNonVisite = this.totalMailles - this.maillesAbsence - this.maillesPresence;
 					}) 
 				} 
 			}).addTo(this.map);	
