@@ -40,53 +40,17 @@ export class NewVisitPage implements OnInit {
 	}
 
 	dataSend = {
-		"cor_visit_grid": [
-		], 
-		"id_base_visit": 15, 
-		"id_base_site": 3, 
-		"cor_visit_perturbation": [
-			{
-				"id_nomenclature": 1068, 
-				"definition_it": null, 
-				"label_fr": "P\u00e2turage", 
-				"hierarchy": "118.508.005", 
-				"mnemonique": "P\u00e2turage", 
-				"label_default": "P\u00e2turage", 
-				"definition_fr": "Comportement des animaux: P\u00e2turage (sur herbac\u00e9es exclusivement)", 
-				"label_it": null, 
-				"label_de": null, 
-				"label_en": null, 
-				"id_type": 118, 
-				"id_broader": 508, 
-				"definition_default": "Comportement des animaux: P\u00e2turage (sur herbac\u00e9es exclusivement)",
-				"label_es": null, 
-				"source": null, 
-				"definition_es": null, 
-				"definition_en": null, 
-				"meta_create_date": "2019-04-12 15:08:45.874398", 
-				"cd_nomenclature": "Pat", 
-				"definition_de": null, 
-				"active": true, 
-				"meta_update_date": "None", 
-				"statut": null
-			}
-		], 
-		"comments": "Visite test for geonature sft mobile", 
-		"uuid_base_visit": "c8583e3e-9e70-46ab-af8e-0859f860cbe9", 
+		"cor_visit_grid": [], 
+		"id_base_visit": null, 
+		"id_base_site": null, 
+		"cor_visit_perturbation": [], 
+		"comments": "", 
+		"uuid_base_visit": null, 
 		"id_digitiser": null, 
-		"visit_date_max": "2019-04-15", 
-		"observers": [
-			{
-				"id_role": 1, 
-				"nom_role": "Administrateur", 
-				"id_organisme": -1, 
-				"groupe": false, 
-				"identifiant": "admin", 
-				"nom_complet": "Administrateur test", 
-				"prenom_role": "test"
-			}
-		], 
-		"visit_date_min": "2019-04-15"}
+		"visit_date_max": null, 
+		"observers": [], 
+		"visit_date_min": null
+	}
 	
 	//chargement des imports
 	constructor(
@@ -249,7 +213,7 @@ export class NewVisitPage implements OnInit {
 							}
 						}
 
-						if(utilise == false)
+						if(utilise == false) //pas vu to present
 						{
 							layer.setStyle({color:"#00FF00"});
 							this.maillesPresence ++;
@@ -262,22 +226,22 @@ export class NewVisitPage implements OnInit {
 							}
 							this.dataSend.cor_visit_grid.push(objet)
 						}
-						else if (utilise && presence)
+						else if (utilise && presence) //present to absent
 						{
 							layer.setStyle({color:"#FF0000"});
 							this.maillesAbsence ++;
 							this.maillesPresence --;
 							this.dataSend.cor_visit_grid[id].presence = false;
 						}
-						else
+						else //absent to pas vu
 						{
 							layer.setStyle({color:"#3388ff"});
 							this.maillesAbsence --;
-							if (this.dataSend.cor_visit_grid.length <= 1)
+							if (this.dataSend.cor_visit_grid.length <= 1) //si y a qu'un element
 							{
 								this.dataSend.cor_visit_grid.pop()
 							}
-							else
+							else //si y en a plusieurs
 							{
 								this.dataSend.cor_visit_grid.splice(id,id+1)
 							}
@@ -358,9 +322,23 @@ export class NewVisitPage implements OnInit {
 		console.log("form")
 		console.log(this.form)
 		//TODO: Fout les données dans this.dataSend
-		console.log("pas encore géré: envoi des données vides")
+		this.form.perturbations.forEach(element => {
+			this.dataSend.cor_visit_perturbation.push(this.perturbations[element])
+		});
+		this.form.observers.forEach(element => {
+			this.dataSend.observers.push(this.observer[element])
+		});
+		this.dataSend.id_base_site = this.id
+		this.dataSend.visit_date_max = this.form.date
+		this.dataSend.visit_date_min = this.form.date
+		this.dataSend.comments = this.form.commentaires
+		//this.dataSend.id_base_visit = null
+		//this.dataSend.id_digitiser = null
+		//this.dataSend.uuid_base_visit = null
+		console.log("géré (beta):")
+		console.log("les données sont stockées en local, et non envoyées, car non complète.")
 		console.log(this.dataSend)
-		//this.apiService.setLocalData("visiteSite"+this.id,this.dataSend);
+		this.apiService.setLocalData("visiteSite"+this.id,this.dataSend);
 		this.router.navigate(['/home']);
 	}
 	
