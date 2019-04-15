@@ -11,6 +11,8 @@ const routes: Routes = [
   { path: 'new-visit', loadChildren: './new-visit/new-visit.module#NewVisitPageModule' },
   { path: 'visionnage', loadChildren: './visionnage/visionnage.module#VisionnagePageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+  { path: 'see-visits', loadChildren: './see-visits/see-visits.module#SeeVisitsPageModule' },
+  { path: 'see-my-visit', loadChildren: './see-my-visit/see-my-visit.module#SeeMyVisitPageModule' },
 ];
 
 @NgModule({

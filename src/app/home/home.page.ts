@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import { MenuController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
 @Component({
@@ -15,7 +14,6 @@ export class HomePage {
 	//chargement des imports
 	constructor(
 		private router:Router,
-		private menu: MenuController,
 		private storage: Storage
 		) 
 	{
@@ -59,6 +57,11 @@ export class HomePage {
 	{
 		//au clique du bouton, envoi sur la page start input
 		this.router.navigate(['/start-input']);
+	}
+
+	public goToWatch()
+	{
+		this.router.navigate(['/see-visits']);
 	}
 
 	public disconnect()
