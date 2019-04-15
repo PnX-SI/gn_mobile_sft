@@ -4,6 +4,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import { ApiService } from '../services/api.service';
 
 import * as L from 'leaflet';
+import { forEach } from '@angular/router/src/utils/collection';
 
 
 @Component({
@@ -30,17 +31,16 @@ export class NewVisitPage implements OnInit {
 	maillesPresence = 0;
 	maillesAbsence = 0;
 
-	form ={}
+	form ={
+		commentaires : "",
+		date: "",
+		observers : [],
+		perturbations : []
+
+	}
 
 	dataSend = {
 		"cor_visit_grid": [
-			{
-				"uuid_base_visit": null, 
-				"id_area": 35311, 
-				"id_base_visit": 15, 
-				"presence": false
-			}, 
-			{"uuid_base_visit": null, "id_area": 35314, "id_base_visit": 15, "presence": true}
 		], 
 		"id_base_visit": 15, 
 		"id_base_site": 3, 
@@ -236,23 +236,69 @@ export class NewVisitPage implements OnInit {
 					layer.on("click", () => //au clique, envoi sur la page visionnage qui correspond
 					{
 						console.log(feature.id);
-						if(layer.options.color.valueOf() == "#3388ff")
+						var utilise = false
+						var presence = false
+						var id = 0
+						for(var i = 0; i <this.dataSend.cor_visit_grid.length; i++)
+						{
+							var element = this.dataSend.cor_visit_grid[i]
+							if (element.id_area == feature.id)
+							{
+								utilise = true
+								presence = element.presence
+								id = i
+								console.log("debug")
+								console.log(element.id_area)
+								console.log(utilise)
+								console.log(presence)
+								console.log(id)
+
+							}
+						}
+
+						if(utilise == false)
 						{
 							layer.setStyle({color:"#00FF00"});
+							console.log("present");
 							this.maillesPresence ++;
+							var objet = {
+								"uuid_basevisite" : null,
+								"id_area" : feature.id,
+								"id_base_visit": null,
+								"presence" : true
+
+							}
+							this.dataSend.cor_visit_grid.push(objet)
 						}
-						else if (layer.options.color.valueOf() =="#00FF00")
+						else if (utilise && presence)
 						{
 							layer.setStyle({color:"#FF0000"});
+							console.log("absent")
 							this.maillesAbsence ++;
 							this.maillesPresence --;
+							//console.log(this.dataSend.cor_visit_grid)
+							this.dataSend.cor_visit_grid[id].presence = false;
 						}
 						else
 						{
 							layer.setStyle({color:"#3388ff"});
+							console.log("pas vu")
 							this.maillesAbsence --;
+							if (this.dataSend.cor_visit_grid.length <= 1)
+							{
+								console.log("1 element")
+								this.dataSend.cor_visit_grid.pop()
+							}
+							else
+							{
+								console.log("plusieurs elements")
+								var debug = this.dataSend.cor_visit_grid.splice(id,id+1)
+								console.log(debug)
+							}
 						}
+						console.log(this.dataSend.cor_visit_grid)
 						this.maillesNonVisite = this.totalMailles - this.maillesAbsence - this.maillesPresence;
+						
 					}) 
 				} 
 			}).addTo(this.map);	
@@ -327,6 +373,7 @@ export class NewVisitPage implements OnInit {
 		console.log(this.form)
 		//TODO: Fout les données dans this.dataSend
 		console.log("pas encore géré: envoi des données vides")
+		console.log(this.dataSend)
 		//this.apiService.setLocalData("visiteSite"+this.id,this.dataSend);
 		this.router.navigate(['/home']);
 	}
