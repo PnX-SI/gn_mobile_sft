@@ -24,7 +24,8 @@
 	right: -75%;
 	">
 		<ion-content>
-			<form (submit)="SubmitVisit()">
+			<form (ngSubmit)="SubmitVisit()">
+				<!--TODO: lui faire prendre en compte les required-->
 				<ion-item>
 						<ion-label>
 							<h3>Zone de prospection</h3>
@@ -39,23 +40,23 @@
 					</ion-item>
 					<ion-item>
 						<ion-label>Date de visite: </ion-label>
-						<ion-input id="date" type="date" min="{{visite.properties.date_max}}"></ion-input>
+						<ion-input required name="date" [(ngModel)]="form.date" type="date" min="{{visite.properties.date_max}}"></ion-input>
 					</ion-item>
 					<ion-item>
 						<ion-label>Observateur(s)</ion-label>
-						<ion-select id="observers" multiple="true" >
-							<ion-select-option *ngFor="let item of observer;" value="{{item}}">{{item.nom_complet}}</ion-select-option>
+						<ion-select required name="observers" [(ngModel)]="form.observers" multiple="true" >
+							<ion-select-option *ngFor="let item of observer;let i = index;" value="{{i}}">{{item.nom_complet}}</ion-select-option>
 						</ion-select>
 					</ion-item>
 					<ion-item>
 						<ion-label>Perturbation(s)</ion-label>
-						<ion-select id="perturbations" multiple="true">
-							<ion-select-option *ngFor="let item of perturbations;" value="{{item}}">{{item.label_fr}}</ion-select-option>
+						<ion-select name="perturbations" [(ngModel)]="form.perturbations" multiple="true">
+							<ion-select-option *ngFor="let item of perturbations; let i = index;" value="{{i}}">{{item.label_fr}}</ion-select-option>
 						</ion-select>
 					</ion-item>
 					<ion-item>
 						<ion-label>Commentaires</ion-label>
-						<ion-textarea id="commentaires" position="floating" spellcheck="true"></ion-textarea>
+						<ion-textarea name="commentaires" [(ngModel)]="form.commentaires" position="floating" spellcheck="true"></ion-textarea>
 					</ion-item>
 					<ion-item>
 						<ion-label>
