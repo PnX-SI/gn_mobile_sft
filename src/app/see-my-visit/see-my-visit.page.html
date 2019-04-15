@@ -1,9 +1,87 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>seeMyVisit</ion-title>
+    <ion-buttons slot="start">
+        <ion-button (click)="goToHome()" slot="end">
+            <ion-icon name="arrow-back"></ion-icon>
+          </ion-button>
+    </ion-buttons>
+    <ion-title>Voir Visite</ion-title>
+    <ion-buttons slot="end">
+      <ion-spinner id="affichChargement" hidden></ion-spinner>
+      <ion-button (click)="reload()" slot="end">
+        <ion-icon name="refresh"></ion-icon>
+      </ion-button>
+      <ion-button (click)="toggleAffichage()" slot="end">
+        <ion-icon name="apps"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
+    <div id="affichage"
+    style="
+    z-index: 3000; 
+    position: absolute; 
+    top: 0; 
+    left: 100%; 
+    bottom: 0; 
+    right: -75%;
+    ">
+      <ion-content>
+        <ion-item>
+            <ion-label>
+              <h3>Zone de prospection</h3>
+              <p>{{id}}</p>
+            </ion-label>
+          </ion-item>			
+          <ion-item>
+            <ion-label>
+            <h3>Espèce propectée</h3>
+            <p>{{visite.properties.nom_taxon}}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Date de visite: </ion-label>
+            <p></p>
+          </ion-item>
+          <ion-item>
+            <ion-label>Observateur(s)</ion-label>
+            <ion-list>
+              
+            </ion-list> 
+          </ion-item>
+          <ion-item>
+            <ion-label>Perturbation(s)</ion-label>
+            <ion-list>
 
-</ion-content>
+            </ion-list> 
+          </ion-item>
+          <ion-item>
+            <ion-label>Commentaires</ion-label>
+            <p>{{commentaires}}</p>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <h3>Maille(s) de présence</h3>
+              <p>{{maillesPresence}}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <h3>Maille(s) d'absence</h3>
+              <p>{{maillesAbsence}}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <h3>Maille(s) non visitée(s)</h3>
+              <p>{{maillesNonVisite}}</p>
+            </ion-label>
+          </ion-item>
+      </ion-content>
+    </div>
+  
+    <div id="mapVision" style="width:100%; height:100%; position: relative;"></div>
+  </ion-content>
+  

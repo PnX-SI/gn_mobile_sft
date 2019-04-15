@@ -4,7 +4,6 @@ import {Router, ActivatedRoute} from '@angular/router';
 import { ApiService } from '../services/api.service';
 
 import * as L from 'leaflet';
-import { forEach } from '@angular/router/src/utils/collection';
 
 
 @Component({
