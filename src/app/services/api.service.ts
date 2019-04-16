@@ -126,7 +126,8 @@ export class ApiService {
     }
     this.http.post(`${API_URL}/auth/login`,user)
     .subscribe(data=>{
-      this.setLocalData("token",data);
+      console.log(data);
+      this.storage.set("user",user)
     })
   }
  
