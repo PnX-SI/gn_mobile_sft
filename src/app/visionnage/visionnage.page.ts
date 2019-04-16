@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 import * as L from 'leaflet';
 import { ApiService } from '../services/api.service';
@@ -24,7 +24,8 @@ export class VisionnagePage implements OnInit {
 	(
 		private router:Router, 
 		private route: ActivatedRoute,
-		private apiService: ApiService
+		private apiService: ApiService,
+		private storage: Storage
 	) 
 	{ 
 		//on lis les paramêtres qu'on a passé
@@ -48,6 +49,13 @@ export class VisionnagePage implements OnInit {
 
 	ionViewDidEnter()//quand on rentre dans la page
 	{  
+		this.storage.get("visiteSite"+this.id).then(res =>{
+			if (res)
+			{
+				alert("Avertisement: Vous avez déjà visité ce site. Enregistrer une visite écrasera l'ancienne.")
+			}
+		})
+		
 		this.reload()//on appel un chargement de page
 		//on fait en sorte que la carte soit affiché
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
