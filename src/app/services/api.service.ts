@@ -124,7 +124,7 @@ export class ApiService {
       password:pswd,
       id_application: 3
     }
-    this.http.post(`${API_URL}/auth/login`,user)
+    this.http.post(`${API_URL}/auth/login`,user,{headers:{}, observe: "response" as "response", withCredentials : true})
     .subscribe(data=>{
       console.log(data);
       this.storage.set("user",user)

@@ -56,7 +56,7 @@ export class LoginPage implements OnInit {
     {
       //TODO: améliorer ça pour plus avoir a tricher sur le token
       this.apiService.LogInAPI(this.login,this.password);
-      setTimeout(()=>this.tryToLogin(),50);
+      setTimeout(()=>this.tryToLogin(),100);
     }
     else
     {
@@ -88,7 +88,7 @@ export class LoginPage implements OnInit {
       }
       else if (this.essai <30)
       {
-        setTimeout(()=>this.tryToLogin(),50);
+        setTimeout(()=>this.tryToLogin(),100);
         this.essai++
       }
       else
