@@ -45,18 +45,27 @@
             <ion-label>Date de visite: </ion-label>
             <p>{{MyVisit.visit_date_min}}</p>
           </ion-item>
-          <ion-item>
-            <ion-label>Observateur(s)</ion-label>
-            <ion-list>
-              
-            </ion-list> 
-          </ion-item>
-          <ion-item>
-            <ion-label>Perturbation(s)</ion-label>
-            <ion-list>
-
-            </ion-list> 
-          </ion-item>
+          <ion-list >
+            <ion-list-header>
+              <ion-label>Observateur(s)</ion-label>
+            </ion-list-header>
+            <ion-item *ngFor="let item of MyVisit.observers">
+              <ion-label>
+                {{item.nom_complet}}
+              </ion-label>
+            </ion-item>
+          </ion-list> 
+          
+          <ion-list>
+            <ion-list-header>
+              <ion-label>Perturbation(s)</ion-label>
+            </ion-list-header>
+            <ion-item *ngFor="let item of MyVisit.cor_visit_perturbation">
+              <ion-label>
+                {{item.label_default}}
+              </ion-label>
+            </ion-item>
+          </ion-list>
           <ion-item>
             <ion-label>Commentaires</ion-label>
             <p>{{commentaires}}</p>
