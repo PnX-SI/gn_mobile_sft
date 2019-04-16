@@ -80,7 +80,6 @@ export class LoginPage implements OnInit {
   public tryToLogin()
   {
     this.apiService.getLocalData("token").then((val)=>{
-      console.log(val)
       if (val)
       {
         document.getElementById("erreur").setAttribute("hidden",null);
