@@ -67,7 +67,7 @@ export class HomePage {
 	public disconnect()
 	{
 		//au click, enlève de la mémoire de l'appareil l'utilisateur stocké, et ramène au login
-		this.storage.remove("token");
+		this.storage.remove("user");
 		this.router.navigate(['/login',{back:"home"}]);
 	}
 }

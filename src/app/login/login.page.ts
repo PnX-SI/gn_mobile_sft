@@ -38,7 +38,7 @@ export class LoginPage implements OnInit {
 
   ionViewDidEnter()//quand on rentre dans la page
   {
-    this.apiService.getLocalData("token").then(
+    this.apiService.getLocalData("user").then(
       (val)=>{
         console.log(val)
         if (val)
@@ -79,7 +79,7 @@ export class LoginPage implements OnInit {
   
   public tryToLogin()
   {
-    this.apiService.getLocalData("token").then((val)=>{
+    this.apiService.getLocalData("user").then((val)=>{
       if (val)
       {
         document.getElementById("erreur").setAttribute("hidden",null);
