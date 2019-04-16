@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import { NetworkService, ConnectionStatus } from '../services/network.service';
-import {ApiService} from '../services/api.service'
+import {ApiService, reponse} from '../services/api.service'
 
 
 @Component({
@@ -16,7 +16,7 @@ export class LoginPage implements OnInit {
   public login: String;
   public password: String;
 
-  public essai = 0;
+  res
   constructor
   (
     private router:Router,
@@ -55,8 +55,8 @@ export class LoginPage implements OnInit {
     if(this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Online)
     {
       //TODO: améliorer ça pour plus avoir a tricher sur le token
-      this.apiService.LogInAPI(this.login,this.password);
-      setTimeout(()=>this.tryToLogin(),50);
+      this.res = this.apiService.LogInAPI(this.login,this.password);
+      setTimeout(()=>this.tryToLogin(),100);
     }
     else
     {
@@ -80,24 +80,22 @@ export class LoginPage implements OnInit {
   public tryToLogin()
   {
     this.apiService.getLocalData("user").then((val)=>{
-      if (val)
+      if (val && reponse)
       {
+        console.log("log in")
         document.getElementById("erreur").setAttribute("hidden",null);
-        this.essai = 0
         this.router.navigate([this.prev_page]);
       }
-      else if (this.essai <30)
+      else if (!reponse)
       {
-        setTimeout(()=>this.tryToLogin(),50);
-        this.essai++
+        setTimeout(()=>this.tryToLogin(),100);
       }
       else
       {
         this.login = "";
         this.password = "";
         document.getElementById("erreur").removeAttribute("hidden");
-        document.getElementById("erreur").innerHTML = "login ou password invalide";
-        this.essai = 0
+        document.getElementById("erreur").innerHTML = reponse.error.msg;
       }
 
     })

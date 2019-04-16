@@ -17,7 +17,7 @@ const API_REPO = 'sft' //API test
   providedIn: 'root'
 })
 export class ApiService {
- 
+  
   constructor
   (
     private http: HttpClient, 
@@ -116,7 +116,6 @@ export class ApiService {
     }
   }*/
 
-  //TODO: Faire que ça marche
   public LogInAPI(log, pswd)
   {
     const user = {
@@ -124,11 +123,20 @@ export class ApiService {
       password:pswd,
       id_application: 3
     }
-    this.http.post(`${API_URL}/auth/login`,user)
-    .subscribe(data=>{
-      console.log(data);
-      this.storage.set("user",user)
-    })
+    //TODO: quand on pourra récupérer le token, le stocker au lieu de user
+    this.http.post(`${API_URL}/auth/login`,user,{headers:{}, observe: "response" as "response", withCredentials : true})
+    .pipe(
+      catchError(err =>{ throw err})
+    )
+    .subscribe(
+      data=>{
+        this.storage.set("user",user)
+        reponse = data
+      },
+      err =>{
+        reponse = err
+      }
+    )
   }
  
   // Save result of API requests
@@ -144,3 +152,5 @@ export class ApiService {
     
   }
 }
+
+export var reponse;
