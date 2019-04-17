@@ -118,6 +118,7 @@ export class ApiService {
 
   public LogInAPI(log, pswd)
   {
+    reponse = null
     const user = {
       login:log,
       password:pswd,
