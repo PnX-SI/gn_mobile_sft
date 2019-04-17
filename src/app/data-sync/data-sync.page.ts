@@ -10,6 +10,7 @@ import { NetworkService, ConnectionStatus } from '../services/network.service';
 })
 export class DataSyncPage implements OnInit {
 	
+	progressBarRecupdonnee = 0
 	
 	constructor
 	(
@@ -29,7 +30,36 @@ export class DataSyncPage implements OnInit {
 	{
 		if(this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Online)
 		{
-			console.log("Pas gérer, a voir comment gérer ça")
+			this.progressBarRecupdonnee = 0 //reset la progress bar
+			this.apiService.getData(true, "observeur").subscribe(res =>{
+				console.log(res)
+				this.apiService.setLocalData("observeur",res)
+				this.progressBarRecupdonnee = this.progressBarRecupdonnee + 0.2 //+10% dans la progress bar	
+			})
+			this.apiService.getData(true, "perturbations").subscribe(res =>{
+				console.log(res)
+				this.apiService.setLocalData("perturbations",res)
+				this.progressBarRecupdonnee = this.progressBarRecupdonnee + 0.2 //+10% dans la progress bar	
+			})
+			this.apiService.getData(true).subscribe(res =>{
+				console.log(res)
+				this.apiService.setLocalData("base",res)
+				this.progressBarRecupdonnee = this.progressBarRecupdonnee + 0.2 //+10% dans la progress bar
+				res.forEach(element => {
+					this.apiService.getData(true,"visite",element.id).subscribe(elem =>{
+						console.log(elem)
+						this.apiService.setLocalData("visite"+element.id,elem)
+						this.progressBarRecupdonnee = this.progressBarRecupdonnee + (0.2/res.length)
+					})
+				});
+				res.forEach(element => {
+					this.apiService.getData(true,"maille",element.id).subscribe(elem =>{
+						console.log(elem)
+						this.apiService.setLocalData("maille"+element.id,elem)
+						this.progressBarRecupdonnee = this.progressBarRecupdonnee + (0.2/res.length)
+					})
+				});
+			})
 		}
 		else
 		{

@@ -48,10 +48,12 @@ export class ApiService {
         return this.http.get(`${API_URL}/${API_REPO}/sites?id_application=7&id_area_type=25`).pipe(
           map(res => 
             res['features']
-          )/*,
-          tap(res => {
-            this.setLocalData('base', res);
-          })*/
+          ),
+          catchError(err => {
+            console.error(err);
+            console.log("renvoi des données locales");
+            throw this.getLocalData('base');
+          })
         )
       }
       else if (requeteType == "visite")
@@ -59,10 +61,12 @@ export class ApiService {
         return this.http.get(`${API_URL}/${API_REPO}/sites?id_base_site=${id}`).pipe(
           map(res => 
             res['features']
-          )/*,
-          tap(res => {
-            this.setLocalData('visite', res);
-          })*/
+          ),
+          catchError(err => {
+            console.error(err);
+            console.log("renvoi des données locales");
+            throw this.getLocalData('visite'+id);
+          })
         )
       }
       else if (requeteType == "maille")
@@ -70,10 +74,12 @@ export class ApiService {
         return this.http.get(`${API_URL}/gn_monitoring/siteareas/${id}?id_area_type=32`).pipe(
           map(res => 
             res['features']
-          )/*,
-          tap(res => {
-            this.setLocalData('maille', res);
-          })*/
+          ),
+          catchError(err => {
+            console.error(err);
+            console.log("renvoi des données locales");
+            throw this.getLocalData('maille'+id);
+          })
         )
       }
       else if (requeteType == "observeur")
@@ -81,10 +87,12 @@ export class ApiService {
         return this.http.get(`${API_URL}/users/menu/1`).pipe(
           map(res =>
             [res]
-          )/*,
-          tap(res => {
-            this.setLocalData('observeur', res);
-          })*/
+          ),
+          catchError(err => {
+            console.error(err);
+            console.log("renvoi des données locales");
+            throw this.getLocalData('observeur');
+          })
         )
       }
       else if (requeteType == "perturbations")
@@ -92,10 +100,12 @@ export class ApiService {
         return this.http.get(`${API_URL}/nomenclatures/nomenclature/TYPE_PERTURBATION?regne=&group2_inpn=&orderby=label_default`).pipe(
           map(res =>
             res['values']
-          )/*,
-          tap(res => {
-            this.setLocalData('perturbations', res);
-          })*/
+          ),
+          catchError(err => {
+            console.error(err);
+            console.log("renvoi des données locales");
+            throw this.getLocalData('perturbations');
+          })
         )
       }
       

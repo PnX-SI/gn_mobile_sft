@@ -66,8 +66,8 @@ export class NewVisitPage implements OnInit {
 		//on call une lecture de données
 		this.loadDataVisite(true,"visite",this.id);
 		this.loadDataMailles(true, "maille",this.id);
-		this.loadDataObserver(true, "observeur",this.id);
-		this.loadDataPerturbations(true, "perturbations",this.id);
+		this.loadDataObserver(true, "observeur");
+		this.loadDataPerturbations(true, "perturbations");
 	}
 	
 	/*fonctions de lecture de données*/
@@ -97,7 +97,7 @@ export class NewVisitPage implements OnInit {
 	 }
 	 loadDataObserver(refresh = false,type = "base",id = 0, refresher?) {
 		this.apiService.getData(refresh,type,id).subscribe(res => {
-			this.observer = res[0];
+			this.observer = res;
 			console.log("observers:");
 			console.log(res[0]);
 			if (refresher) {
