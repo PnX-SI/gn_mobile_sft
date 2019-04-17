@@ -55,7 +55,7 @@ export class LoginPage implements OnInit {
     if(this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Online)
     {
       //TODO: améliorer ça pour plus avoir a tricher sur le token
-      this.res = this.apiService.LogInAPI(this.login,this.password);
+      this.apiService.LogInAPI(this.login,this.password);
       setTimeout(()=>this.tryToLogin(),100);
     }
     else
