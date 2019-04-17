@@ -11,6 +11,7 @@ import { Storage } from '@ionic/storage';
 export class DataSyncPage implements OnInit {
 	
 	progressBarRecupdonnee = 0
+	disableButton = false
 	
 	constructor
 	(
@@ -68,6 +69,7 @@ export class DataSyncPage implements OnInit {
 					})
 				});
 			})
+			
 		}
 		else
 		{

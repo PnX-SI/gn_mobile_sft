@@ -23,9 +23,7 @@
 				<ion-progress-bar></ion-progress-bar>
 				<ion-icon name="cloud-upload"></ion-icon>
 			</ion-item>
-			<ion-button expand="block" (click)="SendVisits()">
-				envoyer
-			</ion-button>
+			<ion-button expand="block" disabled="{{disableButton}}" (click)="SendVisits()">envoyer</ion-button>
 		</ion-item-group>
 		<ion-item-group>
 			<ion-item-divider><strong>Récupération de données (du serveur)</strong></ion-item-divider>
@@ -34,9 +32,7 @@
 				<ion-progress-bar value="{{progressBarRecupdonnee}}"></ion-progress-bar>
 				<ion-icon name="phone-portrait"></ion-icon>
 			</ion-item>
-			<ion-button expand="block" (click)="SaveToLocalData()">
-				recevoir
-			</ion-button>
+			<ion-button expand="block" disabled="{{disableButton}}" (click)="SaveToLocalData()">recevoir</ion-button>
 		</ion-item-group>
 	</ion-list>
 </ion-content>
