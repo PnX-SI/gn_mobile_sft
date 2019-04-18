@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { NetworkService, ConnectionStatus } from '../services/network.service';
 import { Storage } from '@ionic/storage';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-data-sync',
@@ -17,7 +18,8 @@ export class DataSyncPage implements OnInit {
 	(
 		private networkService: NetworkService, 
 		private apiService: ApiService,
-		private storage: Storage
+		private storage: Storage,
+		private router: Router
 	) 
 	{
 		
@@ -26,6 +28,22 @@ export class DataSyncPage implements OnInit {
 	ngOnInit() 
 	{
 	
+	}
+
+	ionViewDidEnter() 
+	{
+		this.storage.get("user").then(res =>{
+				if(!res)
+				{
+					this.disableButton = true
+					var validation = confirm("vous n'êtes pas connecter. voulez vous vous connecter?")
+					if(validation)
+					{
+						this.disableButton = false
+						this.router.navigate(['/login',{back:"data-sync"}]);
+					}
+				}
+			})
 	}
 
 	SaveToLocalData()
@@ -87,5 +105,10 @@ export class DataSyncPage implements OnInit {
 		{
 			alert("Vous n'êtes pas connecté a internet.")
 		}
+	}
+
+	goToHome()
+	{
+		this.router.navigate(['/home']);
 	}
 }

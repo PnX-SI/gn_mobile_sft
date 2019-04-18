@@ -38,7 +38,6 @@ export class HomePage {
 				}
 			})
 		}
-		console.log(this.donneesStockee.length)
 	}
 
 	public goToSetting()

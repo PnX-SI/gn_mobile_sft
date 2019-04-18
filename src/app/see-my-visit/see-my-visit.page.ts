@@ -77,7 +77,7 @@ export class SeeMyVisitPage implements OnInit {
   }
   /*****************************/
 
-    ionViewDidEnter()//quand on rentre dans la page
+  ionViewDidEnter()//quand on rentre dans la page
   {	
     //on montre qu'on charge des truc
     document.getElementById("affichChargement").removeAttribute("hidden");
@@ -91,7 +91,7 @@ export class SeeMyVisitPage implements OnInit {
     
   }
 
-    ngOnInit()  //quand on créé la page
+  ngOnInit()  //quand on créé la page
   {
     //assignation de la carte
     this.map = new L.Map('mapVision');
