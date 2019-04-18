@@ -37,8 +37,8 @@
           </ion-item>			
           <ion-item>
             <ion-label>
-            <h3>Espèce propectée</h3>
-            <p>{{visite.properties.nom_taxon}}</p>
+              <h3>Espèce propectée</h3>
+              <p>{{visite.properties.nom_taxon}}</p>
             </ion-label>
           </ion-item>
           <ion-item>
@@ -51,7 +51,7 @@
             </ion-list-header>
             <ion-item *ngFor="let item of MyVisit.observers">
               <ion-label>
-                {{item.nom_complet}}
+                <h4>{{item.nom_complet}}</h4>
               </ion-label>
             </ion-item>
           </ion-list> 
@@ -62,13 +62,15 @@
             </ion-list-header>
             <ion-item *ngFor="let item of MyVisit.cor_visit_perturbation">
               <ion-label>
-                {{item.label_default}}
+                  <h4>{{item.label_default}}</h4>
               </ion-label>
             </ion-item>
           </ion-list>
           <ion-item>
-            <ion-label>Commentaires</ion-label>
-            <p>{{commentaires}}</p>
+            <ion-label>
+              <h3>Commentaires</h3>
+              <p>{{MyVisit.comments}}</p>
+            </ion-label>
           </ion-item>
           <ion-item>
             <ion-label>
