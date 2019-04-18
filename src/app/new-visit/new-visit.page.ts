@@ -97,7 +97,7 @@ export class NewVisitPage implements OnInit {
 	 }
 	 loadDataObserver(refresh = false,type = "base",id = 0, refresher?) {
 		this.apiService.getData(refresh,type,id).subscribe(res => {
-			this.observer = res;
+			this.observer = res[0];
 			console.log("observers:");
 			console.log(res[0]);
 			if (refresher) {
