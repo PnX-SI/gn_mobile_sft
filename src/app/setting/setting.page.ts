@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import { AngularFrameworkDelegate } from '@ionic/angular/dist/providers/angular-delegate';
+
 
 @Component({
   selector: 'app-setting',
@@ -27,13 +27,8 @@ export class SettingPage implements OnInit {
 		console.log("t'as pas géré ça connard")
 	}
 
-	ok(value)
+	test()
 	{
-		alert("ok:"+value);
-	}
-
-	fail (error)
-	{
-		console.error("ERREUR:"+error);
+		
 	}
 }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -13,6 +13,8 @@ import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http';
 import { Network } from '@ionic-native/network/ngx';
 import { TaxonPipe } from './filtre/taxon.pipe';
+import { File } from '@ionic-native/file/ngx';
+
 
 @NgModule({
   declarations: [AppComponent, TaxonPipe],
@@ -28,7 +30,8 @@ import { TaxonPipe } from './filtre/taxon.pipe';
     SplashScreen,
     { provide: RouteReuseStrategy, 
       useClass: IonicRouteStrategy },
-    Network
+    Network,
+    File
   ],
   bootstrap: [AppComponent]
 })
