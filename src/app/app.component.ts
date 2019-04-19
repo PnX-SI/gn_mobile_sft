@@ -31,32 +31,55 @@ export class AppComponent {
 	  this.initializeApp();
   }
 
-  initializeApp() {
-  //a l'initialisation
-	this.platform.ready().then(() => {//on attend que la plateforme soit prête
-    //on préshot tout ce qui doit être load
-    this.statusBar.styleDefault();
-    this.splashScreen.hide(); 
-    this.networkService.onNetworkChange().subscribe((status: ConnectionStatus) => {
-      if (status == ConnectionStatus.Online) {
-        this.offlineManager.checkForEvents().subscribe();
-      }
-    });
-
-    //on verifie l'existence des dossiers et fichiers qui nous interressent
-    this.file.checkFile(this.file.externalDataDirectory,"settings.json").then(res =>{
-      console.log("ça marche:")
-    },err =>{
-      console.log("erreur: settings.json n'existe pas")
-      this.file.createFile(this.file.externalDataDirectory,"settings.json",true).then(
-        FileEntry =>{
-          this.file.writeExistingFile(this.file.externalDataDirectory,"settings.json","{test:true}")
+  initializeApp() 
+  {
+    //a l'initialisation
+    this.platform.ready().then(() => 
+    { //on attend que la plateforme soit prête
+      //on préshot tout ce qui doit être load
+      this.statusBar.styleDefault();
+      this.splashScreen.hide(); 
+      this.networkService.onNetworkChange().subscribe((status: ConnectionStatus) => 
+      {
+        if (status == ConnectionStatus.Online) 
+        {
+          this.offlineManager.checkForEvents().subscribe();
         }
-      ).catch(err =>{
-        console.log("settings.json n'a pas pu être créé")
-      })
-    })
-	});
-  }
+      });
 
+      //on verifie l'existence des dossiers et fichiers qui nous interressent
+      this.file.checkDir(this.file.dataDirectory,"settings").then(res =>
+        {
+          this.file.checkFile(this.file.externalDataDirectory,"settings.json").then(res =>
+          {
+            console.log("Tout fonctionne")
+          },err =>
+          {
+            console.log("erreur: settings.json n'existe pas")
+            this.file.createFile(this.file.externalDataDirectory,"settings.json",true).then(FileEntry =>
+            {
+              //this.file.writeExistingFile(this.file.externalDataDirectory,"settings.json","{test:true}")
+            },err =>
+            {
+              console.log("settings.json n'a pas pu être créé")
+            })
+          })
+        }, err=>
+        {
+        console.log("le dossier settings n'existe pas. Nous allons le créer")
+        this.file.createDir(this.file.dataDirectory,"settings",false).then(res=>
+        {
+          this.file.createFile(this.file.externalDataDirectory,"settings.json",true).then(FileEntry =>
+          {
+            //this.file.writeExistingFile(this.file.externalDataDirectory,"settings.json","{test:true}")
+          },err =>
+          {
+            console.log("settings.json n'a pas pu être créé")
+          })
+        }, err=>{
+          console.log("nous n'avons pas pu créer le dossier")
+        })
+      });
+    })
+  }
 }
