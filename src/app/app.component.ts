@@ -44,26 +44,17 @@ export class AppComponent {
     });
 
     //on verifie l'existence des dossiers et fichiers qui nous interressent
-    this.file.checkDir(this.file.dataDirectory,'settings').then(res =>{
-      this.file.checkFile(this.file.dataDirectory+'settings','settings.json').then(res =>{
-      }).catch(err =>{
-        console.error("settings.json n'existe pas.")
-        let toast = this.toastController.create({
-          message: `settings.json n'existe pas.`,
-          duration: 3000,
-          position: 'bottom'
-        });
-        toast.then(toast => toast.present());
+    this.file.checkFile(this.file.externalDataDirectory,"settings.json").then(res =>{
+      console.log("ça marche:")
+    },err =>{
+      console.log("erreur: settings.json n'existe pas")
+      this.file.createFile(this.file.externalDataDirectory,"settings.json",true).then(
+        FileEntry =>{
+          this.file.writeExistingFile(this.file.externalDataDirectory,"settings.json","{test:true}")
+        }
+      ).catch(err =>{
+        console.log("settings.json n'a pas pu être créé")
       })
-    }).catch(err =>{
-      console.error("le répertoire settings n'existe pas, nous allons le créer")
-      let toast = this.toastController.create({
-        message: `sle répertoire settings n'existe pas, nous allons le créer.`,
-        duration: 3000,
-        position: 'bottom'
-      });
-      toast.then(toast => toast.present());
-      this.file.createDir(this.file.dataDirectory,'settings',false)
     })
 	});
   }
