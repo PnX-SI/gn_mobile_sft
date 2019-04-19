@@ -3,7 +3,7 @@
 	  	<ion-buttons slot="start">
 		  <ion-back-button></ion-back-button>
 		</ion-buttons>
-		<ion-title>Paramètres /!\ WIP /!\</ion-title>
+		<ion-title>Paramètres</ion-title>
 	</ion-toolbar>
 </ion-header>
 
@@ -17,12 +17,12 @@
 				<ion-label>Coordonnées hors ligne</ion-label>
 			</ion-item-divider>
 			<ion-item>
-				<ion-label>latitude:</ion-label>
-				<ion-input type="number"></ion-input>
+				<ion-label position="stacked">latitude:</ion-label>
+				<ion-input type="number" value="{{latitude}}"></ion-input>
 			</ion-item>
 			<ion-item>
-				<ion-label>longitude:</ion-label>
-				<ion-input type="number"></ion-input>
+				<ion-label position="stacked">longitude:</ion-label>
+				<ion-input type="number" value="{{longitude}}"></ion-input>
 			</ion-item>
 			<ion-item>
 				<ion-button>centrer par rapport a ici</ion-button>
@@ -32,19 +32,19 @@
 			<ion-label><strong>API utilisée</strong></ion-label>
 		</ion-list-header>
 		<ion-item>
-			<ion-label>URL</ion-label>
-			<ion-input type="url"></ion-input>
+			<ion-label position="stacked">URL:</ion-label>
+			<ion-input type="url" value="{{Api_URL}}"></ion-input>
 		</ion-item>
 		<ion-item>
-			<ion-label>clé</ion-label>
-			<ion-input type="texte"></ion-input>
+			<ion-label position="stacked">dossier:</ion-label>
+			<ion-input type="texte" value="{{Api_Dir}}"></ion-input>
 		</ion-item>
-		<ion-list-header>
-			<ion-label><strong>A propos</strong></ion-label>
-		</ion-list-header>
 		<ion-button (click)="test()">
 			Click me
 		</ion-button>
+		<ion-list-header>
+			<ion-label><strong>A propos</strong></ion-label>
+		</ion-list-header>
 		<ion-item>
 			<ion-label>
 			<h3>Version de l'application</h3>

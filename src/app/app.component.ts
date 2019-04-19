@@ -7,7 +7,14 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { File } from '@ionic-native/file/ngx'
 
 import { OfflineManagerService } from './services/offline-manager.service';
-import { ToastController } from '@ionic/angular';
+
+const settings = 
+{
+  API_URL: "http://demo.geonature.fr/geonature/api",
+  API_Dir: "sft",
+  Default_Lat: 44.5682846,
+  Default_Lon: 6.0634622
+}
 
 @Component({
   selector: 'app-root',
@@ -24,8 +31,7 @@ export class AppComponent {
     private statusBar: StatusBar,
     private offlineManager: OfflineManagerService,
     private networkService: NetworkService,
-    private file: File,
-    private toastController : ToastController
+    private file: File
   ) 
   {
 	  this.initializeApp();
@@ -52,13 +58,27 @@ export class AppComponent {
         {
           this.file.checkFile(this.file.externalDataDirectory,"settings.json").then(res =>
           {
-            console.log("Tout fonctionne")
+            console.log("settings.json trouvé")
+            this.file.readAsBinaryString(this.file.externalDataDirectory+"settings","settings.json").then(res =>{
+              console.log("lecture de settings.json")
+              Settings = JSON.parse(res)
+            },err => {
+              console.log("Erreur: settings.json illisible")
+            })
           },err =>
           {
             console.log("erreur: settings.json n'existe pas")
             this.file.createFile(this.file.externalDataDirectory,"settings.json",true).then(FileEntry =>
             {
-              //this.file.writeExistingFile(this.file.externalDataDirectory,"settings.json","{test:true}")
+              this.file.writeExistingFile(this.file.externalDataDirectory,"settings.json",JSON.stringify(settings)).then(res=>{
+                console.log("ecriture dans settings.json avec succès")
+                this.file.readAsBinaryString(this.file.externalDataDirectory+"settings","settings.json").then(res =>{
+                  console.log("lecture de settings.json")
+                  Settings = JSON.parse(res)
+                },err => {
+                  console.log("Erreur: settings.json illisible")
+                })
+              })
             },err =>
             {
               console.log("settings.json n'a pas pu être créé")
@@ -71,7 +91,16 @@ export class AppComponent {
         {
           this.file.createFile(this.file.externalDataDirectory,"settings.json",true).then(FileEntry =>
           {
-            //this.file.writeExistingFile(this.file.externalDataDirectory,"settings.json","{test:true}")
+            console.log("settings.json créé avec succès")
+            this.file.writeExistingFile(this.file.externalDataDirectory,"settings.json",JSON.stringify(settings)).then(res=>{
+              console.log("ecriture dans settings.json avec succès")
+              this.file.readAsBinaryString(this.file.externalDataDirectory+"settings","settings.json").then(res =>{
+                console.log("lecture de settings.json")
+                Settings = JSON.parse(res)
+              },err => {
+                console.log("Erreur: settings.json illisible")
+              })
+            })
           },err =>
           {
             console.log("settings.json n'a pas pu être créé")
@@ -82,4 +111,12 @@ export class AppComponent {
       });
     })
   }
+}
+
+export var Settings = 
+{
+  API_URL: "",
+  API_Dir: "",
+  Default_Lat: 0,
+  Default_Lon: 0
 }
