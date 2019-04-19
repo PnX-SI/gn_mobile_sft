@@ -113,10 +113,4 @@ export class AppComponent {
   }
 }
 
-export var Settings = 
-{
-  API_URL: "",
-  API_Dir: "",
-  Default_Lat: 0,
-  Default_Lon: 0
-}
+export var Settings = settings
