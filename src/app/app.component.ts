@@ -54,45 +54,23 @@ export class AppComponent {
       });
 
       //on verifie l'existence des dossiers et fichiers qui nous interressent
-      this.file.checkDir(this.file.dataDirectory,"settings").then(res =>
+      this.file.checkDir(this.file.externalDataDirectory,"settings").then(res =>
+      {
+        this.file.checkFile(this.file.externalDataDirectory,"settings.json").then(res =>
         {
-          this.file.checkFile(this.file.externalDataDirectory,"settings.json").then(res =>
-          {
-            console.log("settings.json trouvé")
-            this.file.readAsBinaryString(this.file.externalDataDirectory+"settings","settings.json").then(res =>{
-              console.log("lecture de settings.json")
-              Settings = JSON.parse(res)
-            },err => {
-              console.log("Erreur: settings.json illisible")
-            })
-          },err =>
-          {
-            console.log("erreur: settings.json n'existe pas")
-            this.file.createFile(this.file.externalDataDirectory,"settings.json",true).then(FileEntry =>
-            {
-              this.file.writeExistingFile(this.file.externalDataDirectory,"settings.json",JSON.stringify(settings)).then(res=>{
-                console.log("ecriture dans settings.json avec succès")
-                this.file.readAsBinaryString(this.file.externalDataDirectory+"settings","settings.json").then(res =>{
-                  console.log("lecture de settings.json")
-                  Settings = JSON.parse(res)
-                },err => {
-                  console.log("Erreur: settings.json illisible")
-                })
-              })
-            },err =>
-            {
-              console.log("settings.json n'a pas pu être créé")
-            })
+          console.log("settings.json trouvé")
+          this.file.readAsBinaryString(this.file.externalDataDirectory+"settings","settings.json").then(res =>{
+            console.log("lecture de settings.json")
+            Settings = JSON.parse(res)
+          },err => {
+            console.log("Erreur: settings.json illisible")
           })
-        }, err=>
+        },err =>
         {
-        console.log("le dossier settings n'existe pas. Nous allons le créer")
-        this.file.createDir(this.file.dataDirectory,"settings",false).then(res=>
-        {
-          this.file.createFile(this.file.externalDataDirectory,"settings.json",true).then(FileEntry =>
+          console.log("erreur: settings.json n'existe pas")
+          this.file.createFile(this.file.externalDataDirectory+"settings","settings.json",true).then(FileEntry =>
           {
-            console.log("settings.json créé avec succès")
-            this.file.writeExistingFile(this.file.externalDataDirectory,"settings.json",JSON.stringify(settings)).then(res=>{
+            this.file.writeExistingFile(this.file.externalDataDirectory+"settings","settings.json",JSON.stringify(settings)).then(res=>{
               console.log("ecriture dans settings.json avec succès")
               this.file.readAsBinaryString(this.file.externalDataDirectory+"settings","settings.json").then(res =>{
                 console.log("lecture de settings.json")
@@ -105,9 +83,31 @@ export class AppComponent {
           {
             console.log("settings.json n'a pas pu être créé")
           })
-        }, err=>{
-          console.log("nous n'avons pas pu créer le dossier")
         })
+      }, err=>
+      {
+      console.log("le dossier settings n'existe pas. Nous allons le créer")
+      this.file.createDir(this.file.externalDataDirectory,"settings",false).then(res=>
+      {
+        this.file.createFile(this.file.externalDataDirectory+"settings","settings.json",true).then(FileEntry =>
+        {
+          console.log("settings.json créé avec succès")
+          this.file.writeExistingFile(this.file.externalDataDirectory+"settings","settings.json",JSON.stringify(settings)).then(res=>{
+            console.log("ecriture dans settings.json avec succès")
+            this.file.readAsBinaryString(this.file.externalDataDirectory+"settings","settings.json").then(res =>{
+              console.log("lecture de settings.json")
+              Settings = JSON.parse(res)
+            },err => {
+              console.log("Erreur: settings.json illisible")
+            })
+          })
+        },err =>
+        {
+          console.log("settings.json n'a pas pu être créé")
+        })
+      }, err=>{
+        console.log("nous n'avons pas pu créer le dossier")
+      })
       });
     })
   }
