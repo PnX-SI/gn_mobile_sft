@@ -36,6 +36,7 @@ export class SettingPage implements OnInit {
 			console.log("settings.json trouvé")
 			this.file.writeExistingFile(this.file.externalDataDirectory+"settings","settings.json", JSON.stringify(this.settings)).then(res =>{
 				console.log("ecriture de settings.json")
+				alert("Vous devrez redemmarer l'application pour que les changements soient pris en compte")
 			},err => {
 				console.log("Erreur: impossible d'écrire dans settings.json")
 			})
