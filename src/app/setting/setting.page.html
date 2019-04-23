@@ -18,11 +18,11 @@
 			</ion-item-divider>
 			<ion-item>
 				<ion-label position="stacked">latitude:</ion-label>
-				<ion-input type="number" value="{{latitude}}"></ion-input>
+				<ion-input type="number" value="{{settings.latitude}}"></ion-input>
 			</ion-item>
 			<ion-item>
 				<ion-label position="stacked">longitude:</ion-label>
-				<ion-input type="number" value="{{longitude}}"></ion-input>
+				<ion-input type="number" value="{{settings.longitude}}"></ion-input>
 			</ion-item>
 			<ion-item>
 				<ion-button>centrer par rapport a ici</ion-button>
@@ -33,14 +33,14 @@
 		</ion-list-header>
 		<ion-item>
 			<ion-label position="stacked">URL:</ion-label>
-			<ion-input type="url" value="{{Api_URL}}"></ion-input>
+			<ion-input type="url" value="{{settings.Api_URL}}"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label position="stacked">dossier:</ion-label>
-			<ion-input type="texte" value="{{Api_Dir}}"></ion-input>
+			<ion-input type="texte" value="{{settings.Api_Dir}}"></ion-input>
 		</ion-item>
-		<ion-button (click)="test()">
-			Click me
+		<ion-button expand="block" (click)="setSettings()">
+			Valider les nouveaux parametres
 		</ion-button>
 		<ion-list-header>
 			<ion-label><strong>A propos</strong></ion-label>

@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { File } from '@ionic-native/file/ngx'
 
 import { OfflineManagerService } from './services/offline-manager.service';
+import {LocalVariablesService} from './services/local-variables.service'
 
 const settings = 
 {
@@ -31,7 +32,8 @@ export class AppComponent {
     private statusBar: StatusBar,
     private offlineManager: OfflineManagerService,
     private networkService: NetworkService,
-    private file: File
+    private file: File,
+    private local: LocalVariablesService
   ) 
   {
 	  this.initializeApp();
@@ -61,7 +63,7 @@ export class AppComponent {
           console.log("settings.json trouvé")
           this.file.readAsBinaryString(this.file.externalDataDirectory+"settings","settings.json").then(res =>{
             console.log("lecture de settings.json")
-            Settings = JSON.parse(res)
+            this.local.setSettings(JSON.parse(res))
           },err => {
             console.log("Erreur: settings.json illisible")
           })
@@ -74,7 +76,7 @@ export class AppComponent {
               console.log("ecriture dans settings.json avec succès")
               this.file.readAsBinaryString(this.file.externalDataDirectory+"settings","settings.json").then(res =>{
                 console.log("lecture de settings.json")
-                Settings = JSON.parse(res)
+                this.local.setSettings(JSON.parse(res))
               },err => {
                 console.log("Erreur: settings.json illisible")
               })
@@ -96,7 +98,7 @@ export class AppComponent {
             console.log("ecriture dans settings.json avec succès")
             this.file.readAsBinaryString(this.file.externalDataDirectory+"settings","settings.json").then(res =>{
               console.log("lecture de settings.json")
-              Settings = JSON.parse(res)
+              this.local.setSettings(JSON.parse(res))
             },err => {
               console.log("Erreur: settings.json illisible")
             })
@@ -113,4 +115,3 @@ export class AppComponent {
   }
 }
 
-export var Settings = settings

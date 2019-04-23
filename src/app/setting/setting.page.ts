@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {Settings} from '../app.component'
+import {LocalVariablesService} from '../services/local-variables.service'
 
 
 @Component({
@@ -10,34 +10,24 @@ import {Settings} from '../app.component'
 })
 export class SettingPage implements OnInit {
 	
-	latitude
-	longitude
-	Api_URL
-	Api_Dir
+	settings = JSON
 
 	constructor
 	(
-		private router:Router
+		private router:Router,
+		private local: LocalVariablesService
 	) 
 	{
-		this.latitude = Settings.Default_Lat
-		this.longitude = Settings.Default_Lon
-		this.Api_Dir = Settings.API_Dir
-		this.Api_URL = Settings.API_URL
+		this.settings = local.getSettings()
 	}
 
 	ngOnInit() 
 	{
 		
 	}
-		
-	public CpaFai()
+	
+	setSettings()
 	{
-		console.log("t'as pas géré ça connard")
-	}
 
-	test()
-	{
-		
 	}
 }
