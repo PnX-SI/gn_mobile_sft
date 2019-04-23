@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import * as L from 'leaflet';
 import { ApiService } from '../services/api.service';
+import {LocalVariablesService} from '../services/local-variables.service'
 
 @Component({
   selector: 'app-start-input',
@@ -21,14 +22,17 @@ export class StartInputPage implements OnInit {
 	modif = 100;
 	eventInterval
 
+	default_Lat = 0
+	default_Long = 0
 	//chargement des imports
 	constructor(
 		private menu: MenuController, 
 		private router: Router,
-		private apiService: ApiService
+		private apiService: ApiService,
+		private local: LocalVariablesService
 		) 
 	{
-		this.loadData(true);//on charge des données
+		this.loadData(true);//on charge des données		
 	}
 
 	loadData(refresh = false, refresher?) {
@@ -69,7 +73,10 @@ export class StartInputPage implements OnInit {
 		this.map = new L.Map('mapProspec');
 		//on fait en sorte que la carte ai une échelle (pour se repérer c'est cool)
 		L.control.scale("metric").addTo(this.map);
-
+		this.default_Lat = this.local.getSettings()['Default_Lat']
+		this.default_Long = this.local.getSettings()['Default_Lon']
+		console.log("Lat ="+this.default_Lat)
+		console.log("lon ="+this.default_Long)
 		//on setup ce qu'il se passe quand on tente de géolocaliser l'utilisateur
 		this.map.on('locationfound', (e)=> {this.onLocationFound(e)});
 		this.map.on('locationerror', (e)=> {this.onLocationError(e)});
@@ -275,7 +282,7 @@ export class StartInputPage implements OnInit {
 		alert(e.message + "\rNous allons afficher la carte par défaut");//on dit pourquoi on l'as pas trouver
 		//on met l'utilisateur sur la carte par défaut
 		this.map.setView(
-		/*centre*/[44.5682846, 6.0634622],//devront être parametrables
+		/*centre*/[this.default_Lat, this.default_Long],
 		/*zoom*/11
 		);
 		//on indique qu'on a fini de charger
