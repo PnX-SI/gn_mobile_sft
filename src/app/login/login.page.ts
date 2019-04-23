@@ -83,6 +83,7 @@ export class LoginPage implements OnInit {
       if (val && reponse)
       {
         console.log("log in")
+        console.log(reponse)
         document.getElementById("erreur").setAttribute("hidden",null);
         this.router.navigate([this.prev_page]);
       }
@@ -94,6 +95,7 @@ export class LoginPage implements OnInit {
       {
         this.login = "";
         this.password = "";
+        console.error(reponse)
         document.getElementById("erreur").removeAttribute("hidden");
         document.getElementById("erreur").innerHTML = reponse.error.msg;
       }
