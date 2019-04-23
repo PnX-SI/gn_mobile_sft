@@ -61,17 +61,17 @@ export class NewVisitPage implements OnInit {
 		//on lis les paramêtres qu'on a passé
 		this.route.params.subscribe(params =>{
 			this.id = params.id;
-			
+			//on call une lecture de données
+			this.loadDataVisite(true,"visite",this.id);
+			this.loadDataMailles(true, "maille",this.id);
+			this.loadDataObserver(true, "observeur");
+			this.loadDataPerturbations(true, "perturbations");
 		});
-		//on call une lecture de données
-		this.loadDataVisite(true,"visite",this.id);
-		this.loadDataMailles(true, "maille",this.id);
-		this.loadDataObserver(true, "observeur");
-		this.loadDataPerturbations(true, "perturbations");
+		
 	}
 	
 	/*fonctions de lecture de données*/
-	loadDataVisite(refresh = false,type = "base",id = 0, refresher?) {
+	loadDataVisite(refresh = false,type = "base",id, refresher?) {
 		this.apiService.getData(refresh,type,id).subscribe(res => {
 			this.visite = res[0];
 			console.log("visite:");
@@ -81,7 +81,7 @@ export class NewVisitPage implements OnInit {
       		}
 		});
 	 }
-	loadDataMailles(refresh = false,type = "base",id = 0, refresher?) {
+	loadDataMailles(refresh = false,type = "base",id, refresher?) {
 		this.apiService.getData(refresh,type,id).subscribe(res => {
 			this.mailles = res;
 			console.log("mailles:");
@@ -95,8 +95,8 @@ export class NewVisitPage implements OnInit {
       		}
 		});
 	 }
-	 loadDataObserver(refresh = false,type = "base",id = 0, refresher?) {
-		this.apiService.getData(refresh,type,id).subscribe(res => {
+	 loadDataObserver(refresh = false,type = "base", refresher?) {
+		this.apiService.getData(refresh,type).subscribe(res => {
 			this.observer = res[0];
 			console.log("observers:");
 			console.log(res[0]);
@@ -105,8 +105,8 @@ export class NewVisitPage implements OnInit {
       		}
 		});
 	 }
-	 loadDataPerturbations(refresh = false,type = "base",id = 0, refresher?) {
-		this.apiService.getData(refresh,type,id).subscribe(res => {
+	 loadDataPerturbations(refresh = false,type = "base", refresher?) {
+		this.apiService.getData(refresh,type).subscribe(res => {
 			this.perturbations = res;
 			console.log("perturbations:");
 			console.log(res);
