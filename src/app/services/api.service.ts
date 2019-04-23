@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NetworkService, ConnectionStatus } from './network.service';
 import { Storage } from '@ionic/storage';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { tap, map, catchError } from "rxjs/operators";
  
 //const API_STORAGE_KEY = 'specialkey';
@@ -27,18 +27,29 @@ export class ApiService {
     
     ) { }
  
-  getData(forceRefresh: boolean = false, requeteType: string = "base", id: number = 0): Observable<any[]> {
+  getData(forceRefresh: boolean = false, requeteType: string = "base", id: number = 0): Observable<any> {
     if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh) {
       // Return the cached data from Storage
-      /*
       if (requeteType == "base")
       {
         return from(this.getLocalData('base'));
       }
       else if (requeteType == "maille")
       {
-        return from(this.getLocalData('maille'));
-      }*/
+        return from(this.getLocalData('maille'+id));
+      }
+      else if (requeteType == "visite")
+      {
+        return from(this.getLocalData('visite'+id));
+      }
+      else if(requeteType == "observeur")
+      {
+        return from(this.getLocalData('observeur'))
+      }
+      else if(requeteType == "perturbations")
+      {
+        return from(this.getLocalData('perturbations'))
+      }
 
     } else {      
       // Return real API data and store it locally
@@ -52,7 +63,7 @@ export class ApiService {
           catchError(err => {
             console.error(err);
             console.log("renvoi des données locales");
-            throw this.getLocalData('base');
+            throw from(this.getLocalData('base'));
           })
         )
       }
@@ -65,7 +76,7 @@ export class ApiService {
           catchError(err => {
             console.error(err);
             console.log("renvoi des données locales");
-            throw this.getLocalData('visite'+id);
+            throw from(this.getLocalData('visite'+id));
           })
         )
       }
@@ -78,7 +89,7 @@ export class ApiService {
           catchError(err => {
             console.error(err);
             console.log("renvoi des données locales");
-            throw this.getLocalData('maille'+id);
+            throw from(this.getLocalData('maille'+id));
           })
         )
       }
@@ -91,7 +102,7 @@ export class ApiService {
           catchError(err => {
             console.error(err);
             console.log("renvoi des données locales");
-            throw this.getLocalData('observeur');
+            throw from(this.getLocalData('observeur'));
           })
         )
       }
@@ -104,7 +115,7 @@ export class ApiService {
           catchError(err => {
             console.error(err);
             console.log("renvoi des données locales");
-            throw this.getLocalData('perturbations');
+            throw from(this.getLocalData('perturbations'));
           })
         )
       }
