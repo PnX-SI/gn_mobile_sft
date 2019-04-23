@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {LocalVariablesService} from '../services/local-variables.service'
+import { File } from '@ionic-native/file/ngx'
 
 
 @Component({
@@ -15,10 +16,11 @@ export class SettingPage implements OnInit {
 	constructor
 	(
 		private router:Router,
-		private local: LocalVariablesService
+		private local: LocalVariablesService,
+		private file: File
 	) 
 	{
-		this.settings = local.getSettings()
+		this.settings = this.local.getSettings()
 	}
 
 	ngOnInit() 
@@ -28,6 +30,23 @@ export class SettingPage implements OnInit {
 	
 	setSettings()
 	{
+		this.local.setSettings(this.settings);
+		this.file.checkFile(this.file.externalDataDirectory+"settings/","settings.json").then(res =>
+		{
+			console.log("settings.json trouvé")
+			this.file.writeExistingFile(this.file.externalDataDirectory+"settings","settings.json", JSON.stringify(this.settings)).then(res =>{
+				console.log("ecriture de settings.json")
+			},err => {
+				console.log("Erreur: impossible d'écrire dans settings.json")
+			})
+		},err =>
+		{
+			console.log("erreur: settings.json n'existe pas")
+		})
+	}
 
+	goToHome()
+	{
+		this.router.navigate(['/home'])
 	}
 }

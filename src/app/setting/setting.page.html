@@ -1,7 +1,9 @@
 <ion-header>
 	<ion-toolbar >
 	  	<ion-buttons slot="start">
-		  <ion-back-button></ion-back-button>
+			<ion-button (click)="goToHome()" slot="end">
+				<ion-icon name="arrow-back"></ion-icon>
+			  </ion-button>
 		</ion-buttons>
 		<ion-title>Paramètres /!\WIP/!\</ion-title>
 	</ion-toolbar>
@@ -18,11 +20,11 @@
 			</ion-item-divider>
 			<ion-item>
 				<ion-label position="stacked">latitude:</ion-label>
-				<ion-input type="number" value="{{settings.latitude}}"></ion-input>
+				<ion-input type="number" value="{{settings.Default_Lat}}" [(ngModel)]="settings.Default_Lat"></ion-input>
 			</ion-item>
 			<ion-item>
 				<ion-label position="stacked">longitude:</ion-label>
-				<ion-input type="number" value="{{settings.longitude}}"></ion-input>
+				<ion-input type="number" value="{{settings.Default_Lon}}" [(ngModel)]="settings.Default_Lon"></ion-input>
 			</ion-item>
 			<ion-item>
 				<ion-button>centrer par rapport a ici</ion-button>
@@ -33,11 +35,11 @@
 		</ion-list-header>
 		<ion-item>
 			<ion-label position="stacked">URL:</ion-label>
-			<ion-input type="url" value="{{settings.Api_URL}}"></ion-input>
+			<ion-input type="url" value="{{settings.API_URL}}" [(ngModel)]="settings.API_URL"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label position="stacked">dossier:</ion-label>
-			<ion-input type="texte" value="{{settings.Api_Dir}}"></ion-input>
+			<ion-input type="texte" value="{{settings.API_Dir}}" [(ngModel)]="settings.API_Dir"></ion-input>
 		</ion-item>
 		<ion-button expand="block" (click)="setSettings()">
 			Valider les nouveaux parametres

@@ -58,7 +58,7 @@ export class AppComponent {
       //on verifie l'existence des dossiers et fichiers qui nous interressent
       this.file.checkDir(this.file.externalDataDirectory,"settings").then(res =>
       {
-        this.file.checkFile(this.file.externalDataDirectory,"settings.json").then(res =>
+        this.file.checkFile(this.file.externalDataDirectory+"settings/","settings.json").then(res =>
         {
           console.log("settings.json trouvé")
           this.file.readAsBinaryString(this.file.externalDataDirectory+"settings","settings.json").then(res =>{
