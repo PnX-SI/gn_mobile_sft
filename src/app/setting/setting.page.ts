@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {LocalVariablesService} from '../services/local-variables.service'
 import { File } from '@ionic-native/file/ngx'
 import {Geolocation} from '@ionic-native/geolocation/ngx'
+import {AppVersion} from '@ionic-native/app-version/ngx'
 
 
 
@@ -14,16 +15,21 @@ import {Geolocation} from '@ionic-native/geolocation/ngx'
 export class SettingPage implements OnInit {
 	
 	settings = JSON
+	version = "0"
 
 	constructor
 	(
 		private router:Router,
 		private local: LocalVariablesService,
 		private file: File,
-		private geoloc: Geolocation
+		private geoloc: Geolocation,
+		private appVersion: AppVersion
 	) 
 	{
 		this.settings = this.local.getSettings()
+		this.appVersion.getVersionNumber().then(res =>{
+			this.version = res
+		})
 	}
 
 	ngOnInit() 
