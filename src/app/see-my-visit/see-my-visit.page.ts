@@ -63,7 +63,7 @@ export class SeeMyVisitPage implements OnInit {
       
       this.totalMailles = res.length;
 
-      //ont appelle la visite locale
+      //ont appelle la visite stocker en locale
       this.storage.get("visiteSite"+this.id).then((res) => {
         this.MyVisit = res
         console.log(this.MyVisit)

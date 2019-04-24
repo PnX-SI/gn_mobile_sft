@@ -44,6 +44,7 @@ export class VisionnagePage implements OnInit {
 		  if (refresher) {
 			refresher.target.complete();
 		  }
+		  this.reload()
 		});
 	  }
 
@@ -55,8 +56,6 @@ export class VisionnagePage implements OnInit {
 				alert("Avertisement: Vous avez déjà visité ce site. Enregistrer une visite écrasera l'ancienne.")
 			}
 		})
-		
-		this.reload()//on appel un chargement de page
 		//on fait en sorte que la carte soit affiché
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			// tslint:disable-next-line

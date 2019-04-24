@@ -42,22 +42,12 @@ export class StartInputPage implements OnInit {
 		  if (refresher) {
 			refresher.target.complete();
 		  }
+		this.reload(); //on appel un chargement de page
 		});
 	  }
 
 	ionViewDidEnter()//quand on rentre dans la page
 	{			
-		if(this.testeur == 0)
-		{
-			/*
-			si c'est la première fois qu'on rentre dans la page, on fait ça
-			On le fait pas dans le ngOnInit() parce que ça fout la merde
-			et on le fait pas a chaque fois parce qu'a chaque appel y a un popup qui vient
-			et c'est chiant pour l'utilisateur
-			*/
-			this.reload(); //on appel un chargement de page
-			this.testeur = 1;
-		}
 		//on fait en sorte que la carte soit affiché
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		   // tslint:disable-next-line

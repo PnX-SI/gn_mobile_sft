@@ -92,7 +92,9 @@ export class NewVisitPage implements OnInit {
 
 			if (refresher) {
         		refresher.target.complete();
-      		}
+			}
+			  
+			this.reload() //on appel un chargement de page
 		});
 	 }
 	 loadDataObserver(refresh = false,type = "base", refresher?) {
@@ -121,7 +123,6 @@ export class NewVisitPage implements OnInit {
 	{	
 		//on montre qu'on charge des truc
 		document.getElementById("affichChargement").removeAttribute("hidden");
-		setTimeout(() => this.reload(),100); //on appel un chargement de page
 		//on fait en sorte que la carte soit affiché
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			// tslint:disable-next-line
@@ -191,82 +192,68 @@ export class NewVisitPage implements OnInit {
 		});
 		
 		
-		if(this.mailles.length >0)//si la donnée a pu se charger
+		var objet = L.geoJSON(this.mailles,{
+		onEachFeature: (feature, layer) => 
 		{
-			var objet = L.geoJSON(this.mailles,{
-				onEachFeature: (feature, layer) => 
+			layer.on("click", () => //au clique, envoi sur la page visionnage qui correspond
+			{
+				var utilise = false
+				var presence = false
+				var id = 0
+				for(var i = 0; i <this.dataSend.cor_visit_grid.length; i++)
 				{
-					layer.on("click", () => //au clique, envoi sur la page visionnage qui correspond
+					var element = this.dataSend.cor_visit_grid[i]
+					if (element.id_area == feature.id)
 					{
-						var utilise = false
-						var presence = false
-						var id = 0
-						for(var i = 0; i <this.dataSend.cor_visit_grid.length; i++)
-						{
-							var element = this.dataSend.cor_visit_grid[i]
-							if (element.id_area == feature.id)
-							{
-								utilise = true
-								presence = element.presence
-								id = i
-							}
-						}
+						utilise = true
+						presence = element.presence
+						id = i
+					}
+				}
 
-						if(utilise == false) //pas vu to present
-						{
-							layer.setStyle({color:"#00FF00"});
-							this.maillesPresence ++;
-							var objet = {
-								"uuid_basevisite" : null,
-								"id_area" : feature.id,
-								"id_base_visit": null,
-								"presence" : true
+				if(utilise == false) //pas vu to present
+				{
+					layer.setStyle({color:"#00FF00"});
+					this.maillesPresence ++;
+					var objet = {
+						"uuid_basevisite" : null,
+						"id_area" : feature.id,
+						"id_base_visit": null,
+						"presence" : true
 
-							}
-							this.dataSend.cor_visit_grid.push(objet)
-						}
-						else if (utilise && presence) //present to absent
-						{
-							layer.setStyle({color:"#FF0000"});
-							this.maillesAbsence ++;
-							this.maillesPresence --;
-							this.dataSend.cor_visit_grid[id].presence = false;
-						}
-						else //absent to pas vu
-						{
-							layer.setStyle({color:"#3388ff"});
-							this.maillesAbsence --;
-							if (this.dataSend.cor_visit_grid.length <= 1) //si y a qu'un element
-							{
-								this.dataSend.cor_visit_grid.pop()
-							}
-							else //si y en a plusieurs
-							{
-								this.dataSend.cor_visit_grid.splice(id,id+1)
-							}
-						}
-						console.log(this.dataSend.cor_visit_grid)
-						this.maillesNonVisite = this.totalMailles - this.maillesAbsence - this.maillesPresence;
-						
-					}) 
-				} 
-			}).addTo(this.map);	
-			this.map.setView(objet.getBounds().getCenter(), 16);
-			document.getElementById("affichChargement").setAttribute("hidden",null);
-			this.compteReload = 0;
-		}
-		else if (this.compteReload < 10)//sinon, on demande a recharger jusqu'à X fois
-		{
-			this.compteReload ++;
-			setTimeout(() => this.reload(),100); 
-		}
-		else//Si ça répond pas au bout des X fois
-		{
-			alert ("nous n'avons pas réussi a récupérer les données. Veuillez appuyer sur le bouton de rafraichissement.")
-			document.getElementById("affichChargement").setAttribute("hidden",null);
-			this.compteReload = 0;
-		}
-	}	
+					}
+					this.dataSend.cor_visit_grid.push(objet)
+				}
+				else if (utilise && presence) //present to absent
+				{
+					layer.setStyle({color:"#FF0000"});
+					this.maillesAbsence ++;
+					this.maillesPresence --;
+					this.dataSend.cor_visit_grid[id].presence = false;
+				}
+				else //absent to pas vu
+				{
+					layer.setStyle({color:"#3388ff"});
+					this.maillesAbsence --;
+					if (this.dataSend.cor_visit_grid.length <= 1) //si y a qu'un element
+					{
+						this.dataSend.cor_visit_grid.pop()
+					}
+					else //si y en a plusieurs
+					{
+						this.dataSend.cor_visit_grid.splice(id,id+1)
+					}
+				}
+				console.log(this.dataSend.cor_visit_grid)
+				this.maillesNonVisite = this.totalMailles - this.maillesAbsence - this.maillesPresence;
+				
+				}) 
+			} 
+		}).addTo(this.map);	
+		this.map.setView(objet.getBounds().getCenter(), 16);
+		document.getElementById("affichChargement").setAttribute("hidden",null);
+		this.compteReload = 0;
+	}
 	
 	//quand on trouve l'utilisateur
 	onLocationFound(e)
