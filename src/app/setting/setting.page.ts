@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {LocalVariablesService} from '../services/local-variables.service'
 import { File } from '@ionic-native/file/ngx'
+import {Geolocation} from '@ionic-native/geolocation/ngx'
+
 
 
 @Component({
@@ -17,7 +19,8 @@ export class SettingPage implements OnInit {
 	(
 		private router:Router,
 		private local: LocalVariablesService,
-		private file: File
+		private file: File,
+		private geoloc: Geolocation
 	) 
 	{
 		this.settings = this.local.getSettings()
@@ -43,6 +46,16 @@ export class SettingPage implements OnInit {
 		},err =>
 		{
 			console.log("erreur: settings.json n'existe pas")
+		})
+	}
+
+	getPos()
+	{
+		this.geoloc.getCurrentPosition().then(res=>{
+			this.settings["Default_Lat"] = res.coords.latitude
+			this.settings["Default_Lon"] = res.coords.longitude
+		},err =>{
+			alert(err.message)
 		})
 	}
 

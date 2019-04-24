@@ -14,7 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Network } from '@ionic-native/network/ngx';
 import { TaxonPipe } from './filtre/taxon.pipe';
 import { File } from '@ionic-native/file/ngx';
-
+import {Geolocation} from '@ionic-native/geolocation/ngx'
 
 @NgModule({
   declarations: [AppComponent, TaxonPipe],
@@ -31,7 +31,8 @@ import { File } from '@ionic-native/file/ngx';
     { provide: RouteReuseStrategy, 
       useClass: IonicRouteStrategy },
     Network,
-    File
+    File,
+    Geolocation
   ],
   bootstrap: [AppComponent]
 })

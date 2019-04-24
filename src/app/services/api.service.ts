@@ -61,7 +61,7 @@ export class ApiService {
       
       if (requeteType == "base")
       {
-        console.log("api url:"+this.local.getSettings()['API_URL']+" api dir:"+this.local.getSettings()['API_Dir'])
+        //console.log("api url:"+this.local.getSettings()['API_URL']+" api dir:"+this.local.getSettings()['API_Dir'])
         return this.http.get(`${this.local.getSettings()['API_URL']}/${this.local.getSettings()['API_Dir']}/sites?id_application=7&id_area_type=25`).pipe(
           map(res => 
             res['features']

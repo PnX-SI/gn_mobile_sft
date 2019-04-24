@@ -27,7 +27,7 @@
 				<ion-input type="number" value="{{settings.Default_Lon}}" [(ngModel)]="settings.Default_Lon"></ion-input>
 			</ion-item>
 			<ion-item>
-				<ion-button>centrer par rapport a ici</ion-button>
+				<ion-button (click)="getPos()">centrer par rapport a ici</ion-button>
 			</ion-item>
 		</ion-item-group>
 		<ion-list-header>
