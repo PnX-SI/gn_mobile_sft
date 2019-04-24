@@ -43,13 +43,6 @@ export class SeeMyVisitPage implements OnInit {
       //on call une lecture de données
       this.loadDataVisite(true,"visite",this.id);
       this.loadDataMailles(true, "maille",this.id);
-      this.storage.get("visiteSite"+this.id).then((res) => {
-        this.MyVisit = res
-        console.log(this.MyVisit)
-        this.maillesNonVisite = this.totalMailles - this.MyVisit["cor_visit_grid"].length
-
-      }  
-    )
     });  
     
   }
@@ -69,6 +62,15 @@ export class SeeMyVisitPage implements OnInit {
       console.log(res);
       
       this.totalMailles = res.length;
+
+      //ont appelle la visite locale
+      this.storage.get("visiteSite"+this.id).then((res) => {
+        this.MyVisit = res
+        console.log(this.MyVisit)
+        this.maillesNonVisite = this.totalMailles - this.MyVisit["cor_visit_grid"].length
+
+      }  
+    )
 
       if (refresher) {
             refresher.target.complete();
