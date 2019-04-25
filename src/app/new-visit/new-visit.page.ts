@@ -122,15 +122,12 @@ export class NewVisitPage implements OnInit {
 
   	ionViewDidEnter()//quand on rentre dans la page
 	{	
-		//on montre qu'on charge des truc
-		document.getElementById("affichChargement").removeAttribute("hidden");
 		//on fait en sorte que la carte soit affiché
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			// tslint:disable-next-line
 			attribution: '&copy; OpenStreetMap',
 			maxZoom: 18
 		}).addTo(this.map);	
-		
 	}
 
   	ngOnInit()  //quand on créé la page
