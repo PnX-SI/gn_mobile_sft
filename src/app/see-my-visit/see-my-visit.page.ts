@@ -4,9 +4,11 @@ import { Storage } from '@ionic/storage';
 
 import { ApiService } from '../services/api.service';
 
-import * as L from 'leaflet';
+import 'leaflet';
+import 'leaflet-tilelayer-mbtiles'
 import * as geoJSON from 'geojson';
 
+declare var L: any;
 @Component({
   selector: 'app-see-my-visit',
   templateUrl: './see-my-visit.page.html',
@@ -88,7 +90,7 @@ export class SeeMyVisitPage implements OnInit {
       attribution: '&copy; OpenStreetMap',
       maxZoom: 18
     }).addTo(this.map);	
-    
+
   }
 
   ngOnInit()  //quand on créé la page
