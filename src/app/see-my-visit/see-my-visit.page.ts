@@ -5,7 +5,7 @@ import { Storage } from '@ionic/storage';
 import { ApiService } from '../services/api.service';
 
 import 'leaflet';
-import 'leaflet-tilelayer-mbtiles'
+//import 'leaflet-tilelayer-mbtiles'
 import * as geoJSON from 'geojson';
 
 declare var L: any;
