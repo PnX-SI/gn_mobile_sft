@@ -4,6 +4,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import { ApiService } from '../services/api.service';
 
 import * as L from 'leaflet';
+import * as geoJSON from 'geojson';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class NewVisitPage implements OnInit {
 	id;
 	marque;
 	visite = [];
-	mailles = [];
+	mailles: geoJSON.FeatureCollection;
 	observer = [];
 	perturbations = [];
 	compteReload = 0;
@@ -137,7 +138,7 @@ export class NewVisitPage implements OnInit {
 		//assignation de la carte
 		this.map = new L.Map('mapVisit');
 		//on fait en sorte que la carte ai une échelle (pour se repérer c'est cool)
-		L.control.scale("metric").addTo(this.map);
+		L.control.scale().addTo(this.map);
 		//on setup ce qu'il se passe si on géolocalise l'utilisateur (on s'en fout de pas le trouver)	
 		this.map.on('locationfound', (e)=> {this.onLocationFound(e)});
 		
@@ -259,7 +260,7 @@ export class NewVisitPage implements OnInit {
 	onLocationFound(e)
 	{
 		//on pose un marqueur sur sa position
-		this.marque = L.marker(e["latlng"],L.Icon.Default).addTo(this.map)
+		this.marque = L.marker(e["latlng"]).addTo(this.map)
 	}
 
 	toggleAffichage()

@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage';
 import { ApiService } from '../services/api.service';
 
 import * as L from 'leaflet';
+import * as geoJSON from 'geojson';
 
 @Component({
   selector: 'app-see-my-visit',
@@ -17,7 +18,7 @@ export class SeeMyVisitPage implements OnInit {
   id;
   marque;
   visite = [];
-  mailles = [];
+  mailles:geoJSON.FeatureCollection;
   MyVisit = [];
   compteReload = 0;
   modif = 100;
@@ -68,13 +69,12 @@ export class SeeMyVisitPage implements OnInit {
         this.MyVisit = res
         console.log(this.MyVisit)
         this.maillesNonVisite = this.totalMailles - this.MyVisit["cor_visit_grid"].length
-
       }  
-    )
-
+      )
       if (refresher) {
-            refresher.target.complete();
-          }
+        refresher.target.complete();
+      }
+      this.reload()
     });
   }
   /*****************************/
@@ -83,7 +83,6 @@ export class SeeMyVisitPage implements OnInit {
   {	
     //on montre qu'on charge des truc
     document.getElementById("affichChargement").removeAttribute("hidden");
-    setTimeout(() => this.reload(),100); //on appel un chargement de page
     //on fait en sorte que la carte soit affiché
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       // tslint:disable-next-line
@@ -98,7 +97,7 @@ export class SeeMyVisitPage implements OnInit {
     //assignation de la carte
     this.map = new L.Map('mapVision');
     //on fait en sorte que la carte ai une échelle (pour se repérer c'est cool)
-    L.control.scale("metric").addTo(this.map);
+    L.control.scale().addTo(this.map);
   }
 
   ionViewDidLeave()
@@ -119,9 +118,7 @@ export class SeeMyVisitPage implements OnInit {
     //on recharge rapidement la carte
     this.map.invalidateSize(); 
     
-    if(this.mailles.length >0)//si la donnée a pu se charger
-    {
-      var objet = L.geoJSON(this.mailles,{
+    var objet = L.geoJSON(this.mailles,{
         onEachFeature: (feature, layer) => 
         {
           this.MyVisit["cor_visit_grid"].forEach(element => {
@@ -145,18 +142,6 @@ export class SeeMyVisitPage implements OnInit {
       this.map.setView(objet.getBounds().getCenter(), 16);
       document.getElementById("affichChargement").setAttribute("hidden",null);
       this.compteReload = 0;
-    }
-    else if (this.compteReload < 10)//sinon, on demande a recharger jusqu'à X fois
-    {
-      this.compteReload ++;
-      setTimeout(() => this.reload(),100); 
-    }
-    else//Si ça répond pas au bout des X fois
-    {
-      alert ("nous n'avons pas réussi a récupérer les données. Veuillez appuyer sur le bouton de rafraichissement.")
-      document.getElementById("affichChargement").setAttribute("hidden",null);
-      this.compteReload = 0;
-    }
   }	
 
   toggleAffichage()

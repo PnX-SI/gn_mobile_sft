@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import * as L from 'leaflet';
 import { ApiService } from '../services/api.service';
 import {LocalVariablesService} from '../services/local-variables.service'
+import * as geoJSON from 'geojson';
 
 @Component({
   selector: 'app-start-input',
@@ -17,7 +18,7 @@ export class StartInputPage implements OnInit {
 	//variables de la page
 	map:L.Map;
 	marque;
-	data = [];
+	data: geoJSON.FeatureCollection;
 	testeur = 0;
 	modif = 100;
 	eventInterval
@@ -62,7 +63,7 @@ export class StartInputPage implements OnInit {
 		//assiniation de la carte
 		this.map = new L.Map('mapProspec');
 		//on fait en sorte que la carte ai une échelle (pour se repérer c'est cool)
-		L.control.scale("metric").addTo(this.map);
+		L.control.scale().addTo(this.map);
 		this.default_Lat = this.local.getSettings()['Default_Lat']
 		this.default_Long = this.local.getSettings()['Default_Lon']
 		console.log("Lat ="+this.default_Lat)
@@ -138,135 +139,16 @@ export class StartInputPage implements OnInit {
 	
 	//quand on trouve l'utilisateur
 	onLocationFound(e) {
-		//on lui demande s'il veux être automatiquement envoyé sur la visite la plus proche de lui
-		var confirmation = confirm("Vous avez été géolocaliser.\rVoulez vous que l'appli vérifie si vous êtes a proximité d'un lieu a visiter? (cela peut prendre du temps)")
-		if(confirmation) // si l'utilisateur dit oui
-		{
-			//on utilise un algo de tri pour voir si l'utilisateur se trouve pas loin d'une visite
-			var identifiant = NaN
-			for (var i=0;i<this.data.length;i++) //lecture de la donnée stoquée en i
-			{
-				//préparation des données de bases
-				var thisLength = this.data[i]["geometry"]["coordinates"][0][0].length
-				var lonMin = this.data[i]["geometry"]["coordinates"][0][0][0][0]
-				var lonMax = this.data[i]["geometry"]["coordinates"][0][0][thisLength-1][0]
-				
-				//début algo de tri pour trouver la plus basse longitude
-				for (var j=0;j<this.data[i]["geometry"]["coordinates"][0][0].length;j++)
-				{
-					var min = j
-					var max = this.data[i]["geometry"]["coordinates"][0][0].length-1
-					
-					for(var h=j+1;h<this.data[i]["geometry"]["coordinates"][0][0].length;h++)
-					{
-						if(this.data[i]["geometry"]["coordinates"][0][0][h][0]<this.data[i]["geometry"]["coordinates"][0][0][min][0])
-						{
-							min = h
-						}
-						else if (this.data[i]["geometry"]["coordinates"][0][0][h][0]>this.data[i]["geometry"]["coordinates"][0][0][max][0])
-						{
-							max = h
-						}
-					}
-					if(min != j)
-					{
-						lonMin = this.data[i]["geometry"]["coordinates"][0][0][min][0]
-						
-					}
-					if(max != this.data[i]["geometry"]["coordinates"][0][0].length-1)
-					{
-						lonMax = this.data[i]["geometry"]["coordinates"][0][0][max][0]
-						
-					}
-					
-				}//fin algo de tri pour trouver la plus basse longitude
-
-				var latMin = this.data[i]["geometry"]["coordinates"][0][0][0][1]
-				var latMax = this.data[i]["geometry"]["coordinates"][0][0][thisLength-1][1]
-				//début algo de tri pour trouver la plus basse latitude
-				for (var j=0;j<this.data[i]["geometry"]["coordinates"][0][0].length;j++)
-				{
-					var min = j
-					var max = this.data[i]["geometry"]["coordinates"][0][0].length-1
-					
-					for(var h=j+1;h<this.data[i]["geometry"]["coordinates"][0][0].length;h++)
-					{
-						if(this.data[i]["geometry"]["coordinates"][0][0][h][1]<this.data[i]["geometry"]["coordinates"][0][0][min][1])
-						{
-							min = h
-						}
-						else if (this.data[i]["geometry"]["coordinates"][0][0][h][1]>this.data[i]["geometry"]["coordinates"][0][0][max][1])
-						{
-							max = h
-						}
-					}
-					if(min != j)
-					{
-						latMin = this.data[i]["geometry"]["coordinates"][0][0][min][1]
-						
-					}
-					if(max != this.data[i]["geometry"]["coordinates"][0][0].length-1)
-					{
-						latMax = this.data[i]["geometry"]["coordinates"][0][0][max][1]
-						
-					}
-					
-				}//fin algo de tri pour trouver la plus basse latitude
-				
-				//si on trouve une correspondance, on arrete l'algo plus tot
-				if (lonMin <= e["longitude"] && e["longitude"]<=lonMax && latMin <= e["latitude"] && e["latitude"] <= latMax)
-				{
-					identifiant = this.data[i]["id"];
-					break
-				}
-			} // fin de lecture de donnée
-			
-			/*//outil de débug
-			//décommantez si vous voulez vérifier que la redirection ce fait bien
-			// mais que vous n'êtes pas proche d'une visite
-			var debug = confirm("Debug?")
-			if(debug)
-			{
-				identifiant = parseInt(prompt("entrez un idendifiant", "2"));
-			}*/
-			
-
-			if (identifiant) //si on a trouver une visite
-			{
-				alert("Nous avons trouvé une zone a visualiser autour de vous.\rRedirection.")
-				// on place la vue sur l'utilisateur (pour que quand l'utilisateur part, il soit centré sur lui)
-				this.map.setView(
-					/*centre*/[e["latitude"], e["longitude"]],
-					/*zoom*/11
-					);
-				//on redirige sur la page visionnage qui correspond
-				this.router.navigate(['/visionnage',{id:identifiant}]);	
-			}
-			else //si on a rien trouver
-			{
-				alert("Nous n'avons pas trouvé de zone a visualiser autour de vous.\rNous allons afficher les environs autour de vous")
-				//on centre la carte sur l'utilisateur
-				this.map.setView(
-					/*centre*/[e["latitude"], e["longitude"]],
-					/*zoom*/11
-					);
-			}
-		}
-		else
-		{
-			alert("Nous allons afficher les environs autour de vous")
-			//on centre la carte sur l'utilisateur
-			this.map.setView(
-				/*centre*/[e["latitude"], e["longitude"]],
-				/*zoom*/11
-				);
-		}
-		this.marque = L.marker(e["latlng"],L.Icon.Default).addTo(this.map); //on place une marque où ce trouve l'utilisateur
+		this.map.setView(
+			/*centre*/[e["latitude"], e["longitude"]],
+			/*zoom*/11
+			);
+		this.marque = L.marker(e["latlng"]).addTo(this.map); //on place une marque où ce trouve l'utilisateur
 		//on indique qu'on a fini de charger
 		document.getElementById("affichChargement").setAttribute("hidden",null);
 	}
 	
-	//quand on ne trouve pas l'utilisateur
+	//quand on ne trouve pas l'utilisateur 
 	onLocationError(e) {
 		console.error(e.message)//on vois le message d'erreur sur la console
 		alert(e.message + "\rNous allons afficher la carte par défaut");//on dit pourquoi on l'as pas trouver
