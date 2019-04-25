@@ -69,7 +69,8 @@ export class ApiService {
           catchError(err => {
             console.error(err);
             console.log("renvoi des données locales");
-            throw from(this.getLocalData('base'));
+
+            return from(this.getLocalData('base'));
           })
         )
       }
@@ -82,7 +83,7 @@ export class ApiService {
           catchError(err => {
             console.error(err);
             console.log("renvoi des données locales");
-            throw from(this.getLocalData('visite'+id));
+            return from(this.getLocalData('visite'+id));
           })
         )
       }
@@ -95,7 +96,7 @@ export class ApiService {
           catchError(err => {
             console.error(err);
             console.log("renvoi des données locales");
-            throw from(this.getLocalData('maille'+id));
+            return from(this.getLocalData('maille'+id));
           })
         )
       }
@@ -108,7 +109,7 @@ export class ApiService {
           catchError(err => {
             console.error(err);
             console.log("renvoi des données locales");
-            throw from(this.getLocalData('observeur'));
+            return from(this.getLocalData('observeur'));
           })
         )
       }
@@ -121,7 +122,7 @@ export class ApiService {
           catchError(err => {
             console.error(err);
             console.log("renvoi des données locales");
-            throw from(this.getLocalData('perturbations'));
+            return from(this.getLocalData('perturbations'));
           })
         )
       }
