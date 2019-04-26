@@ -5,8 +5,9 @@ import { Storage } from '@ionic/storage';
 import { ApiService } from '../services/api.service';
 
 import 'leaflet';
-//import 'leaflet-tilelayer-mbtiles'
+import 'leaflet-tilelayer-mbtiles-ts'
 import * as geoJSON from 'geojson';
+
 
 declare var L: any;
 @Component({
@@ -17,10 +18,10 @@ declare var L: any;
 export class SeeMyVisitPage implements OnInit {
   //variables de la page
   map:L.Map;
-  id;
+  id; 
   marque;
-  visite = [];
-  mailles:geoJSON.FeatureCollection;
+  visite = []; 
+  mailles:geoJSON.FeatureCollection; 
   MyVisit = [];
   compteReload = 0;
   modif = 100;
@@ -90,6 +91,7 @@ export class SeeMyVisitPage implements OnInit {
       attribution: '&copy; OpenStreetMap',
       maxZoom: 18
     }).addTo(this.map);	
+    L.tileLayer.mbtiles("../ortho.mbtiles")
 
   }
 
