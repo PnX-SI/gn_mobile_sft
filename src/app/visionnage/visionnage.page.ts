@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import { Storage } from '@ionic/storage';
-
+import { File } from '@ionic-native/file/ngx'
 
 import 'leaflet';
 import 'leaflet-tilelayer-mbtiles-ts'
@@ -30,7 +30,8 @@ export class VisionnagePage implements OnInit {
 		private router:Router, 
 		private route: ActivatedRoute,
 		private apiService: ApiService,
-		private storage: Storage
+		private storage: Storage,
+		private file:File
 	) 
 	{ 
 		//on lis les paramêtres qu'on a passé
@@ -67,8 +68,8 @@ export class VisionnagePage implements OnInit {
 			attribution: '&copy; OpenStreetMap',
 			maxZoom: 18
 		}).addTo(this.map);
-		//Carte mbtile. TODO: la faire charger qu'en mode offline, la faire chercher dans les dossiers locals du portable
-		L.tileLayer.mbTiles('assets/mbtiles/countries-raster.mbtiles',{
+		//Carte mbtile. TODO: la faire charger qu'en mode offline
+		L.tileLayer.mbTiles(this.file.externalDataDirectory+"MBTilesLocales/cartes.mbtiles",{
 			maxZoom: 18,
 			attribution: "local"
 		  }).addTo(this.map)

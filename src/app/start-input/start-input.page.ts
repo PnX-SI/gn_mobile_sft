@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { File } from '@ionic-native/file/ngx'
 
 
 import { ApiService } from '../services/api.service';
@@ -35,7 +36,8 @@ export class StartInputPage implements OnInit {
 		private menu: MenuController, 
 		private router: Router,
 		private apiService: ApiService,
-		private local: LocalVariablesService
+		private local: LocalVariablesService,
+		private file:File
 		) 
 	{
 		this.loadData(true);//on charge des données		
@@ -60,8 +62,8 @@ export class StartInputPage implements OnInit {
 		  attribution: '&copy; OpenStreetMap',
 		  maxZoom: 18
 		}).addTo(this.map);
-		//Carte mbtile. TODO: la faire charger qu'en mode offline, la faire chercher dans les dossiers locals du portable
-		L.tileLayer.mbTiles('assets/mbtiles/countries-raster.mbtiles',{
+		//Carte mbtile. TODO: la faire charger qu'en mode offline
+		L.tileLayer.mbTiles(this.file.externalDataDirectory+"MBTilesLocales/cartes.mbtiles",{
 			maxZoom: 18,
 			attribution: "local"
 		  }).addTo(this.map)	
