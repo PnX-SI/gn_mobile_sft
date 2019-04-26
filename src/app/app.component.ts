@@ -55,7 +55,8 @@ export class AppComponent {
         }
       });
 
-      //on verifie l'existence des dossiers et fichiers qui nous interressent
+      /*on verifie l'existence des dossiers et fichiers qui nous interressent*/
+      //settings
       this.file.checkDir(this.file.externalDataDirectory,"settings").then(res =>
       {
         this.file.checkFile(this.file.externalDataDirectory+"settings/","settings.json").then(res =>
@@ -111,7 +112,32 @@ export class AppComponent {
         console.log("nous n'avons pas pu créer le dossier")
       })
       });
+      //dossier des mbtiles
+      this.file.checkDir(this.file.externalDataDirectory,"MBTilesLocales").then(res => {
+        this.file.checkFile(this.file.externalDataDirectory+"MBTilesLocales/","cartes.mbtiles").then(res =>
+        {
+          console.log("cartes.mbtiles présent")
+        }, err =>
+        {
+          //TODO quand le téléchargement sera mis en place, changer le texte
+          alert("Vous devez placer le fichier \"cartes.mbtiles\" dans le dossier: \n"+this.file.externalDataDirectory+"MBTilesLocales"+"\npour avoir vos cartes en local")
+          //console.log("Vous devez placer le fichier \"cartes.mbtiles\" dans le dossier: \n"+this.file.externalDataDirectory+"MBTilesLocales"+"\npour avoir vos cartes en local")
+        })
+      }, err =>
+      {
+        console.log("le dossier MBTilesLocales n'existe pas. Nous allons le créer")
+        this.file.createDir(this.file.externalDataDirectory,"MBTilesLocales",false).then(res =>
+        {
+          //TODO quand le téléchargement sera mis en place, changer le texte
+          alert("Dossier de cartes locales créé. Vous devez placer le fichier \"cartes.mbtiles\" dans le dossier: \n"+this.file.externalDataDirectory+"MBTilesLocales"+"\npour avoir vos cartes en local")
+          //console.log("Dossier de cartes locales créé. Vous devez placer le fichier \"cartes.mbtiles\" dans le dossier: \n"+this.file.externalDataDirectory+"MBTilesLocales"+"\npour avoir vos cartes en local")
+        }, err=>{
+          console.log("nous n'avons pas pu créer le dossier")
+        })
+      })
+      /**************************************************************/
     })
+    
   }
 }
 
