@@ -8,8 +8,8 @@ import 'leaflet';
 import 'leaflet-tilelayer-mbtiles-ts'
 import * as geoJSON from 'geojson';
 
-
 declare var L: any;
+
 @Component({
   selector: 'app-see-my-visit',
   templateUrl: './see-my-visit.page.html',
@@ -90,9 +90,13 @@ export class SeeMyVisitPage implements OnInit {
       // tslint:disable-next-line
       attribution: '&copy; OpenStreetMap',
       maxZoom: 18
-    }).addTo(this.map);	
-    L.tileLayer.mbTiles("../ortho.mbtiles") 
-
+    }).addTo(this.map);
+    //Carte mbtile. TODO: la faire charger qu'en mode offline, la faire chercher dans les dossiers locals du portable
+    L.tileLayer.mbTiles('assets/mbtiles/countries-raster.mbtiles',{
+      maxZoom: 18,
+      attribution: "local"
+    }).addTo(this.map)
+    
   }
 
   ngOnInit()  //quand on créé la page

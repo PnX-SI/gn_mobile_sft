@@ -2,10 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
-import * as L from 'leaflet';
+
 import { ApiService } from '../services/api.service';
 import {LocalVariablesService} from '../services/local-variables.service'
+
+import 'leaflet';
+import 'leaflet-tilelayer-mbtiles-ts'
 import * as geoJSON from 'geojson';
+
+declare var L: any;
 
 @Component({
   selector: 'app-start-input',
@@ -55,6 +60,11 @@ export class StartInputPage implements OnInit {
 		  attribution: '&copy; OpenStreetMap',
 		  maxZoom: 18
 		}).addTo(this.map);
+		//Carte mbtile. TODO: la faire charger qu'en mode offline, la faire chercher dans les dossiers locals du portable
+		L.tileLayer.mbTiles('assets/mbtiles/countries-raster.mbtiles',{
+			maxZoom: 18,
+			attribution: "local"
+		  }).addTo(this.map)	
 		
 	}
 	
