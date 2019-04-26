@@ -91,7 +91,7 @@ export class SeeMyVisitPage implements OnInit {
       attribution: '&copy; OpenStreetMap',
       maxZoom: 18
     }).addTo(this.map);	
-    L.tileLayer.mbtiles("../ortho.mbtiles")
+    L.tileLayer.mbTiles("../ortho.mbtiles") 
 
   }
 
