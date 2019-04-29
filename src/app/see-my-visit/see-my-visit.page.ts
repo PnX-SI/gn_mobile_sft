@@ -93,13 +93,13 @@ export class SeeMyVisitPage implements OnInit {
       attribution: '&copy; OpenStreetMap',
       maxZoom: 18
     }).addTo(this.map);
-    //Carte mbtile. TODO: la faire charger qu'en mode offline
-    var fileUrl
-    this.file.resolveDirectoryUrl(this.file.externalDataDirectory+"MBTilesLocales/").then(res => res = fileUrl)
-    L.tileLayer.mbTiles(this.file.getFile(fileUrl,"cartes.mbtiles",{}),{
-      maxZoom: 18,
-      attribution: "local"
-    }).addTo(this.map)
+    //Carte mbtile. TODO:  la faire charger qu'en mode offline
+		this.file.readAsArrayBuffer(this.file.externalDataDirectory+"MBTilesLocales/", "cartes.mbtiles").then(res =>{
+			L.tileLayer.mbTiles(res,{
+				maxZoom: 18,
+				attribution: "local"
+			  }).addTo(this.map)
+		})
     
   }
 

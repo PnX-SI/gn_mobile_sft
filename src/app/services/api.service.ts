@@ -17,9 +17,6 @@ import {LocalVariablesService} from './local-variables.service'
 })
 export class ApiService {
   
-  //API_URL = this.local.getSettings()['API_URL']
-  //API_REPO = this.local.getSettings()['API_Dir']
-
   constructor
   (
     private http: HttpClient, 
@@ -29,7 +26,7 @@ export class ApiService {
     private local: LocalVariablesService
     
     ) {
-
+    
     }
  
   getData(forceRefresh: boolean = false, requeteType: string = "base", id: number = 0): Observable<any> {
