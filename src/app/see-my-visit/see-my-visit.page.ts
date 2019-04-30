@@ -8,6 +8,7 @@ import { ApiService } from '../services/api.service';
 import 'leaflet';
 import 'leaflet-tilelayer-mbtiles-ts'
 import * as geoJSON from 'geojson';
+import { ConnectionStatus, NetworkService } from '../services/network.service';
 
 declare var L: any;
 
@@ -39,7 +40,8 @@ export class SeeMyVisitPage implements OnInit {
       private route: ActivatedRoute,
       private apiService: ApiService,
       private storage:Storage,
-      private file:File
+      private file:File,
+      private networkService: NetworkService
     ) 
   {
     //on lis les paramêtres qu'on a passé
@@ -88,18 +90,25 @@ export class SeeMyVisitPage implements OnInit {
   ionViewDidEnter()//quand on rentre dans la page
   {	
     //on fait en sorte que la carte soit affiché
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		if(this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Online)
+    {
+      //Carte online (png via OSM)
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       // tslint:disable-next-line
       attribution: '&copy; OpenStreetMap',
       maxZoom: 18
-    }).addTo(this.map);
-    //Carte mbtile. TODO:  la faire charger qu'en mode offline
-		this.file.readAsArrayBuffer(this.file.externalDataDirectory+"MBTilesLocales/", "cartes.mbtiles").then(res =>{
-			L.tileLayer.mbTiles(res,{
-				maxZoom: 18,
-				attribution: "local"
-			  }).addTo(this.map)
-		})
+      }).addTo(this.map);
+    }
+    else
+    {
+      //Carte offline (mbTiles)
+      this.file.readAsArrayBuffer(this.file.externalDataDirectory+"MBTilesLocales/", "cartes.mbtiles").then(res =>{
+        L.tileLayer.mbTiles(res,{
+          maxZoom: 18,
+          attribution: "local"
+        }).addTo(this.map)
+      })
+    }
     
   }
 

@@ -9,6 +9,7 @@ import * as geoJSON from 'geojson';
 
 declare var L: any;
 import { ApiService } from '../services/api.service';
+import { ConnectionStatus, NetworkService } from '../services/network.service';
 
 @Component({
   selector: 'app-visionnage',
@@ -31,7 +32,8 @@ export class VisionnagePage implements OnInit {
 		private route: ActivatedRoute,
 		private apiService: ApiService,
 		private storage: Storage,
-		private file:File
+		private file:File,
+		private networkService:NetworkService
 	) 
 	{ 
 		//on lis les paramêtres qu'on a passé
@@ -63,24 +65,31 @@ export class VisionnagePage implements OnInit {
 			}
 		})
 		//on fait en sorte que la carte soit affiché
-		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		if(this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Online)
+		{
+			//Carte online (png via OSM)
+			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			// tslint:disable-next-line
 			attribution: '&copy; OpenStreetMap',
 			maxZoom: 18
-		}).addTo(this.map);
-		//Carte mbtile. TODO:  la faire charger qu'en mode offline
-		this.file.readAsArrayBuffer(this.file.externalDataDirectory+"MBTilesLocales/", "cartes.mbtiles").then(res =>{
-			L.tileLayer.mbTiles(res,{
+			}).addTo(this.map);
+		}
+		else
+		{
+			//Carte offline (mbTiles)
+			this.file.readAsArrayBuffer(this.file.externalDataDirectory+"MBTilesLocales/", "cartes.mbtiles").then(res =>{
+				L.tileLayer.mbTiles(res,{
 				maxZoom: 18,
 				attribution: "local"
-			  }).addTo(this.map)
-		})
+				}).addTo(this.map)
+			})
+		}
    
 	}
 
 	ngOnInit() //quand on créé la page
 	{
-		//assiniation de la carte
+		//assignation de la carte
 		this.map = new L.Map('mapVisio');
 		//on fait en sorte que la carte ai une échelle (pour se repérer c'est cool)
 		L.control.scale().addTo(this.map);
