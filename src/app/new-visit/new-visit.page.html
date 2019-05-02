@@ -38,23 +38,25 @@
 						</ion-label>
 					</ion-item>
 					<ion-item>
-						<ion-label>Date de visite: </ion-label>
+						<!--TODO: mettre par défaut a la date du jour-->
+						<ion-label position="stacked">Date de visite: </ion-label>
 						<ion-input required name="date" [(ngModel)]="form.date" type="date" min="{{visite.properties.date_max}}"></ion-input>
 					</ion-item>
 					<ion-item>
-						<ion-label>Observateur(s)</ion-label>
+						<!--TODO: mettre par défaut l'utilisateur connecté-->
+						<ion-label position="stacked">Observateur(s)</ion-label>
 						<ion-select required name="observers" [(ngModel)]="form.observers" multiple="true" >
 							<ion-select-option *ngFor="let item of observer;let i = index;" value="{{i}}">{{item.nom_complet}}</ion-select-option>
 						</ion-select>
 					</ion-item>
 					<ion-item>
-						<ion-label>Perturbation(s)</ion-label>
+						<ion-label position="stacked">Perturbation(s)</ion-label>
 						<ion-select name="perturbations" [(ngModel)]="form.perturbations" multiple="true">
 							<ion-select-option *ngFor="let item of perturbations; let i = index;" value="{{i}}">{{item.label_fr}}</ion-select-option>
 						</ion-select>
 					</ion-item>
 					<ion-item>
-						<ion-label>Commentaires</ion-label>
+						<ion-label position="stacked">Commentaires</ion-label>
 						<ion-textarea name="commentaires" [(ngModel)]="form.commentaires" position="floating" spellcheck="true"></ion-textarea>
 					</ion-item>
 					<ion-item>
