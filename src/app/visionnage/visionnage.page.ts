@@ -45,7 +45,8 @@ export class VisionnagePage implements OnInit {
 			});
 	}
 
-	loadData(refresh = false,type = "base",id = 0, refresher?) {
+	loadData(refresh = false,type = "base",id = 0, refresher?) 
+	{
 		//on part chercher des données dans l'API
 		this.apiService.getData(refresh,type,id).subscribe(res => {
 		this.data = res;//on fait que la variable exporté soit égale aux données
@@ -54,7 +55,7 @@ export class VisionnagePage implements OnInit {
 		  }
 		  this.reload()
 		});
-	  }
+	}
 
 	ionViewDidEnter()//quand on rentre dans la page
 	{  

@@ -296,7 +296,6 @@ export class NewVisitPage implements OnInit {
 
 	CancelVisit()
 	{
-		// TODO:code pour annuler la saisie
 		this.router.navigate(['/start-input']);
 	}	
 	 
@@ -323,27 +322,40 @@ export class NewVisitPage implements OnInit {
 
 	SubmitVisit()
 	{
-		console.log("form")
-		console.log(this.form)
-		//TODO: Fout les données dans this.dataSend
-		this.form.perturbations.forEach(element => {
-			this.dataSend.cor_visit_perturbation.push(this.perturbations[element])
-		});
-		this.form.observers.forEach(element => {
-			this.dataSend.observers.push(this.observer[element])
-		});
-		this.dataSend.id_base_site = this.id
-		this.dataSend.visit_date_max = this.form.date
-		this.dataSend.visit_date_min = this.form.date
-		this.dataSend.comments = this.form.commentaires
-		//this.dataSend.id_base_visit = null
-		//this.dataSend.id_digitiser = null
-		//this.dataSend.uuid_base_visit = null
-		console.log("géré (beta):")
-		console.log("les données sont stockées en local, et non envoyées, car non complète.")
-		console.log(this.dataSend)
-		this.apiService.setLocalData("visiteSite"+this.id,this.dataSend);
-		this.router.navigate(['/home']);
+		console.log("form:",this.form)
+		if(this.form.date !="" && this.form.observers.length > 0 && this.maillesNonVisite != this.totalMailles)
+		{
+			this.form.perturbations.forEach(element => {
+				this.dataSend.cor_visit_perturbation.push(this.perturbations[element])
+			});
+			this.form.observers.forEach(element => {
+				this.dataSend.observers.push(this.observer[element])
+			});
+			this.dataSend.id_base_site = this.id
+			this.dataSend.visit_date_max = this.form.date
+			this.dataSend.visit_date_min = this.form.date
+			this.dataSend.comments = this.form.commentaires
+			//this.dataSend.id_base_visit = null
+			//this.dataSend.id_digitiser = null
+			//this.dataSend.uuid_base_visit = null
+			console.log("géré (beta):")
+			console.log("les données sont stockées en local, et non envoyées, car non complète.")
+			console.log(this.dataSend)
+			this.apiService.setLocalData("visiteSite"+this.id,this.dataSend);
+			this.router.navigate(['/home']);
+		}
+		else if(this.maillesNonVisite == this.totalMailles)
+		{
+			alert("vous n'avez pas visité de mailles")
+		}
+		else if(this.form.observers.length == 0)
+		{
+			alert("aucun observateur sélectionné")
+		}
+		else if(this.form.date =="")
+		{
+			alert("vous n'avez pas mis de date")
+		}
 	}
 	
 }
