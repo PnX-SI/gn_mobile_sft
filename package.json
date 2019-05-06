@@ -1,6 +1,6 @@
 {
   "name": "SuiviFloreTerritoire",
-  "version": "0.2",
+  "version": "0.2.0",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
@@ -49,6 +49,7 @@
     "karma": "^4.1.0",
     "leaflet": "^1.4.0",
     "leaflet-tilelayer-mbtiles-ts": "^1.4.9",
+    "node-sass": "^4.12.0",
     "rxjs": "~6.3.3",
     "sql.js": "^0.5.0",
     "tar": "^4.4.8",
@@ -58,7 +59,7 @@
     "@angular-devkit/architect": "~0.12.3",
     "@angular-devkit/core": "~7.2.3",
     "@angular-devkit/schematics": "~7.2.3",
-    "@angular/cli": "~7.2.3",
+    "@angular/cli": "^7.3.8",
     "@angular/compiler": "^7.2.13",
     "@angular/compiler-cli": "^7.2.13",
     "@angular/language-service": "^7.2.13",

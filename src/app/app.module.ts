@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core'; 
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -24,7 +24,7 @@ import {AppVersion} from '@ionic-native/app-version/ngx'
     IonicModule.forRoot(), 
     AppRoutingModule, 
     IonicStorageModule.forRoot(), 
-    HttpClientModule,
+    HttpClientModule, 
   ],
   providers: [
     StatusBar,
