@@ -131,12 +131,12 @@ export class NewVisitPage implements OnInit {
 		//on fait en sorte que la carte soit affiché
 		if(this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Online)
 		{
-			//Carte online (png via OSM)
-			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-			// tslint:disable-next-line
-			attribution: '&copy; OpenStreetMap',
-			maxZoom: 18
-			}).addTo(this.map);
+			//Carte online (png via OTM)
+			L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+				// tslint:disable-next-line
+				attribution: '&copy; OpenTopoMap',
+				maxZoom: 18
+				}).addTo(this.map);
 		}
 		else
 		{
