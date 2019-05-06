@@ -9,6 +9,7 @@ import 'leaflet';
 import 'leaflet-tilelayer-mbtiles-ts'
 import * as geoJSON from 'geojson';
 import { ConnectionStatus, NetworkService } from '../services/network.service';
+import {LocalVariablesService} from '../services/local-variables.service'
 
 declare var L: any;
 
@@ -41,7 +42,8 @@ export class SeeMyVisitPage implements OnInit {
       private apiService: ApiService,
       private storage:Storage,
       private file:File,
-      private networkService: NetworkService
+      private networkService: NetworkService,
+      private local: LocalVariablesService
     ) 
   {
     //on lis les paramêtres qu'on a passé
@@ -102,7 +104,7 @@ export class SeeMyVisitPage implements OnInit {
     else
     {
       //Carte offline (mbTiles)
-      this.file.readAsArrayBuffer(this.file.externalDataDirectory+"MBTilesLocales/", "cartes.mbtiles").then(res =>{
+      this.file.readAsArrayBuffer(this.file.externalDataDirectory+"MBTilesLocales/", this.local.getSettings()["mbTile_File"]).then(res =>{
         L.tileLayer.mbTiles(res,{
           maxZoom: 18,
           attribution: "local"

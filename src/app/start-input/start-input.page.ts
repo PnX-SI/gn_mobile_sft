@@ -71,7 +71,7 @@ export class StartInputPage implements OnInit {
 		else
 		{
 			//Carte offline (mbTiles)
-			this.file.readAsArrayBuffer(this.file.externalDataDirectory+"MBTilesLocales/", "cartes.mbtiles").then(res =>{
+			this.file.readAsArrayBuffer(this.file.externalDataDirectory+"MBTilesLocales/", this.local.getSettings()["mbTile_File"]).then(res =>{
 				L.tileLayer.mbTiles(res,{
 					maxZoom: 18,
 					attribution: "local"
