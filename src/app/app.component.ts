@@ -14,7 +14,8 @@ const settings =
   API_URL: "http://demo.geonature.fr/geonature/api",
   API_Dir: "sft",
   Default_Lat: 44.5682846,
-  Default_Lon: 6.0634622
+  Default_Lon: 6.0634622,
+  mbTile_File:"cartes.mbtiles"
 }
 
 @Component({

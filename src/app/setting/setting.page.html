@@ -21,6 +21,10 @@
 		<ion-input type="number" value="{{settings.Default_Lon}}" [(ngModel)]="settings.Default_Lon"></ion-input>
 		
 		<ion-button (click)="getPos()">centrer par rapport a ici</ion-button>
+
+		<ion-label><p>Carte hors ligne</p></ion-label>
+		<ion-label position="stacked">Nom du fichier :</ion-label>
+		<ion-input type="text" value="{{settings.mbTile_File}}" [(ngModel)]="settings.mbTile_File"></ion-input>
 	</ion-item-group>
 	<ion-item-group>
 		<h3><strong>API utilisée</strong></h3>
@@ -29,7 +33,7 @@
 		<ion-input type="url" value="{{settings.API_URL}}" [(ngModel)]="settings.API_URL"></ion-input>
 		
 		<ion-label position="stacked">Module :</ion-label>
-		<ion-input type="texte" value="{{settings.API_Dir}}" [(ngModel)]="settings.API_Dir"></ion-input>
+		<ion-input type="text" value="{{settings.API_Dir}}" [(ngModel)]="settings.API_Dir"></ion-input>
 	</ion-item-group>
 
 	<ion-button expand="block" (click)="setSettings()">
