@@ -10,49 +10,36 @@
 </ion-header>
 
 <ion-content padding>
-	<ion-list>
-		<ion-list-header>
-			<ion-label><strong>Paramètres de cartes</strong></ion-label>
-		</ion-list-header>
-		<ion-item-group>
-			<ion-item-divider>
-				<ion-label>Coordonnées hors ligne</ion-label>
-			</ion-item-divider>
-			<ion-item>
-				<ion-label position="stacked">latitude:</ion-label>
-				<ion-input type="number" value="{{settings.Default_Lat}}" [(ngModel)]="settings.Default_Lat"></ion-input>
-			</ion-item>
-			<ion-item>
-				<ion-label position="stacked">longitude:</ion-label>
-				<ion-input type="number" value="{{settings.Default_Lon}}" [(ngModel)]="settings.Default_Lon"></ion-input>
-			</ion-item>
-			<ion-item>
-				<ion-button (click)="getPos()">centrer par rapport a ici</ion-button>
-			</ion-item>
-		</ion-item-group>
-		<ion-list-header>
-			<ion-label><strong>API utilisée</strong></ion-label>
-		</ion-list-header>
-		<ion-item>
-			<ion-label position="stacked">URL:</ion-label>
-			<ion-input type="url" value="{{settings.API_URL}}" [(ngModel)]="settings.API_URL"></ion-input>
-		</ion-item>
-		<ion-item>
-			<ion-label position="stacked">dossier:</ion-label>
-			<ion-input type="texte" value="{{settings.API_Dir}}" [(ngModel)]="settings.API_Dir"></ion-input>
-		</ion-item>
-		<ion-button expand="block" (click)="setSettings()">
-			Valider les nouveaux parametres
-		</ion-button>
-		<ion-list-header>
-			<ion-label><strong>A propos</strong></ion-label>
-		</ion-list-header>
-		<ion-item>
-			<ion-label>
-			<h3>Version de l'application</h3>
-			<p>{{version}}</p>
-			<p>24/04/2019</p>
-			</ion-label>
-		</ion-item>
-	</ion-list>
+	<ion-item-group>
+		<h3><strong>Carte</strong></h3>
+		<ion-label><p>Coordonnées hors ligne</p></ion-label>
+		
+		<ion-label position="stacked">Latitude :</ion-label>
+		<ion-input type="number" value="{{settings.Default_Lat}}" [(ngModel)]="settings.Default_Lat"></ion-input>
+
+		<ion-label position="stacked">Longitude :</ion-label>
+		<ion-input type="number" value="{{settings.Default_Lon}}" [(ngModel)]="settings.Default_Lon"></ion-input>
+		
+		<ion-button (click)="getPos()">centrer par rapport a ici</ion-button>
+	</ion-item-group>
+	<ion-item-group>
+		<h3><strong>API utilisée</strong></h3>
+	
+		<ion-label position="stacked">URL Geonature :</ion-label>
+		<ion-input type="url" value="{{settings.API_URL}}" [(ngModel)]="settings.API_URL"></ion-input>
+		
+		<ion-label position="stacked">Module :</ion-label>
+		<ion-input type="texte" value="{{settings.API_Dir}}" [(ngModel)]="settings.API_Dir"></ion-input>
+	</ion-item-group>
+
+	<ion-button expand="block" (click)="setSettings()">
+		Enregistrer
+	</ion-button>
+		<h3><strong>A propos</strong></h3>
+		<ion-label>
+		<h3>Version de l'application</h3>
+		<p>{{version}}</p>
+		<p>24/04/2019</p>
+		</ion-label>
+
 </ion-content>

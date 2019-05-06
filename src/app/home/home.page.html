@@ -14,7 +14,7 @@
 
 <ion-content padding>
 	<ion-item-group>
-		<ion-item-divider><strong>Etat de l'appareil</strong></ion-item-divider>
+		<h1><strong>Etat de l'appareil</strong></h1>
 		<ion-item>
 			<ion-label>
 				<h3>Dernière synchronisation</h3>
@@ -28,11 +28,10 @@
 			</ion-label>
 		</ion-item>
 	</ion-item-group>
-  	<ion-button expand="block" (click)="goToSync()">Synchroniser</ion-button>
+	<ion-button expand="block" (click)="goToWatch()">Afficher</ion-button>
+	<ion-button expand="block" (click)="goToSync()">Synchroniser</ion-button>
 </ion-content>
 
 <ion-footer>
-	<ion-button expand="block" (click)="goToWatch()">Voir visites</ion-button>
 	<ion-button expand="block" (click)="goToInput()">Nouvelle visite</ion-button>
-	
 </ion-footer>
