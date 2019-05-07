@@ -84,6 +84,30 @@ export class StartInputPage implements OnInit {
 	{
 		//assiniation de la carte
 		this.map = new L.Map('mapProspec');
+		//ont met un bouton pour ce recentrer
+		var centrer = L.Control.extend({
+			options:{
+				position:"topleft"
+			},
+			onAdd: (map)=>{
+				var container = L.DomUtil.create('input', 'leaflet-bar leaflet-control leaflet-control-custom');
+				container.type = "button"
+				container.style["background-image"] = "url(\"../../assets/icon/md-locate.svg\")"
+				container.style.backgroundColor = 'white';
+				container.style.width = '35px';
+				container.style.height = '35px';
+			
+				container.onclick = function()
+				{
+					map.locate({
+						setView: false, 
+						maxZoom: 11
+					})
+				}
+				return container;
+			}
+		})
+		this.map.addControl(new centrer(this.map))
 		//on fait en sorte que la carte ai une échelle (pour se repérer c'est cool)
 		L.control.scale().addTo(this.map);
 		this.default_Lat = this.local.getSettings()['Default_Lat']
@@ -132,12 +156,6 @@ export class StartInputPage implements OnInit {
 		});
 		L.Marker.prototype.options.icon = iconDefault;
 		//fin réafirmation
-
-		//on supprime les marqueur s'ils existent
-		if (this.marque)
-		{
-			this.marque.remove();
-		}
 		
 		//on géolocalise un utilisateur
 		this.map.locate({
@@ -165,6 +183,11 @@ export class StartInputPage implements OnInit {
 			/*centre*/[e["latitude"], e["longitude"]],
 			/*zoom*/11
 			);
+		//on supprime les marqueur s'ils existent
+		if (this.marque)
+		{
+			this.marque.remove();
+		}
 		this.marque = L.marker(e["latlng"]).addTo(this.map); //on place une marque où ce trouve l'utilisateur
 		//on indique qu'on a fini de charger
 		document.getElementById("affichChargement").setAttribute("hidden",null);

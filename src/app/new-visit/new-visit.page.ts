@@ -256,7 +256,6 @@ export class NewVisitPage implements OnInit {
 	//quand on trouve l'utilisateur
 	onLocationFound(e)
 	{
-		console.log("trouvé")
 		if(this.userPosPoint)
 		{
 			this.userPosPoint.remove()
