@@ -9,6 +9,7 @@ import 'leaflet-tilelayer-mbtiles-ts'
 import * as geoJSON from 'geojson';
 import { ConnectionStatus, NetworkService } from '../services/network.service';
 import {LocalVariablesService} from '../services/local-variables.service'
+import { watch } from 'fs';
 
 declare var L: any;
 
@@ -22,7 +23,7 @@ export class NewVisitPage implements OnInit {
 	//variables de la page
 	map:L.Map;
 	id;
-	marque;
+	userPosPoint;
 	visite = [];
 	mailles: geoJSON.FeatureCollection;
 	observer = [];
@@ -150,6 +151,8 @@ export class NewVisitPage implements OnInit {
 				maxZoom: 18
 				}).addTo(this.map);
 		})
+		
+
 	}
 
   	ngOnInit()  //quand on créé la page
@@ -173,7 +176,12 @@ export class NewVisitPage implements OnInit {
   
 	reload()//fonction de (re)chargement
 	{
-		
+		this.map.locate({
+			setView: false, 
+			maxZoom: 11,
+			watch: true,
+			enableHighAccuracy: true
+		});
 		//on montre qu'on charge des truc
 		document.getElementById("affichChargement").removeAttribute("hidden");
 		//on ferme l'affichage
@@ -181,92 +189,62 @@ export class NewVisitPage implements OnInit {
 		this.eventInterval = setInterval(() => this.animAffic(true),1);
 		//on recharge rapidement la carte
 		this.map.invalidateSize();
-
-		//on réafirme les paramêtre des marqueurs, et on change leur taille (pour simplifier la vie de l'utilisateur)
-		const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
-		const iconUrl = 'assets/leaflet/marker-icon.png';
-		const shadowUrl = 'assets/leaflet/marker-shadow.png';
-		const iconDefault = L.icon({
-			iconRetinaUrl,
-			iconUrl,
-			shadowUrl,
-			iconSize: [12, 20],
-			iconAnchor: [6, 20],
-			popupAnchor: [1, -34],
-			tooltipAnchor: [16, -28],
-			shadowSize: [20, 20]
-		});
-		L.Marker.prototype.options.icon = iconDefault; 
-		//fin réafirmation
-		
-		//on supprime les marqueurs s'ils existent
-		if(this.marque)
-		{
-			this.marque.remove()
-		}
-
-		//on géolocalise un utilisateur
-		this.map.locate({
-			setView: false, 
-			maxZoom: 11
-		});
-		
-		
-		var objet = L.geoJSON(this.mailles,{
-		onEachFeature: (feature, layer) => 
-		{
-			layer.on("click", () => //au clique, envoi sur la page visionnage qui correspond
-			{
-				var utilise = false
-				var presence = false
-				var id = 0
-				for(var i = 0; i <this.dataSend.cor_visit_grid.length; i++)
-				{
-					var element = this.dataSend.cor_visit_grid[i]
-					if (element.id_area == feature.id)
-					{
-						utilise = true
-						presence = element.presence
-						id = i
-					}
-				}
-
-				if(utilise == false) //pas vu to present
-				{
-					layer["setStyle"]({color:"#00FF00"});
-					this.maillesPresence ++;
-					var objet = { 
-						"uuid_basevisite" : null,
-						"id_area" : feature.id,
-						"id_base_visit": null,
-						"presence" : true
-
-					}
-					this.dataSend.cor_visit_grid.push(objet)
-				}
-				else if (utilise && presence) //present to absent
-				{
-					layer["setStyle"]({color:"#FF0000"});
-					this.maillesAbsence ++;
-					this.maillesPresence --;
-					this.dataSend.cor_visit_grid[id].presence = false;
-				}
-				else //absent to pas vu
-				{
-					layer["setStyle"]({color:"#3388ff"});
-					this.maillesAbsence --;
-					if (this.dataSend.cor_visit_grid.length <= 1) //si y a qu'un element
-					{
-						this.dataSend.cor_visit_grid.pop()
-					}
-					else //si y en a plusieurs
-					{
-						this.dataSend.cor_visit_grid.splice(id,id+1)
-					}
-				}
-				console.log(this.dataSend.cor_visit_grid)
-				this.maillesNonVisite = this.totalMailles - this.maillesAbsence - this.maillesPresence;
 				
+		var objet = L.geoJSON(this.mailles,{
+			onEachFeature: (feature, layer) => 
+			{
+				layer.on("click", () => //au clique, envoi sur la page visionnage qui correspond
+				{
+					var utilise = false
+					var presence = false
+					var id = 0
+					for(var i = 0; i <this.dataSend.cor_visit_grid.length; i++)
+					{
+						var element = this.dataSend.cor_visit_grid[i]
+						if (element.id_area == feature.id)
+						{
+							utilise = true
+							presence = element.presence
+							id = i
+						}
+					}
+
+					if(utilise == false) //pas vu to present
+					{
+						layer["setStyle"]({color:"#00FF00"});
+						this.maillesPresence ++;
+						var objet = { 
+							"uuid_basevisite" : null,
+							"id_area" : feature.id,
+							"id_base_visit": null,
+							"presence" : true
+
+						}
+						this.dataSend.cor_visit_grid.push(objet)
+					}
+					else if (utilise && presence) //present to absent
+					{
+						layer["setStyle"]({color:"#FF0000"});
+						this.maillesAbsence ++;
+						this.maillesPresence --;
+						this.dataSend.cor_visit_grid[id].presence = false;
+					}
+					else //absent to pas vu
+					{
+						layer["setStyle"]({color:"#3388ff"});
+						this.maillesAbsence --;
+						if (this.dataSend.cor_visit_grid.length <= 1) //si y a qu'un element
+						{
+							this.dataSend.cor_visit_grid.pop()
+						}
+						else //si y en a plusieurs
+						{
+							this.dataSend.cor_visit_grid.splice(id,id+1)
+						}
+					}
+					console.log(this.dataSend.cor_visit_grid)
+					this.maillesNonVisite = this.totalMailles - this.maillesAbsence - this.maillesPresence;
+					
 				}) 
 			} 
 		}).addTo(this.map);	
@@ -278,8 +256,13 @@ export class NewVisitPage implements OnInit {
 	//quand on trouve l'utilisateur
 	onLocationFound(e)
 	{
+		console.log("trouvé")
+		if(this.userPosPoint)
+		{
+			this.userPosPoint.remove()
+		}
 		//on pose un marqueur sur sa position
-		this.marque = L.marker(e["latlng"]).addTo(this.map)
+		this.userPosPoint = L.circleMarker(e["latlng"],{color:'#FF8C00', fillOpacity:1, radius: 3}).addTo(this.map)
 	}
 
 	toggleAffichage()
