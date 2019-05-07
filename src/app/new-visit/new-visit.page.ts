@@ -131,25 +131,25 @@ export class NewVisitPage implements OnInit {
   	ionViewDidEnter()//quand on rentre dans la page
 	{	
 		//on fait en sorte que la carte soit affiché
-		if(this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Online)
-		{
+		this.file.checkFile(this.file.externalDataDirectory+"MBTilesLocales/", this.local.getSettings()["mbTile_File"]).then(res =>{
+			//Carte locale (mbTiles)
+			this.file.readAsArrayBuffer(this.file.externalDataDirectory+"MBTilesLocales/", this.local.getSettings()["mbTile_File"]).then(res =>{
+				console.log("mbtile chargé")
+				L.tileLayer.mbTiles(res,{
+					maxZoom: 18,
+					attribution: "local"
+				}).addTo(this.map)
+			},err =>{
+				console.log("mbtile non chargé")
+			})
+		}, err =>{
 			//Carte online (png via OTM)
 			L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
 				// tslint:disable-next-line
 				attribution: '&copy; OpenTopoMap',
 				maxZoom: 18
 				}).addTo(this.map);
-		}
-		else
-		{
-			//Carte offline (mbTiles)
-			this.file.readAsArrayBuffer(this.file.externalDataDirectory+"MBTilesLocales/", this.local.getSettings()["mbTile_File"]).then(res =>{
-				L.tileLayer.mbTiles(res,{
-				maxZoom: 18,
-				attribution: "local"
-				}).addTo(this.map)
-			})
-		}
+		})
 	}
 
   	ngOnInit()  //quand on créé la page
