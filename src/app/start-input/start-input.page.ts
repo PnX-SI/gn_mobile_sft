@@ -183,13 +183,27 @@ export class StartInputPage implements OnInit {
 			/*centre*/[e["latitude"], e["longitude"]],
 			/*zoom*/11
 			);
-		//on supprime les marqueur s'ils existent
+		//on supprime les marqueurs s'ils existent
 		if (this.marque)
 		{
 			this.marque.remove();
 		}
 		this.marque = L.marker(e["latlng"]).addTo(this.map); //on place une marque où ce trouve l'utilisateur
 		//on indique qu'on a fini de charger
+		for(const feature in this.data)
+		{
+			if(L.geoJSON(this.data[feature]).getBounds().contains([e["latitude"], e["longitude"]]))
+			{
+				var validation = confirm("Vous êtes détecté comme vous trouvant sur le site suivant:\r"+
+										"Espèce : "+this.data[feature]["properties"]["nom_taxon"]+"\r"+
+										"Lieu : "+this.data[feature]["properties"]["nom_commune"]+"\r"+
+										"Voulez vous visiter ce site?")
+				if(validation)
+				{
+					this.watchArea(feature)
+				}
+			}
+		}
 		document.getElementById("affichChargement").setAttribute("hidden",null);
 	}
 	
