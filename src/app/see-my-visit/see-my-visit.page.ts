@@ -104,10 +104,10 @@ export class SeeMyVisitPage implements OnInit {
 				console.log("mbtile non chargé")
 			})
 		}, err =>{
-			//Carte online (png via OTM)
-			L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+			//Carte online
+			L.tileLayer(this.local.getSettings()["Online_Leaflet_URL"], {
 				// tslint:disable-next-line
-				attribution: '&copy; OpenTopoMap',
+				attribution: '&copy;'+this.local.getSettings()["Online_Attribution"],
 				maxZoom: 18
 				}).addTo(this.map);
 		})

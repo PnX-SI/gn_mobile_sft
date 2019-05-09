@@ -25,6 +25,12 @@
 		<ion-label><p>Carte hors ligne</p></ion-label>
 		<ion-label position="stacked">Nom du fichier :</ion-label>
 		<ion-input type="text" value="{{settings.mbTile_File}}" [(ngModel)]="settings.mbTile_File"></ion-input>
+		
+		<ion-label><p>Carte en ligne</p></ion-label>
+		<ion-label position="stacked">URL Leaflet :</ion-label>
+		<ion-input type="text" value="{{settings.Online_Leaflet_URL}}" [(ngModel)]="settings.Online_Leaflet_URL"></ion-input>
+		<ion-label position="stacked">Attribution :</ion-label> 
+		<ion-input type="text" value="{{settings.Online_Attribution}}" [(ngModel)]="settings.Online_Attribution"></ion-input>
 	</ion-item-group>
 	<ion-item-group>
 		<h3><strong>API utilisée</strong></h3>

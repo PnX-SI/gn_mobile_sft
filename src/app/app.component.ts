@@ -15,7 +15,9 @@ const settings =
   API_Dir: "sft",
   Default_Lat: 44.5682846,
   Default_Lon: 6.0634622,
-  mbTile_File:"cartes.mbtiles"
+  mbTile_File:"cartes.mbtiles",
+  Online_Leaflet_URL:'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+  Online_Attribution:"OpenTopoMap"
 }
 
 @Component({
