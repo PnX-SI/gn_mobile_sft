@@ -264,7 +264,7 @@ export class NewVisitPage implements OnInit {
 		this.userPosPoint = L.circleMarker(e["latlng"],{color:'#FF8C00', fillOpacity:1, radius: 3}).addTo(this.map)
 	}
 
-	toggleAffichage()
+	toggleAffichage()//TODO: adapter l'interface a la largeur de l'appareil
 	{
 		if (this.modif > 25)
 		{

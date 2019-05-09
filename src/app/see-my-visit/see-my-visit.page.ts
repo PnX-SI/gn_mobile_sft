@@ -166,7 +166,7 @@ export class SeeMyVisitPage implements OnInit {
       this.compteReload = 0;
   }	
 
-  toggleAffichage()
+  toggleAffichage()//TODO: adapter l'interface a la largeur de l'appareil
   {
     if (this.modif > 25)
     {

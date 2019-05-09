@@ -232,7 +232,7 @@ export class StartInputPage implements OnInit {
 		this.router.navigate(['/visionnage',{id:id}]);	
 	}
 
-	toggleAffichage()
+	toggleAffichage()//TODO: adapter l'interface a la largeur de l'appareil
 	{
 		if (this.modif > 25)
 		{
