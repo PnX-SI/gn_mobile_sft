@@ -256,11 +256,12 @@ export class NewVisitPage implements OnInit {
 	//quand on trouve l'utilisateur
 	onLocationFound(e)
 	{
+		//on supprime le point
 		if(this.userPosPoint)
 		{
 			this.userPosPoint.remove()
 		}
-		//on pose un marqueur sur sa position
+		//on pose un point sur sa position
 		this.userPosPoint = L.circleMarker(e["latlng"],{color:'#FF8C00', fillOpacity:1, radius: 3}).addTo(this.map)
 	}
 

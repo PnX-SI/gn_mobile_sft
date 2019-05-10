@@ -22,7 +22,7 @@ export class VisionnagePage implements OnInit {
 	public id;
 	map:L.Map;
 	data = []
-	marque
+	userPosPoint
 	nomCommune
 	nomTaxon
 
@@ -106,28 +106,6 @@ export class VisionnagePage implements OnInit {
 		this.map.invalidateSize();
 		this.nomCommune = this.data[0]["properties"]["nom_commune"]
 		this.nomTaxon = this.data[0]["properties"]["nom_taxon"]
-		//on réafirme les paramêtre des marqueurs
-		const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
-		const iconUrl = 'assets/leaflet/marker-icon.png';
-		const shadowUrl = 'assets/leaflet/marker-shadow.png';
-		const iconDefault = L.icon({
-		iconRetinaUrl,
-		iconUrl,
-		shadowUrl,
-		iconSize: [25, 41],
-		iconAnchor: [12, 41],
-		popupAnchor: [1, -34],
-		tooltipAnchor: [16, -28],
-		shadowSize: [41, 41]
-		});
-		L.Marker.prototype.options.icon = iconDefault;
-		//fin réafirmation
-		
-		//on supprime les marqueurs s'ils existent
-		if(this.marque)
-		{
-			this.marque.remove();
-		}
 
 		//on géolocalise un utilisateur
 		this.map.locate({
@@ -156,7 +134,12 @@ export class VisionnagePage implements OnInit {
 	//quand on trouve l'utilisateur
 	onLocationFound(e)
 	{
+		//on supprime le point
+		if(this.userPosPoint)
+		{
+			this.userPosPoint.remove()
+		}
 		//on pose un marqueur sur sa position
-		this.marque = L.marker(e["latlng"]).addTo(this.map)
+		this.userPosPoint = L.circleMarker(e["latlng"],{color:'#FF8C00', fillOpacity:1, radius: 3}).addTo(this.map)
 	}
 }

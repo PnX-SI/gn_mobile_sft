@@ -24,7 +24,7 @@ declare var L: any;
 export class StartInputPage implements OnInit {
 	//variables de la page
 	map:L.Map;
-	marque;
+	userPosPoint;
 	data: geoJSON.FeatureCollection;
 	testeur = 0;
 	modif = 100;
@@ -139,23 +139,6 @@ export class StartInputPage implements OnInit {
 		this.menu.enable(true, "VisuTaxon");
 		//on recharge rapidement la carte
 		this.map.invalidateSize();
-
-		//on réafirme les paramêtre des marqueurs
-		const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
-		const iconUrl = 'assets/leaflet/marker-icon.png';
-		const shadowUrl = 'assets/leaflet/marker-shadow.png';
-		const iconDefault = L.icon({
-		iconRetinaUrl,
-		iconUrl,
-		shadowUrl,
-		iconSize: [25, 41],
-		iconAnchor: [12, 41],
-		popupAnchor: [1, -34],
-		tooltipAnchor: [16, -28],
-		shadowSize: [41, 41]
-		});
-		L.Marker.prototype.options.icon = iconDefault;
-		//fin réafirmation
 		
 		//on géolocalise un utilisateur
 		this.map.locate({
@@ -183,12 +166,13 @@ export class StartInputPage implements OnInit {
 			/*centre*/[e["latitude"], e["longitude"]],
 			/*zoom*/11
 			);
-		//on supprime les marqueurs s'ils existent
-		if (this.marque)
+		//on supprime le point
+		if(this.userPosPoint)
 		{
-			this.marque.remove();
+			this.userPosPoint.remove()
 		}
-		this.marque = L.marker(e["latlng"]).addTo(this.map); //on place une marque où ce trouve l'utilisateur
+		//on pose un marqueur sur sa position
+		this.userPosPoint = L.circleMarker(e["latlng"],{color:'#FF8C00', fillOpacity:1, radius: 3}).addTo(this.map)
 		//on indique qu'on a fini de charger
 		for(const feature in this.data)
 		{
@@ -200,7 +184,8 @@ export class StartInputPage implements OnInit {
 										"Voulez vous visiter ce site?")
 				if(validation)
 				{
-					this.watchArea(feature)
+					this.watchArea(parseInt(feature)+1) 
+					break
 				}
 			}
 		}
