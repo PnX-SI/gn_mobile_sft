@@ -5,25 +5,30 @@ CHANGELOG
 0.2.0 (2019-05-09)
 ------------------
 
-Deuxième version de l'appli mobile GeoNature (protocole Suivi flore territoire) , piloté par le PNE, développée par @rorp24. 
+Deuxième version de l'appli mobile GeoNature (protocole Suivi flore territoire), pilotée par le PNE et le CBNA, développée par @rorp24. 
 
-Prototype fonctionnel, auquel il manque l'envoi de données dans la base, et des filtres de recherche.
+Prototype fonctionnel, auquel il manque l'envoi de données dans la BDD, et les filtres de recherche.
+
+Démo vidéo : https://geonature.fr/docs/img/2019-05-SFT-mobile-0.2.0.gif
+
+.. image :: img/screenshots-0-2-0.png
 
 **Fonctionnalités**
 
-* Possibilité pour l'utilisateur de se connecter à l'API 
-* Paramètres de l'application
-* Récupération de données en ligne pour une utilisation hors ligne
-* Utilisation en mode hors ligne
-* Formulaire de saisie
-* Stockage en local des insertions de données
-* Auto-détection d'une ZP proche
-* Affichage continue de la position pendant la visite
+* Possibilité pour l'utilisateur de s'authentifier à l'API 
+* Paramètres de l'application sous forme de fichier, éditable aussi dans l'application
+* Récupération de données en ligne depuis l'API pour une utilisation hors ligne (stockage local)
+* Saisie en mode hors ligne fonctionnel (stockage local)
+* Développement du formulaire de saisie
+* Auto-détection d'une ZP proche de la position GPS
+* Localisation continue de la position GPS pendant la visite
+* Utilisation de mbtiles pour la carto hors ligne (pour l'instant limité à des fichiers de 20Mo)
 
 **A venir**
 
-* Ecriture dans la base
-* Recherche par paramètres des ZP
+* Synchronisation et écriture dans la BDD
+* Filtre et recherche des ZP
+* Documentation
 
 0.1.0 (2019-03-15)
 ------------------
