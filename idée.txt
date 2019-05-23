@@ -1,1 +1,19 @@
-passer par un custom composent
+var dateEcrit
+    if (temps.getMonth() < 10)
+    {
+      dateEcrit = temps.getFullYear()+"-0"+(temps.getMonth()+1)+"-"
+    }
+    else
+    {
+      dateEcrit = temps.getFullYear()+"-"+(temps.getMonth()+1)+"-"
+    }
+
+    if(temps.getDate() < 10)
+    {
+      dateEcrit = dateEcrit+"0"+temps.getDate()
+    }
+    else
+    {
+      dateEcrit = dateEcrit+temps.getDate()
+    }
+    this.date = dateEcrit
