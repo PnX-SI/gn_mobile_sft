@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import {SQLite, SQLiteObject} from '@ionic-native/sqlite/ngx'
 import { File } from '@ionic-native/file/ngx'
 
 
@@ -30,6 +31,7 @@ export class StartInputPage implements OnInit {
 	modif = 100;
 	eventInterval
 
+
 	default_Lat = 0
 	default_Long = 0
 	//chargement des imports
@@ -39,7 +41,8 @@ export class StartInputPage implements OnInit {
 		private apiService: ApiService,
 		private local: LocalVariablesService,
 		private file:File, 
-		private networkService: NetworkService
+		private networkService: NetworkService,
+		private sqlite: SQLite
 		) 
 	{
 		this.loadData(true);//on charge des données		
@@ -59,18 +62,18 @@ export class StartInputPage implements OnInit {
 	ionViewDidEnter()//quand on rentre dans la page
 	{			
 		//on fait en sorte que la carte soit affiché
-		this.file.checkFile(this.file.externalDataDirectory+"MBTilesLocales/", this.local.getSettings()["mbTile_File"]).then(res =>{
+		this.sqlite.create({
+			name:this.local.getSettings()['mbTile_File'],
+			location:this.file.externalDataDirectory+"MBTilesLocales/"
+		}).then((res: SQLiteObject) =>{
 			//Carte locale (mbTiles)
-			this.file.readAsArrayBuffer(this.file.externalDataDirectory+"MBTilesLocales/", this.local.getSettings()["mbTile_File"]).then(res =>{
 				console.log("mbtile chargé")
-				L.tileLayer.mbTiles(res,{
+				L.tileLayer.mbTiles('',{
 					maxZoom: 18,
 					attribution: "local"
-				}).addTo(this.map)
-			},err =>{
-				console.log("mbtile non chargé")
-			})
+				},res).addTo(this.map)
 		}, err =>{
+			console.error("sql erreur:" + JSON.stringify(err))
 			//Carte online
 			L.tileLayer(this.local.getSettings()["Online_Leaflet_URL"], {
 				// tslint:disable-next-line
