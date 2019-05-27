@@ -95,7 +95,7 @@ export class LoginPage implements OnInit {
       {
         this.login = "";
         this.password = "";
-        console.error(reponse)
+        console.error(JSON.stringify(reponse) )
         document.getElementById("erreur").removeAttribute("hidden");
         document.getElementById("erreur").innerHTML = reponse.error.msg;
       }
