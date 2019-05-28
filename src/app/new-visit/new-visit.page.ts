@@ -78,8 +78,29 @@ export class NewVisitPage implements OnInit {
 			this.loadDataPerturbations(true, "perturbations");
 		});
 		
+		//paramettrage de la date par défaut
+		var temps = new Date()
+		var dateEcrit
+		if (temps.getMonth() < 10)
+		{
+		dateEcrit = temps.getFullYear()+"-0"+(temps.getMonth()+1)+"-"
+		}
+		else
+		{
+		dateEcrit = temps.getFullYear()+"-"+(temps.getMonth()+1)+"-"
+		}
+
+		if(temps.getDate() < 10)
+		{
+		dateEcrit = dateEcrit+"0"+temps.getDate()
+		}
+		else
+		{
+		dateEcrit = dateEcrit+temps.getDate()
+		}
+		this.form.date = dateEcrit
 	}
-	
+		
 	/*fonctions de lecture de données*/
 	loadDataVisite(refresh = false,type = "base",id, refresher?) {
 		this.apiService.getData(refresh,type,id).subscribe(res => {

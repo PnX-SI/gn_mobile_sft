@@ -64,14 +64,14 @@ export class StartInputPage implements OnInit {
 		//on fait en sorte que la carte soit affiché
 		this.sqlite.create({
 			name:this.local.getSettings()['mbTile_File'],
-			location:this.file.externalDataDirectory+"MBTilesLocales/"
+			location: this.file.externalDataDirectory+"MBTilesLocales/"
 		}).then((res: SQLiteObject) =>{
 			//Carte locale (mbTiles)
 				console.log("mbtile chargé")
-				L.tileLayer.mbTiles('',{
+				L.tileLayer.mbTiles(res,{
 					maxZoom: 18,
 					attribution: "local"
-				},res).addTo(this.map)
+				}).addTo(this.map)
 		}, err =>{
 			console.error("sql erreur:" + JSON.stringify(err))
 			//Carte online
