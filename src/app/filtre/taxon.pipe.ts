@@ -18,7 +18,7 @@ export class TaxonPipe implements PipeTransform {
     {
       nom = nom.toLowerCase()
       return value.filter( val =>{
-        return val.properties.nom_taxon.toLowerCase().match(nom)//.indexOf(nom) !==-1
+        return val.properties.nom_taxon.toLowerCase().includes(nom)
       })
     }
   }

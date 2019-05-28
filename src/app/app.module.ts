@@ -15,7 +15,8 @@ import { Network } from '@ionic-native/network/ngx';
 import { File } from '@ionic-native/file/ngx';
 import {Geolocation} from '@ionic-native/geolocation/ngx'
 import {AppVersion} from '@ionic-native/app-version/ngx'
-import {SQLite} from '@ionic-native/sqlite/ngx'
+import {SQLite} from '@ionic-native/sqlite/ngx';
+
 
 @NgModule({
   declarations: [AppComponent],

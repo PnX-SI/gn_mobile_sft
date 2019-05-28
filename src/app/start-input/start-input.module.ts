@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { StartInputPage } from './start-input.page';
 import { TaxonPipe } from '../filtre/taxon.pipe';
+import { DatePipe } from '../filtre/date.pipe'
 
 const routes: Routes = [
   {
@@ -22,6 +23,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [StartInputPage, TaxonPipe]
+  declarations: [StartInputPage, TaxonPipe, DatePipe]
 })
 export class StartInputPageModule {}
