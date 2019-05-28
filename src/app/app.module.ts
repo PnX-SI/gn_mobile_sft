@@ -12,14 +12,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http';
 import { Network } from '@ionic-native/network/ngx';
-import { TaxonPipe } from './filtre/taxon.pipe';
 import { File } from '@ionic-native/file/ngx';
 import {Geolocation} from '@ionic-native/geolocation/ngx'
 import {AppVersion} from '@ionic-native/app-version/ngx'
 import {SQLite} from '@ionic-native/sqlite/ngx'
 
 @NgModule({
-  declarations: [AppComponent, TaxonPipe],
+  declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, 
     IonicModule.forRoot(), 

@@ -8,6 +8,7 @@ import { File } from '@ionic-native/file/ngx'
 import { ApiService } from '../services/api.service';
 import {LocalVariablesService} from '../services/local-variables.service'
 
+
 import 'leaflet';
 import 'leaflet-tilelayer-mbtiles-ts'
 import * as geoJSON from 'geojson';
