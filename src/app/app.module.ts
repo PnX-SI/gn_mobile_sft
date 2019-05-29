@@ -18,6 +18,7 @@ import {AppVersion} from '@ionic-native/app-version/ngx'
 import {SQLite} from '@ionic-native/sqlite/ngx';
 
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
