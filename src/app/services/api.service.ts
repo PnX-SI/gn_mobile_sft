@@ -52,9 +52,13 @@ export class ApiService {
       {
         return from(this.getLocalData('perturbations'))
       }
+      else if(requeteType == "organisme")
+      {
+        return from(this.getLocalData('organisme'))
+      }
 
     } else {      
-      // Return real API data and store it locally
+      // Return real API data
       
       if (requeteType == "base")
       {
@@ -123,7 +127,19 @@ export class ApiService {
           })
         )
       }
-      
+      else if (requeteType == "organisme")
+      {
+        return this.http.get(`${this.local.getSettings()['API_URL']}/${this.local.getSettings()['API_Dir']}/organisme`).pipe(
+          map(res =>
+            res
+          ),
+          catchError(err => {
+            console.error(err);
+            console.log("renvoi des données locales");
+            return from(this.getLocalData('organisme'));
+          })
+        )
+      }
     }
   }
  

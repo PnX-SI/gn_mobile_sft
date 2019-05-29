@@ -54,6 +54,7 @@ export class DataSyncPage implements OnInit {
 			/*purge des anciennes données*/
 			this.storage.remove("observeur")
 			this.storage.remove("perturbations")
+			this.storage.remove("organisme")
 			this.apiService.getLocalData("base").then(res =>{
 					res.forEach(element => {
 						this.storage.remove("visite"+element.id)
@@ -65,25 +66,29 @@ export class DataSyncPage implements OnInit {
 			/****************************/
 			this.apiService.getData(true, "observeur").subscribe(res =>{
 				this.apiService.setLocalData("observeur",res)
-				this.progressBarRecupdonnee = this.progressBarRecupdonnee + 0.2 //+10% dans la progress bar	
+				this.progressBarRecupdonnee = this.progressBarRecupdonnee + 0.1 //+10% dans la progress bar	
+			})
+			this.apiService.getData(true, "organisme").subscribe(res =>{
+				this.apiService.setLocalData("organisme",res)
+				this.progressBarRecupdonnee = this.progressBarRecupdonnee + 0.1 //+10% dans la progress bar	
 			})
 			this.apiService.getData(true, "perturbations").subscribe(res =>{
 				this.apiService.setLocalData("perturbations",res)
-				this.progressBarRecupdonnee = this.progressBarRecupdonnee + 0.2 //+10% dans la progress bar	
+				this.progressBarRecupdonnee = this.progressBarRecupdonnee + 0.1 //+10% dans la progress bar	
 			})
 			this.apiService.getData(true).subscribe(res =>{
 				this.apiService.setLocalData("base",res)
-				this.progressBarRecupdonnee = this.progressBarRecupdonnee + 0.2 //+10% dans la progress bar
+				this.progressBarRecupdonnee = this.progressBarRecupdonnee + 0.1 //+10% dans la progress bar
 				res.forEach(element => {
 					this.apiService.getData(true,"visite",element.id).subscribe(elem =>{
 						this.apiService.setLocalData("visite"+element.id,elem)
-						this.progressBarRecupdonnee = this.progressBarRecupdonnee + (0.2/res.length)
+						this.progressBarRecupdonnee = this.progressBarRecupdonnee + (0.3/res.length)
 					})
 				});
 				res.forEach(element => {
 					this.apiService.getData(true,"maille",element.id).subscribe(elem =>{
 						this.apiService.setLocalData("maille"+element.id,elem)
-						this.progressBarRecupdonnee = this.progressBarRecupdonnee + (0.2/res.length)
+						this.progressBarRecupdonnee = this.progressBarRecupdonnee + (0.3/res.length)
 					})
 				});
 			})

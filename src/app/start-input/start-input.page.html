@@ -40,8 +40,7 @@
 				<ion-input type="date" [(ngModel)]="jour"></ion-input>
 				<ion-label position="stacked">Organisme :</ion-label>
 				<ion-select placeholder="Organisme">
-					<ion-select-option value="1">PNE</ion-select-option>
-					<ion-select-option value="2">Autre</ion-select-option>
+					<ion-select-option *ngFor="let item of organismes;let i = index;" value="{{i}}">{{item.nom_organisme}}</ion-select-option>
 				</ion-select>
 			</ion-item-group>
 				

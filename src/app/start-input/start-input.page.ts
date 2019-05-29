@@ -14,7 +14,7 @@ import 'leaflet';
 import 'leaflet-tilelayer-mbtiles-ts'
 import * as geoJSON from 'geojson';
 import {NetworkService, ConnectionStatus} from '../services/network.service';
-import { IonicNativePlugin } from '@ionic-native/core';
+
 
 declare var L: any;
 
@@ -34,6 +34,7 @@ export class StartInputPage implements OnInit {
 	modif = 100;
 	eventInterval
 
+	organismes
 
 	default_Lat = 0
 	default_Long = 0
@@ -48,19 +49,31 @@ export class StartInputPage implements OnInit {
 		private sqlite: SQLite
 		) 
 	{
-		this.loadData(true);//on charge des données		
+		this.loadData(true);//on charge des données
+		this.loadDataOrg(true,"organisme")		
 	}
 
-	loadData(refresh = false, refresher?) {
+	loadData(refresh = false, type ="base", refresher?) {
 		//on part chercher des données dans l'API
-		this.apiService.getData(refresh).subscribe(res => {
+		this.apiService.getData(refresh,type).subscribe(res => {
 		this.data = res;//on fait que la variable exporté soit égale aux données
 		  if (refresher) {
 			refresher.target.complete();
 		  }
 		this.reload(); //on appel un chargement de page
 		});
-	  }
+	}
+	loadDataOrg(refresh = false, type ="base", refresher?) {
+	//on part chercher des données dans l'API
+	this.apiService.getData(refresh,type).subscribe(res => {
+		console.log(res)
+		this.organismes = res;//on fait que la variable exporté soit égale aux données
+		if (refresher) {
+		refresher.target.complete();
+		}
+	this.reload(); //on appel un chargement de page
+	});
+	}
 
 	ionViewDidEnter()//quand on rentre dans la page
 	{			
