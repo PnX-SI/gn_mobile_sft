@@ -26,6 +26,7 @@
     "@ionic-native/core": "^5.5.0",
     "@ionic-native/file": "^5.5.0",
     "@ionic-native/geolocation": "^5.5.0",
+    "@ionic-native/ionic-webview": "^5.6.1",
     "@ionic-native/network": "^5.5.0",
     "@ionic-native/splash-screen": "^5.5.0",
     "@ionic-native/sqlite": "^5.6.1",
@@ -107,5 +108,8 @@
     "crypto": false,
     "fs": false,
     "path": false
+  },
+  "config": {
+    "ionic_source_map_type": "cheap-source-map"
   }
 }

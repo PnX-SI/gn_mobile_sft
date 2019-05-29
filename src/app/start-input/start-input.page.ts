@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import {SQLite, SQLiteObject} from '@ionic-native/sqlite/ngx'
 import { File } from '@ionic-native/file/ngx'
+import {WebView} from '@ionic-native/ionic-webview'
 
 
 import { ApiService } from '../services/api.service';
@@ -13,6 +14,7 @@ import 'leaflet';
 import 'leaflet-tilelayer-mbtiles-ts'
 import * as geoJSON from 'geojson';
 import {NetworkService, ConnectionStatus} from '../services/network.service';
+import { IonicNativePlugin } from '@ionic-native/core';
 
 declare var L: any;
 
@@ -63,18 +65,24 @@ export class StartInputPage implements OnInit {
 	ionViewDidEnter()//quand on rentre dans la page
 	{			
 		//on fait en sorte que la carte soit affiché
-		this.sqlite.create({
-			name:this.local.getSettings()['mbTile_File'],
-			location: this.file.externalDataDirectory+"MBTilesLocales/"
-		}).then((res: SQLiteObject) =>{
+		
+		this.file.checkFile(this.file.externalDataDirectory+"MBTilesLocales/",this.local.getSettings()["mbTile_File"]).then(res =>{
 			//Carte locale (mbTiles)
-				console.log("mbtile chargé")
-				L.tileLayer.mbTiles(res,{
-					maxZoom: 18,
-					attribution: "local"
-				}).addTo(this.map)
+			var pathToFile = this.file.externalDataDirectory+"MBTilesLocales/"+this.local.getSettings()["mbTile_File"]
+			var truePath = WebView.convertFileSrc(pathToFile)
+			console.log("mbtile chargé")
+			L.tileLayer.mbTiles(truePath,{
+				maxZoom: 18,
+				attribution: "local"
+			}).addTo(this.map)
+
+			this.map.on('databaseloaded', (ev)=>{
+				console.info('MBTiles DB loaded', ev);
+			});
+			this.map.on('databaseerror', (ev) => {
+				console.error(JSON.stringify(ev));
+			});
 		}, err =>{
-			console.error("sql erreur:" + JSON.stringify(err))
 			//Carte online
 			L.tileLayer(this.local.getSettings()["Online_Leaflet_URL"], {
 				// tslint:disable-next-line

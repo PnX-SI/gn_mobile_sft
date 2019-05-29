@@ -17,8 +17,7 @@ export class DatePipe implements PipeTransform {
     else
     {
       return value.filter( val =>{
-        //console.log(val.properties.date_max.localeCompare(jour))
-        return val.properties.date_max.localeCompare(jour) > -1
+        return val.properties.date_max.localeCompare(jour) > -1 //affiche les dates après celle qu'on lui passe, et les zones marquées en "aucunes visites"
       })
     }
   }
