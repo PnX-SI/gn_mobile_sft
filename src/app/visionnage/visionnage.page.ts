@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { File } from '@ionic-native/file/ngx'
+import {WebView} from '@ionic-native/ionic-webview'
 
 import 'leaflet';
 import 'leaflet-tilelayer-mbtiles-ts'
@@ -68,17 +69,16 @@ export class VisionnagePage implements OnInit {
 			}
 		})
 		//on fait en sorte que la carte soit affiché
-		this.file.checkFile(this.file.externalDataDirectory+"MBTilesLocales/", this.local.getSettings()["mbTile_File"]).then(res =>{
+		this.file.checkFile(this.file.externalDataDirectory+"MBTilesLocales/",this.local.getSettings()["mbTile_File"]).then(res =>{
 			//Carte locale (mbTiles)
-			this.file.readAsArrayBuffer(this.file.externalDataDirectory+"MBTilesLocales/", this.local.getSettings()["mbTile_File"]).then(res =>{
-				console.log("mbtile chargé")
-				L.tileLayer.mbTiles(res,{
-					maxZoom: 18,
-					attribution: "local"
-				}).addTo(this.map)
-			},err =>{
-				console.log("mbtile non chargé")
-			})
+			var pathToFile = this.file.externalDataDirectory+"MBTilesLocales/"+this.local.getSettings()["mbTile_File"]
+			var truePath = WebView.convertFileSrc(pathToFile)
+			console.log("mbtile chargé")
+			L.tileLayer.mbTiles(truePath,{
+				maxZoom: 18,
+				attribution: "local"
+			}).addTo(this.map)
+			
 		}, err =>{
 			//Carte online
 			L.tileLayer(this.local.getSettings()["Online_Leaflet_URL"], {

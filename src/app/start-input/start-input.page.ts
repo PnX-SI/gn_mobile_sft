@@ -64,21 +64,19 @@ export class StartInputPage implements OnInit {
 		});
 	}
 	loadDataOrg(refresh = false, type ="base", refresher?) {
-	//on part chercher des données dans l'API
-	this.apiService.getData(refresh,type).subscribe(res => {
-		console.log(res)
-		this.organismes = res;//on fait que la variable exporté soit égale aux données
-		if (refresher) {
-		refresher.target.complete();
-		}
-	this.reload(); //on appel un chargement de page
-	});
+		//on part chercher des données dans l'API
+		this.apiService.getData(refresh,type).subscribe(res => {
+			this.organismes = res;//on fait que la variable exporté soit égale aux données
+			if (refresher) {
+			refresher.target.complete();
+			}
+		this.reload(); //on appel un chargement de page
+		});
 	}
 
 	ionViewDidEnter()//quand on rentre dans la page
 	{			
 		//on fait en sorte que la carte soit affiché
-		
 		this.file.checkFile(this.file.externalDataDirectory+"MBTilesLocales/",this.local.getSettings()["mbTile_File"]).then(res =>{
 			//Carte locale (mbTiles)
 			var pathToFile = this.file.externalDataDirectory+"MBTilesLocales/"+this.local.getSettings()["mbTile_File"]
@@ -88,13 +86,7 @@ export class StartInputPage implements OnInit {
 				maxZoom: 18,
 				attribution: "local"
 			}).addTo(this.map)
-
-			this.map.on('databaseloaded', (ev)=>{
-				console.info('MBTiles DB loaded', ev);
-			});
-			this.map.on('databaseerror', (ev) => {
-				console.error(JSON.stringify(ev));
-			});
+			
 		}, err =>{
 			//Carte online
 			L.tileLayer(this.local.getSettings()["Online_Leaflet_URL"], {
