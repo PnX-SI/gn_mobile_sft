@@ -59,7 +59,16 @@ export class AppComponent {
       });
 
       /*on verifie l'existence des dossiers et fichiers qui nous interressent*/
-      this.settings()
+      if(!this.platform.is("cordova") || !this.platform.is("android"))
+      {
+        alert("vous n'êtes pas sur une plateforme android.\nCertaines fonctionnalités pourrait ne pas être disponible.")
+        this.local.setSettings(settings)
+      }
+      else
+      {
+        this.settings()
+      }
+      
       
       /**************************************************************/
     })
