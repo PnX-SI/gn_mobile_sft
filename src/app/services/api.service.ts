@@ -165,15 +165,22 @@ export class ApiService {
       password:pswd,
       id_application: 3
     }
-    //TODO: quand on pourra récupérer le token, le stocker au lieu de user
     this.http.post(`${this.local.getSettings()['API_URL']}/auth/login`,user,{headers:{}, observe: "response" as "response", withCredentials : true})
     .pipe(
       catchError(err =>{ throw err})
     )
     .subscribe(
       data=>{
-        this.storage.set("user",user)
+        this.storage.set("user",data.body)
         reponse = data
+        if(data.body["access_token"])
+        {
+
+        }
+        else
+        {
+          console.warn("nous n'arrivons pas a trouver le token.\nModifiez l'api de manière à ce qu'elle renvoi le token")
+        }
       },
       err =>{
         reponse = err

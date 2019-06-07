@@ -58,7 +58,7 @@ export class AppComponent {
         }
       });
 
-      /*on verifie l'existence des dossiers et fichiers qui nous interressent*/
+      //on vérifie la plateforme
       if(!this.platform.is("cordova") || !this.platform.is("android"))
       {
         alert("vous n'êtes pas sur une plateforme android.\nCertaines fonctionnalités pourrait ne pas être disponible.")
@@ -66,6 +66,7 @@ export class AppComponent {
       }
       else
       {
+        /*on verifie l'existence des dossiers et fichiers qui nous interressent*/
         this.settings()
       }
       
