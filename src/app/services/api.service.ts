@@ -172,8 +172,12 @@ export class ApiService {
             this.storage.remove("visiteSite" + mes["id_base_site"]);
           },
           err => {
-            console.error(err);
-            alert("une erreur s'est produite");
+            console.error(JSON.stringify(err));
+            if (err.error.message) {
+              alert(err.error.message);
+            } else {
+              alert("une erreur inconnue s'est produite");
+            }
           }
         );
     }
