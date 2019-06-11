@@ -168,9 +168,12 @@ export class ApiService {
           mes => {
             console.log("données envoyées");
             console.log(mes);
+            alert("ZP envoyé");
+            this.storage.remove("visiteSite" + mes["id_base_site"]);
           },
           err => {
             console.error(err);
+            alert("une erreur s'est produite");
           }
         );
     }
