@@ -1,37 +1,43 @@
 <ion-header>
   <ion-toolbar>
-		<ion-buttons slot="start">
-			<ion-button (click)="disconnect()">
-					<ion-icon name="power"></ion-icon>
-			</ion-button>
-		</ion-buttons>
-		<ion-title>Flore</ion-title>
-    <ion-button color="primary" size="small" shape="round" slot="end" (click)="goToSetting()">
-    	<ion-icon slot="icon-only" name="settings"></ion-icon>
+    <ion-buttons slot="start">
+      <ion-button (click)="disconnect()">
+        <ion-icon name="power"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Flore</ion-title>
+    <ion-button
+      color="primary"
+      size="small"
+      shape="round"
+      slot="end"
+      (click)="goToSetting()"
+    >
+      <ion-icon slot="icon-only" name="settings"></ion-icon>
     </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-	<ion-item-group>
-		<h1><strong>Etat de l'appareil</strong></h1>
-		<ion-item>
-			<ion-label>
-				<h3>Dernière synchronisation</h3>
-				<p>Placeholder date</p>
-			</ion-label>
-		</ion-item>
-		<ion-item>
-			<ion-label>
-				<h3>Visites non synchronisées</h3>
-				<p>{{donneesStockee.length}}</p>
-			</ion-label>
-		</ion-item>
-	</ion-item-group>
-	<ion-button expand="block" (click)="goToWatch()">Afficher</ion-button>
-	<ion-button expand="block" (click)="goToSync()">Synchroniser</ion-button>
+  <ion-item-group>
+    <h1><strong>Etat de l'appareil</strong></h1>
+    <ion-item>
+      <ion-label>
+        <h3>Dernière synchronisation</h3>
+        <p>{{ lastSync }}</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h3>Visites non synchronisées</h3>
+        <p>{{ donneesStockee.length }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-item-group>
+  <ion-button expand="block" (click)="goToWatch()">Afficher</ion-button>
+  <ion-button expand="block" (click)="goToSync()">Synchroniser</ion-button>
 </ion-content>
 
 <ion-footer>
-	<ion-button expand="block" (click)="goToInput()">Nouvelle visite</ion-button>
+  <ion-button expand="block" (click)="goToInput()">Nouvelle visite</ion-button>
 </ion-footer>
