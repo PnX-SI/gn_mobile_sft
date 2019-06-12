@@ -1,40 +1,49 @@
 <ion-header>
   <ion-toolbar>
-			<ion-buttons slot="start">
-					<ion-button (click)="goToHome()" slot="end">
-							<ion-icon name="arrow-back"></ion-icon>
-						</ion-button>
-			</ion-buttons>
-    <ion-title>Synchronisation /!\ WIP /!\</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToHome()" slot="end">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Synchronisation</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-	<ion-list>
-		<ion-item-group>
-			<ion-item-divider><strong>Etat du serveur</strong></ion-item-divider>
-			<ion-item>
-				<ion-icon name="cloud"></ion-icon>
-				<ion-text slot="end">Placeholder</ion-text>
-			</ion-item>
-		</ion-item-group>
-		<ion-item-group>
-			<ion-item-divider><strong>Envoi de données</strong></ion-item-divider>
-			<ion-item>
-				<ion-icon name="phone-portrait"></ion-icon>
-				<ion-progress-bar></ion-progress-bar>
-				<ion-icon name="cloud-upload"></ion-icon>
-			</ion-item>
-			<ion-button expand="block" disabled="{{disableButton}}" (click)="SendVisits()">envoyer</ion-button>
-		</ion-item-group>
-		<ion-item-group>
-			<ion-item-divider><strong>Récupération de données (du serveur)</strong></ion-item-divider>
-			<ion-item>
-				<ion-icon name="cloud-download"></ion-icon>
-				<ion-progress-bar value="{{progressBarRecupdonnee}}"></ion-progress-bar>
-				<ion-icon name="phone-portrait"></ion-icon>
-			</ion-item>
-			<ion-button expand="block" disabled="{{disableButton}}" (click)="SaveToLocalData()">recevoir</ion-button>
-		</ion-item-group>
-	</ion-list>
+  <ion-list>
+    <ion-item-group>
+      <ion-item-divider><strong>Envoi de données</strong></ion-item-divider>
+      <ion-item>
+        <ion-icon name="phone-portrait"></ion-icon>
+        <ion-progress-bar value="{{ progressBarEnvoyee }}"></ion-progress-bar>
+        <ion-icon name="cloud-upload"></ion-icon>
+      </ion-item>
+      <ion-button
+        expand="block"
+        disabled="{{ disableButton }}"
+        (click)="SendVisits()"
+        >envoyer</ion-button
+      >
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider
+        ><strong>Récupération de données (du serveur)</strong></ion-item-divider
+      >
+      <ion-item>
+        <ion-icon name="cloud-download"></ion-icon>
+        <ion-progress-bar
+          value="{{ progressBarRecupdonnee }}"
+        ></ion-progress-bar>
+        <ion-icon name="phone-portrait"></ion-icon>
+      </ion-item>
+      <ion-button
+        expand="block"
+        disabled="{{ disableButton }}"
+        (click)="SaveToLocalData()"
+      >
+        recevoir
+      </ion-button>
+    </ion-item-group>
+  </ion-list>
+  <p>{{ textResult }}</p>
 </ion-content>

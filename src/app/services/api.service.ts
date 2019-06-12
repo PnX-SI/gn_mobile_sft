@@ -183,6 +183,65 @@ export class ApiService {
     }
   }
 
+  PurgeresultSilentDataSend() {
+    resultSilentDataSend = "";
+  }
+
+  SilentSendData(token, data) {
+    let url = `${this.local.getSettings()["API_URL"]}/${
+      this.local.getSettings()["API_Dir"]
+    }/visitJWT`;
+    if (
+      this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline
+    ) {
+      alert(
+        "Vous n'êtes pas connecté a internet. Les données n'ont pas été envoyées"
+      );
+    } else {
+      this.http
+        .post(url, data, { headers: { jwt: token } })
+        .pipe(
+          catchError(err => {
+            throw err;
+          })
+        )
+        .subscribe(
+          mes => {
+            console.log("ZP" + mes["id_base_site"] + " envoyé");
+            resultSilentDataSend =
+              resultSilentDataSend + "\nZP" + mes["id_base_site"] + ": envoyé";
+            console.log(mes);
+            this.storage.remove("visiteSite" + mes["id_base_site"]);
+          },
+          err => {
+            console.error(JSON.stringify(err));
+            if (err.error.message) {
+              console.error(
+                "ZP" + data["id_base_site"] + ":" + err.error.message
+              );
+              resultSilentDataSend =
+                resultSilentDataSend +
+                "\nZP" +
+                data["id_base_site"] +
+                ":" +
+                err.error.message;
+            } else {
+              console.error(
+                "ZP" +
+                  data["id_base_site"] +
+                  ":une erreur inconnue s'est produite"
+              );
+              resultSilentDataSend =
+                resultSilentDataSend +
+                "\nZP" +
+                data["id_base_site"] +
+                ":une erreur inconnue s'est produite";
+            }
+          }
+        );
+    }
+  }
+
   public LogInAPI(log, pswd) {
     reponse = null;
     const user = {
@@ -232,3 +291,5 @@ export class ApiService {
 }
 
 export var reponse;
+
+export var resultSilentDataSend: string;

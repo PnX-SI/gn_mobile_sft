@@ -81,11 +81,17 @@ export class SeeVisitsPage implements OnInit {
         });
 
         this.storage.get("user").then(user => {
-          if (user["access_token"]) {
-            this.apiService.sendData(user["access_token"], formatedData);
+          if (user) {
+            if (user["access_token"]) {
+              this.apiService.sendData(user["access_token"], formatedData);
+            } else {
+              console.error("pas de token");
+              alert("veuillez vous connecter à la bonne api");
+            }
           } else {
-            console.error("pas de token");
+            alert("veuillez vous connecter à une api");
           }
+
           setTimeout(() => this.ionViewDidEnter(), 1000);
         });
       });
