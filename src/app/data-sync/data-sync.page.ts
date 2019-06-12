@@ -18,7 +18,10 @@ export class DataSyncPage implements OnInit {
 
   textResult;
 
-  interval;
+  isLocalDataUpdated = false;
+  isDataSend = false;
+
+  interval = [];
   constructor(
     private networkService: NetworkService,
     private apiService: ApiService,
@@ -40,10 +43,36 @@ export class DataSyncPage implements OnInit {
           this.router.navigate(["/login", { back: "data-sync" }]);
         }
       } else {
-        this.interval = setInterval(
+        this.interval[0] = setInterval(
           () => (this.textResult = resultSilentDataSend),
           100
         );
+        this.interval[1] = setInterval(() => {
+          if (this.progressBarRecupdonnee >= 0.9) {
+            //on attend que les données soit récupéré
+            this.isLocalDataUpdated = true; //on dit que cette partie est synchronisé
+            //console.log("sync get");
+          } else {
+            this.isLocalDataUpdated = false;
+          }
+        }, 100);
+        this.interval[2] = setInterval(() => {
+          if (this.progressBarEnvoyee >= 0.9) {
+            //on attend que les données soit envoyé
+            this.isDataSend = true; //on dit que cette partie est synchronisé
+            //console.log("sync send");
+          } else {
+            this.isDataSend = false;
+          }
+        }, 100);
+        this.interval[3] = setInterval(() => {
+          if (this.isDataSend && this.isLocalDataUpdated) {
+            //quand tout est synchronisé
+            console.log("synchronisé");
+            this.storage.set("timestampSynchro", Date.now()); //on stocke le moment où ça a été synchronisé
+            clearInterval(this.interval[3]);
+          }
+        }, 100);
       }
     });
   }
@@ -114,7 +143,7 @@ export class DataSyncPage implements OnInit {
       this.storage.get("user").then(user => {
         if (user["access_token"]) {
           //on s'assure que l'utilisateur est connecté à une api qui utilise le jwt
-          for (var i = 0; i <= 99; i++) {
+          for (var i = 0; i <= 9999; i++) {
             this.storage.get("visiteSite" + i).then(data => {
               //pour un grand nombre de donnée
               if (data) {
@@ -168,8 +197,10 @@ export class DataSyncPage implements OnInit {
   }
 
   ionViewDidLeave() {
-    if (this.interval) {
-      clearInterval(this.interval);
+    if (this.interval.length > 0) {
+      clearInterval(this.interval[0]);
+      clearInterval(this.interval[1]);
+      clearInterval(this.interval[2]);
     }
   }
 }
