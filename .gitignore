@@ -33,3 +33,5 @@ $RECYCLE.BIN/
 Thumbs.db
 UserInterfaceState.xcuserstate
 docs/.~lock.Doc développeurs.odt#
+
+*.odt#
