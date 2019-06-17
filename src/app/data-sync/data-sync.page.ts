@@ -200,6 +200,7 @@ export class DataSyncPage implements OnInit {
     this.SendVisits();
     this.SaveToLocalData();
   }
+
   ionViewDidLeave() {
     if (this.interval.length > 0) {
       clearInterval(this.interval[0]);
