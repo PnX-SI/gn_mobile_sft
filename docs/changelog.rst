@@ -2,6 +2,22 @@
 CHANGELOG
 =========
 
+0.3.0 (2019-06-18)
+------------------
+
+Troisième version de l'appli mobile GeoNature (protocole Suivi flore territoire), pilotée par le PNE et le CBNA, développée par @rorp24. 
+
+Prototype opérationnel permettant l'envoi de données dans la BDD.
+
+**Fonctionnalités**
+
+* Compatibilité avec la version 9 d'Android
+* Mise en place des filtres de recherche
+* Possibilité d’envoyer des données à l’API
+* Synchronisation totale de l’application et de l'API
+* Documentation développeur (V1)
+* Documentation utilisateur (V0.1)
+
 0.2.0 (2019-05-09)
 ------------------
 
