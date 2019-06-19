@@ -23,14 +23,17 @@ export class SeeVisitsPage implements OnInit {
   {
     //récupération du nombre de visites non synchronisées
     this.visites = []; //reset pour éviter un faux positif
-    for (var i = 0; i <= 99; i++) {
-      this.storage.get("visiteSite" + i).then(res => {
-        if (res) {
-          this.visites.push(res);
-        }
+    this.apiService.getData(true).subscribe(res => {
+      res.forEach(element => {
+        this.storage.get("visiteSite" + element.id).then(visit => {
+          if (visit) {
+            this.visites.push(visit);
+            //this.local.setListVisit(this.donneesStockee);
+          }
+        });
       });
-    }
-    console.log(this.visites);
+    });
+    //console.log(this.visites);
   }
 
   GoToHome() {

@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Storage } from "@ionic/storage";
+import { LocalVariablesService } from "../services/local-variables.service";
+import { ApiService } from "../services/api.service";
 
 @Component({
   selector: "app-home",
@@ -12,7 +14,12 @@ export class HomePage {
   lastSync;
 
   //chargement des imports
-  constructor(private router: Router, private storage: Storage) {}
+  constructor(
+    private router: Router,
+    private storage: Storage,
+    private local: LocalVariablesService,
+    private apiService: ApiService
+  ) {}
 
   ngOnInit() {}
 
@@ -43,13 +50,16 @@ export class HomePage {
 
     //récupération du nombre de visites non synchronisées
     this.donneesStockee = []; //reset pour éviter un faux positif
-    for (var i = 0; i <= 9999; i++) {
-      this.storage.get("visiteSite" + i).then(res => {
-        if (res) {
-          this.donneesStockee.push(res);
-        }
+    this.apiService.getData(true).subscribe(res => {
+      res.forEach(element => {
+        this.storage.get("visiteSite" + element.id).then(visit => {
+          if (visit) {
+            this.donneesStockee.push(visit);
+            //this.local.setListVisit(this.donneesStockee);
+          }
+        });
       });
-    }
+    });
   }
 
   public goToSetting() {

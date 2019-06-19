@@ -143,7 +143,7 @@ export class DataSyncPage implements OnInit {
       this.storage.get("user").then(user => {
         if (user["access_token"]) {
           //on s'assure que l'utilisateur est connecté à une api qui utilise le jwt
-          for (var i = 0; i <= 9999; i++) {
+          for (var i = 0; i <= 99; i++) {
             this.storage.get("visiteSite" + i).then(data => {
               //pour un grand nombre de donnée
               if (data) {
