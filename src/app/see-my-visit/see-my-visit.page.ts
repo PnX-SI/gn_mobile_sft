@@ -1,31 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
-import { Storage } from '@ionic/storage';
-import { File } from '@ionic-native/file/ngx'
-import {WebView} from '@ionic-native/ionic-webview'
+import { Component, OnInit } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
+import { Storage } from "@ionic/storage";
+import { File } from "@ionic-native/file/ngx";
+import { WebView } from "@ionic-native/ionic-webview";
 
-import { ApiService } from '../services/api.service';
+import { ApiService } from "../services/api.service";
 
-import 'leaflet';
-import 'leaflet-tilelayer-mbtiles-ts'
-import * as geoJSON from 'geojson';
-import { ConnectionStatus, NetworkService } from '../services/network.service';
-import {LocalVariablesService} from '../services/local-variables.service'
+import "leaflet";
+import "leaflet-tilelayer-mbtiles-ts";
+import * as geoJSON from "geojson";
+import { ConnectionStatus, NetworkService } from "../services/network.service";
+import { LocalVariablesService } from "../services/local-variables.service";
 
 declare var L: any;
 
 @Component({
-  selector: 'app-see-my-visit',
-  templateUrl: './see-my-visit.page.html',
-  styleUrls: ['./see-my-visit.page.scss'],
+  selector: "app-see-my-visit",
+  templateUrl: "./see-my-visit.page.html",
+  styleUrls: ["./see-my-visit.page.scss"]
 })
 export class SeeMyVisitPage implements OnInit {
   //variables de la page
-  map:L.Map;
-  id; 
+  map: L.Map;
+  id;
   marque;
-  visite = []; 
-  mailles:geoJSON.FeatureCollection; 
+  visite = [];
+  mailles: geoJSON.FeatureCollection;
   MyVisit = [];
   compteReload = 0;
   modif = 100;
@@ -38,171 +38,159 @@ export class SeeMyVisitPage implements OnInit {
 
   //chargement des imports
   constructor(
-      private router:Router, 
-      private route: ActivatedRoute,
-      private apiService: ApiService,
-      private storage:Storage,
-      private file:File,
-      private networkService: NetworkService,
-      private local: LocalVariablesService
-    ) 
-  {
+    private router: Router,
+    private route: ActivatedRoute,
+    private apiService: ApiService,
+    private storage: Storage,
+    private file: File,
+    private networkService: NetworkService,
+    private local: LocalVariablesService
+  ) {
     //on lis les paramêtres qu'on a passé
-    this.route.params.subscribe(params =>{
+    this.route.params.subscribe(params => {
       this.id = params.id;
-      
+
       //on call une lecture de données
-      this.loadDataVisite(true,"visite",this.id);
-      this.loadDataMailles(true, "maille",this.id);
-    });  
-    
+      this.loadDataVisite(true, "visite", this.id);
+      this.loadDataMailles(true, "maille", this.id);
+    });
   }
 
   /*fonctions de lecture de données*/
-  loadDataVisite(refresh = false,type = "base",id = 0, refresher?) {
-    this.apiService.getData(refresh,type,id).subscribe(res => {
+  loadDataVisite(refresh = false, type = "base", id = 0, refresher?) {
+    this.apiService.getData(refresh, type, id).subscribe(res => {
       this.visite = res[0];
-      if (refresher) {
-            refresher.target.complete();
-          }
-    });
-  }
-  loadDataMailles(refresh = false,type = "base",id = 0, refresher?) {
-    this.apiService.getData(refresh,type,id).subscribe(res => {
-      this.mailles = res;
-      console.log(res);
-      
-      this.totalMailles = res.length;
-
-      //ont appelle la visite stocker en locale
-      this.storage.get("visiteSite"+this.id).then((res) => {
-        this.MyVisit = res
-        console.log(this.MyVisit)
-        this.maillesNonVisite = this.totalMailles - this.MyVisit["cor_visit_grid"].length
-        this.reload()
-      }  
-      )
       if (refresher) {
         refresher.target.complete();
       }
-      
+    });
+  }
+  loadDataMailles(refresh = false, type = "base", id = 0, refresher?) {
+    this.apiService.getData(refresh, type, id).subscribe(res => {
+      this.mailles = res;
+      console.log(res);
+
+      this.totalMailles = res.length;
+
+      //ont appelle la visite stocker en locale
+      this.storage.get("visiteSite" + this.id).then(res => {
+        this.MyVisit = res;
+        console.log(this.MyVisit);
+        this.maillesNonVisite =
+          this.totalMailles - this.MyVisit["cor_visit_grid"].length;
+        this.reload();
+      });
+      if (refresher) {
+        refresher.target.complete();
+      }
     });
   }
   /*****************************/
 
-  ionViewDidEnter()//quand on rentre dans la page
-  {	
+  ionViewDidEnter() //quand on rentre dans la page
+  {
     //on fait en sorte que la carte soit affiché
-		this.file.checkFile(this.file.externalDataDirectory+"MBTilesLocales/",this.local.getSettings()["mbTile_File"]).then(res =>{
-			//Carte locale (mbTiles)
-			var pathToFile = this.file.externalDataDirectory+"MBTilesLocales/"+this.local.getSettings()["mbTile_File"]
-			var truePath = WebView.convertFileSrc(pathToFile)
-			console.log("mbtile chargé")
-			L.tileLayer.mbTiles(truePath,{
-				maxZoom: 18,
-				attribution: "local"
-			}).addTo(this.map)
-			
-		}, err =>{
-			//Carte online
-			L.tileLayer(this.local.getSettings()["Online_Leaflet_URL"], {
-				// tslint:disable-next-line
-				attribution: '&copy;'+this.local.getSettings()["Online_Attribution"],
-				maxZoom: 18
-				}).addTo(this.map);
-		})
-    
+    this.file
+      .checkDir(
+        this.file.externalDataDirectory,
+        this.local.getSettings()["TilesDirectory"]
+      )
+      .then(
+        res => {
+          //Carte locale (dossier de tuiles)
+          var pathToFile =
+            this.file.externalDataDirectory +
+            this.local.getSettings()["TilesDirectory"];
+          var truePath = WebView.convertFileSrc(pathToFile);
+          console.log("mbtile chargé");
+          L.tileLayer(truePath + "/{z}/{x}/{y}.png", {
+            maxZoom: 16,
+            attribution: "local"
+          }).addTo(this.map);
+        },
+        err => {
+          //Carte online
+          L.tileLayer(this.local.getSettings()["Online_Leaflet_URL"], {
+            // tslint:disable-next-line
+            attribution:
+              "&copy;" + this.local.getSettings()["Online_Attribution"],
+            maxZoom: 18
+          }).addTo(this.map);
+        }
+      );
   }
 
-  ngOnInit()  //quand on créé la page
+  ngOnInit() //quand on créé la page
   {
     //assignation de la carte
-    this.map = new L.Map('mapVision');
+    this.map = new L.Map("mapVision");
     //on fait en sorte que la carte ai une échelle (pour se repérer c'est cool)
     L.control.scale().addTo(this.map);
   }
 
-  ionViewDidLeave()
-  {
+  ionViewDidLeave() {
     //on ferme l'affichage
-    document.getElementById('affichage').style.left = "100%"
-    document.getElementById('affichage').style.right = "-75%"
+    document.getElementById("affichage").style.left = "100%";
+    document.getElementById("affichage").style.right = "-75%";
     this.modif = 100;
   }
 
-  reload()//fonction de (re)chargement
+  reload() //fonction de (re)chargement
   {
     //on montre qu'on charge des truc
     document.getElementById("affichChargement").removeAttribute("hidden");
     //on ferme l'affichage
-    clearInterval(this.eventInterval)
-    this.eventInterval = setInterval(() => this.animAffic(true),1);
+    clearInterval(this.eventInterval);
+    this.eventInterval = setInterval(() => this.animAffic(true), 1);
     //on recharge rapidement la carte
-    this.map.invalidateSize(); 
-    
-    var objet = L.geoJSON(this.mailles,{
-        onEachFeature: (feature, layer) => 
-        {
-          this.MyVisit["cor_visit_grid"].forEach(element => {
-            if (feature.id == element["id_area"])
-            {
-              if(element["presence"])
-              {
-                layer["setStyle"]({color:"#00FF00"});
-                this.maillesPresence++
-              }
-              else 
-              {
-                layer["setStyle"]({color:"#FF0000"});
-                this.maillesAbsence++
-              }
-              
-            } 
-          });          
-        } 
-      }).addTo(this.map);	
-      this.map.setView(objet.getBounds().getCenter(), 16);
-      document.getElementById("affichChargement").setAttribute("hidden",null);
-      this.compteReload = 0;
-  }	
+    this.map.invalidateSize();
 
-  toggleAffichage()//TODO: adapter l'interface a la largeur de l'appareil
-  {
-    if (this.modif > 25)
-    {
-      clearInterval(this.eventInterval)
-      this.eventInterval = setInterval(() => this.animAffic(false),1);
-    }
-    else
-    {
-      clearInterval(this.eventInterval)
-      this.eventInterval = setInterval(() => this.animAffic(true),1);
-    }
-  }
-  
-  animAffic(reverse:Boolean)
-  {
-    if (this.modif >= 25 && !reverse)
-    {
-      document.getElementById('affichage').style.left = this.modif+"%"
-      document.getElementById('affichage').style.right = (25-this.modif)+"%"
-      this.modif--
-    }
-    else if (this.modif <= 100 && reverse)
-    {
-      document.getElementById('affichage').style.left = this.modif+"%"
-      document.getElementById('affichage').style.right = (25-this.modif)+"%"
-      this.modif++
-    }
-    else 
-    {
-      clearInterval(this.eventInterval)
-    }
-    
+    var objet = L.geoJSON(this.mailles, {
+      onEachFeature: (feature, layer) => {
+        this.MyVisit["cor_visit_grid"].forEach(element => {
+          if (feature.id == element["id_area"]) {
+            if (element["presence"]) {
+              layer["setStyle"]({ color: "#00FF00" });
+              this.maillesPresence++;
+            } else {
+              layer["setStyle"]({ color: "#FF0000" });
+              this.maillesAbsence++;
+            }
+          }
+        });
+      }
+    }).addTo(this.map);
+    this.map.setView(objet.getBounds().getCenter(), 16);
+    document.getElementById("affichChargement").setAttribute("hidden", null);
+    this.compteReload = 0;
   }
 
-  goToHome()
+  toggleAffichage() //TODO: adapter l'interface a la largeur de l'appareil
   {
-    this.router.navigate(['/home']);
+    if (this.modif > 25) {
+      clearInterval(this.eventInterval);
+      this.eventInterval = setInterval(() => this.animAffic(false), 1);
+    } else {
+      clearInterval(this.eventInterval);
+      this.eventInterval = setInterval(() => this.animAffic(true), 1);
+    }
+  }
+
+  animAffic(reverse: Boolean) {
+    if (this.modif >= 25 && !reverse) {
+      document.getElementById("affichage").style.left = this.modif + "%";
+      document.getElementById("affichage").style.right = 25 - this.modif + "%";
+      this.modif--;
+    } else if (this.modif <= 100 && reverse) {
+      document.getElementById("affichage").style.left = this.modif + "%";
+      document.getElementById("affichage").style.right = 25 - this.modif + "%";
+      this.modif++;
+    } else {
+      clearInterval(this.eventInterval);
+    }
+  }
+
+  goToHome() {
+    this.router.navigate(["/home"]);
   }
 }

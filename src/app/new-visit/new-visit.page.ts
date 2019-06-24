@@ -146,25 +146,22 @@ export class NewVisitPage implements OnInit {
   {
     //on fait en sorte que la carte soit affiché
     this.file
-      .checkFile(
-        this.file.externalDataDirectory + "MBTilesLocales/",
-        this.local.getSettings()["mbTile_File"]
+      .checkDir(
+        this.file.externalDataDirectory,
+        this.local.getSettings()["TilesDirectory"]
       )
       .then(
         res => {
-          //Carte locale (mbTiles)
+          //Carte locale (dossier de tuiles)
           var pathToFile =
             this.file.externalDataDirectory +
-            "MBTilesLocales/" +
-            this.local.getSettings()["mbTile_File"];
+            this.local.getSettings()["TilesDirectory"];
           var truePath = WebView.convertFileSrc(pathToFile);
           console.log("mbtile chargé");
-          L.tileLayer
-            .mbTiles(truePath, {
-              maxZoom: 18,
-              attribution: "local"
-            })
-            .addTo(this.map);
+          L.tileLayer(truePath + "/{z}/{x}/{y}.png", {
+            maxZoom: 16,
+            attribution: "local"
+          }).addTo(this.map);
         },
         err => {
           //Carte online
