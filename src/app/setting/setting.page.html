@@ -31,12 +31,6 @@
     <ion-button (click)="getPos()">centrer par rapport a ici</ion-button>
 
     <ion-label><p>Carte hors ligne</p></ion-label>
-    <ion-label position="stacked">Nom du fichier :</ion-label>
-    <ion-input
-      type="text"
-      value="{{ settings.mbTile_File }}"
-      [(ngModel)]="settings.mbTile_File"
-    ></ion-input>
     <ion-label position="stacked">Dossier de tuiles :</ion-label>
     <ion-input
       type="text"
@@ -58,6 +52,13 @@
       [(ngModel)]="settings.Online_Attribution"
     ></ion-input>
   </ion-item-group>
+
+  <ion-label position="stacked">Niveau de zoom maximal :</ion-label>
+  <ion-input
+    type="number"
+    value="{{ settings.MaxZoomLevel }}"
+    [(ngModel)]="settings.MaxZoomLevel"
+  ></ion-input>
   <ion-item-group>
     <h3><strong>API utilisée</strong></h3>
 

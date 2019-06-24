@@ -14,8 +14,8 @@ const settings = {
   API_Dir: "sft",
   Default_Lat: 44.5682846,
   Default_Lon: 6.0634622,
-  mbTile_File: "cartes.mbtiles",
   TilesDirectory: "scan",
+  MaxZoomLevel: 18,
   Online_Leaflet_URL: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
   Online_Attribution: "OpenTopoMap"
 };
@@ -124,7 +124,6 @@ export class AppComponent {
                               console.log("lecture de settings.json");
                               this.local.setSettings(JSON.parse(res));
                               //verif dossier des mbtiles
-                              this.mbtiles();
                             },
                             err => {
                               console.log("Erreur: settings.json illisible");
@@ -171,8 +170,6 @@ export class AppComponent {
                             res => {
                               console.log("lecture de settings.json");
                               this.local.setSettings(JSON.parse(res));
-                              //verif dossier des mbtiles
-                              this.mbtiles();
                             },
                             err => {
                               console.log("Erreur: settings.json illisible");
@@ -184,60 +181,6 @@ export class AppComponent {
                     console.log("settings.json n'a pas pu être créé");
                   }
                 );
-            },
-            err => {
-              console.log("nous n'avons pas pu créer le dossier");
-            }
-          );
-      }
-    );
-  }
-
-  mbtiles() {
-    //dossier des mbtiles
-    this.file.checkDir(this.file.externalDataDirectory, "MBTilesLocales").then(
-      res => {
-        this.file
-          .checkFile(
-            this.file.externalDataDirectory + "MBTilesLocales/",
-            this.local.getSettings()["mbTile_File"]
-          )
-          .then(
-            res => {
-              console.log("fichier de cartes présent");
-            },
-            err => {
-              //TODO quand le téléchargement sera mis en place, changer le texte
-              alert(
-                "Vous devez placer le fichier " +
-                  this.local.getSettings()["mbTile_File"] +
-                  " dans le dossier: \n" +
-                  this.file.externalDataDirectory +
-                  "MBTilesLocales" +
-                  "\npour avoir vos cartes en local"
-              );
-              //console.log("Vous devez placer le fichier \"cartes.mbtiles\" dans le dossier: \n"+this.file.externalDataDirectory+"MBTilesLocales"+"\npour avoir vos cartes en local")
-            }
-          );
-      },
-      err => {
-        console.log(
-          "le dossier MBTilesLocales n'existe pas. Nous allons le créer"
-        );
-        this.file
-          .createDir(this.file.externalDataDirectory, "MBTilesLocales", false)
-          .then(
-            res => {
-              //TODO quand le téléchargement sera mis en place, changer le texte
-              alert(
-                "Dossier de cartes locales créé. Vous devez placer le fichier " +
-                  this.local.getSettings()["mbTile_File"] +
-                  " dans le dossier: \n" +
-                  this.file.externalDataDirectory +
-                  "MBTilesLocales" +
-                  "\npour avoir vos cartes en local"
-              );
-              //console.log("Dossier de cartes locales créé. Vous devez placer le fichier \"cartes.mbtiles\" dans le dossier: \n"+this.file.externalDataDirectory+"MBTilesLocales"+"\npour avoir vos cartes en local")
             },
             err => {
               console.log("nous n'avons pas pu créer le dossier");

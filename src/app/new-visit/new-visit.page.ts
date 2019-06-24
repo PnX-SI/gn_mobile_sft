@@ -159,7 +159,7 @@ export class NewVisitPage implements OnInit {
           var truePath = WebView.convertFileSrc(pathToFile);
           console.log("mbtile chargé");
           L.tileLayer(truePath + "/{z}/{x}/{y}.png", {
-            maxZoom: 16,
+            maxZoom: this.local.getSettings()["MaxZoomLevel"],
             attribution: "local"
           }).addTo(this.map);
         },
@@ -169,7 +169,7 @@ export class NewVisitPage implements OnInit {
             // tslint:disable-next-line
             attribution:
               "&copy;" + this.local.getSettings()["Online_Attribution"],
-            maxZoom: 18
+            maxZoom: this.local.getSettings()["MaxZoomLevel"]
           }).addTo(this.map);
         }
       );
