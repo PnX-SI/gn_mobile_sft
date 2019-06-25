@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { MenuController, IonicModule } from "@ionic/angular";
 import { Router } from "@angular/router";
-import { SQLite, SQLiteObject } from "@ionic-native/sqlite/ngx";
 import { File } from "@ionic-native/file/ngx";
 import { WebView } from "@ionic-native/ionic-webview";
+import { Diagnostic } from "@ionic-native/diagnostic/ngx";
 
 import { ApiService } from "../services/api.service";
 import { LocalVariablesService } from "../services/local-variables.service";
@@ -11,7 +11,6 @@ import { LocalVariablesService } from "../services/local-variables.service";
 import "leaflet";
 import "leaflet-tilelayer-mbtiles-ts";
 import * as geoJSON from "geojson";
-import { NetworkService, ConnectionStatus } from "../services/network.service";
 
 declare var L: any;
 
@@ -40,8 +39,7 @@ export class StartInputPage implements OnInit {
     private apiService: ApiService,
     private local: LocalVariablesService,
     private file: File,
-    private networkService: NetworkService,
-    private sqlite: SQLite
+    private diagnostic: Diagnostic
   ) {
     this.loadData(true); //on charge des données
     this.loadDataOrg(true, "organisme");
@@ -71,34 +69,30 @@ export class StartInputPage implements OnInit {
   ionViewDidEnter() //quand on rentre dans la page
   {
     //on fait en sorte que la carte soit affiché
-    this.file
-      .checkDir(
-        this.file.externalDataDirectory,
-        this.local.getSettings()["TilesDirectory"]
-      )
-      .then(
-        res => {
-          //Carte locale (dossier de tuiles)
-          var pathToFile =
-            this.file.externalDataDirectory +
+    var test = this.diagnostic.getExternalSdCardDetails().then(
+      res => {
+        //Carte locale (dossier de tuiles)
+        /*var pathToFile =
+            this.file.externalRootDirectory +
             this.local.getSettings()["TilesDirectory"];
           var truePath = WebView.convertFileSrc(pathToFile);
           console.log("mbtile chargé");
           L.tileLayer(truePath + "/{z}/{x}/{y}.png", {
             maxZoom: this.local.getSettings()["MaxZoomLevel"],
             attribution: "local"
-          }).addTo(this.map);
-        },
-        err => {
-          //Carte online
-          L.tileLayer(this.local.getSettings()["Online_Leaflet_URL"], {
-            // tslint:disable-next-line
-            attribution:
-              "&copy;" + this.local.getSettings()["Online_Attribution"],
-            maxZoom: this.local.getSettings()["MaxZoomLevel"]
-          }).addTo(this.map);
-        }
-      );
+          }).addTo(this.map);*/
+        alert("test");
+      },
+      err => {
+        //Carte online
+        L.tileLayer(this.local.getSettings()["Online_Leaflet_URL"], {
+          // tslint:disable-next-line
+          attribution:
+            "&copy;" + this.local.getSettings()["Online_Attribution"],
+          maxZoom: this.local.getSettings()["MaxZoomLevel"]
+        }).addTo(this.map);
+      }
+    );
   }
 
   ngOnInit() //quand on créé la page
