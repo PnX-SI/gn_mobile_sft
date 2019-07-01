@@ -14,10 +14,10 @@
     <ion-item>
       <ion-label text-wrap>
         <h3>Id ZP : {{ item.id_base_site }}</h3>
-        <p>Nb mailles visité : {{ item.cor_visit_grid.length }}</p>
-        <p>Nb perturbation : {{ item.cor_visit_perturbation.length }}</p>
-        <p>Nb observateurs : {{ item.cor_visit_observer.length }}</p>
-        <p>Commentaires : {{ item.comments }}</p>
+        <p>Nb maille(s) visitée(s) : {{ item.cor_visit_grid.length }}</p>
+        <p>Nb perturbation(s) : {{ item.cor_visit_perturbation.length }}</p>
+        <p>Nb observateur(s) : {{ item.cor_visit_observer.length }}</p>
+        <p>Commentaire : {{ item.comments }}</p>
         <ion-button (click)="watch(item.id_base_site)">
           <ion-icon name="eye"></ion-icon>
         </ion-button>

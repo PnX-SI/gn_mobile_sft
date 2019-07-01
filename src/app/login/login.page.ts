@@ -46,20 +46,19 @@ export class LoginPage implements OnInit {
     if (
       this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Online
     ) {
-      //TODO: améliorer ça pour plus avoir a tricher sur le token
       this.apiService.LogInAPI(this.login, this.password);
       setTimeout(() => this.tryToLogin(), 100);
     } else {
       document.getElementById("erreur").removeAttribute("hidden");
       document.getElementById("erreur").innerHTML =
-        "Vous n'êtes pas connecté a internet";
+        "Vous n'êtes pas connecté à internet";
     }
   }
 
   public goToOffline() {
     //au clique du bouton, renvoi a l'ancienne page ou, a défaut, sur home
     var confirmation = confirm(
-      "voulez vous utiliser l'application en mode hors ligne?"
+      "Voulez-vous utiliser l'application en mode hors ligne ?"
     );
     if (confirmation) {
       document.getElementById("erreur").setAttribute("hidden", null);

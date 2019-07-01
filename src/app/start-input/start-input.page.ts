@@ -11,6 +11,7 @@ import { LocalVariablesService } from "../services/local-variables.service";
 import "leaflet";
 import "leaflet-tilelayer-mbtiles-ts";
 import * as geoJSON from "geojson";
+import { cordova } from "@ionic-native/core";
 
 declare var L: any;
 
@@ -69,7 +70,15 @@ export class StartInputPage implements OnInit {
   ionViewDidEnter() //quand on rentre dans la page
   {
     //on fait en sorte que la carte soit affiché
-    var test = this.diagnostic.getExternalSdCardDetails().then(
+    cordova(
+      this,
+      "getExternalSdCardDetails",
+      { platforms: ["Android"] },
+      arguments
+    ).then(res => {
+      alert("test hard");
+    });
+    this.diagnostic.getExternalSdCardDetails().then(
       res => {
         //Carte locale (dossier de tuiles)
         /*var pathToFile =
@@ -81,9 +90,10 @@ export class StartInputPage implements OnInit {
             maxZoom: this.local.getSettings()["MaxZoomLevel"],
             attribution: "local"
           }).addTo(this.map);*/
-        alert("test");
+        alert("test soft");
       },
       err => {
+        console.error(err);
         //Carte online
         L.tileLayer(this.local.getSettings()["Online_Leaflet_URL"], {
           // tslint:disable-next-line
@@ -200,14 +210,14 @@ export class StartInputPage implements OnInit {
           .contains([e["latitude"], e["longitude"]])
       ) {
         var validation = confirm(
-          "Vous êtes détecté comme vous trouvant sur le site suivant:\r" +
+          "Vous êtes détecté comme vous trouvant sur le site suivant :\r" +
             "Espèce : " +
             this.data[feature]["properties"]["nom_taxon"] +
             "\r" +
-            "Lieu : " +
+            "Commune : " +
             this.data[feature]["properties"]["nom_commune"] +
-            "\r" +
-            "Voulez vous visiter ce site?"
+            "\r\r" +
+            "Voulez-vous visiter ce site ?"
         );
         if (validation) {
           this.watchArea(parseInt(feature) + 1);

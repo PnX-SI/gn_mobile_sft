@@ -47,7 +47,7 @@ export class SeeVisitsPage implements OnInit {
 
   delete(id) {
     var confirmation = confirm(
-      "êtes vous sûr de vouloir supprimer cette visite?"
+      "Êtes vous sûr de vouloir supprimer cette visite ?"
     );
     if (confirmation) {
       this.storage.remove("visiteSite" + id);
@@ -57,7 +57,7 @@ export class SeeVisitsPage implements OnInit {
 
   send(id) {
     var confirmation = confirm(
-      "êtes vous sûr de vouloir envoyer cette visite?"
+      "Êtes vous sûr de vouloir envoyer cette visite ?"
     );
     if (confirmation) {
       this.storage.get("visiteSite" + id).then(data => {
@@ -89,10 +89,11 @@ export class SeeVisitsPage implements OnInit {
               this.apiService.sendData(user["access_token"], formatedData);
             } else {
               console.error("pas de token");
-              alert("veuillez vous connecter à la bonne api");
+              alert("Veuillez vous connecter à la bonne API.");
             }
           } else {
-            alert("veuillez vous connecter à une api");
+            alert("Veuillez vous connecter à une API.");
+            //TODO: Remplacer par un renvoi au login
           }
 
           setTimeout(() => this.ionViewDidEnter(), 1000);

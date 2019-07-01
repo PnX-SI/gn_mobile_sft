@@ -36,7 +36,7 @@ export class DataSyncPage implements OnInit {
       if (!res) {
         this.disableButton = true;
         var validation = confirm(
-          "vous n'êtes pas connecter. voulez vous vous connecter?"
+          "Vous n'êtes pas authentifié. Voulez-vous vous authentifier ?"
         );
         if (validation) {
           this.disableButton = false;
@@ -129,7 +129,7 @@ export class DataSyncPage implements OnInit {
         });
       });
     } else {
-      alert("Vous n'êtes pas connecté a internet.");
+      alert("Vous n'êtes pas connecté à internet.");
     }
   }
 
@@ -184,11 +184,11 @@ export class DataSyncPage implements OnInit {
           }
         } else {
           console.error("pas de token");
-          alert("veuillez vous connecter à la bonne api");
+          alert("Veuillez vous connecter à la bonne API.");
         }
       });
     } else {
-      alert("Vous n'êtes pas connecté a internet.");
+      alert("Vous n'êtes pas connecté à internet.");
     }
   }
 
