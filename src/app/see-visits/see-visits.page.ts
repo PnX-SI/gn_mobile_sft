@@ -22,8 +22,8 @@ export class SeeVisitsPage implements OnInit {
   ionViewDidEnter() //quand on rentre dans la page
   {
     //récupération du nombre de visites non synchronisées
-    this.visites = []; //reset pour éviter un faux positif
     this.apiService.getData(true).subscribe(res => {
+      this.visites = []; //reset pour éviter un faux positif
       res.forEach(element => {
         this.storage.get("visiteSite" + element.id).then(visit => {
           if (visit) {
@@ -92,8 +92,12 @@ export class SeeVisitsPage implements OnInit {
               alert("Veuillez vous connecter à la bonne API.");
             }
           } else {
-            alert("Veuillez vous connecter à une API.");
-            //TODO: Remplacer par un renvoi au login
+            var validation = confirm(
+              "Vous devez vous authentifier pour envoyer une visite. Voulez-vous vous authentifier ?"
+            );
+            if (validation) {
+              this.router.navigate(["/login", { back: "see-visits" }]);
+            }
           }
 
           setTimeout(() => this.ionViewDidEnter(), 1000);

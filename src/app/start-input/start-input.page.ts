@@ -243,8 +243,7 @@ export class StartInputPage implements OnInit {
     this.router.navigate(["/visionnage", { id: id }]);
   }
 
-  toggleAffichage() //TODO: adapter l'interface a la largeur de l'appareil
-  {
+  toggleAffichage() {
     if (this.modif > 25) {
       clearInterval(this.eventInterval);
       this.eventInterval = setInterval(() => this.animAffic(false), 1);

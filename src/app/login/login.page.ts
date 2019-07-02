@@ -67,7 +67,6 @@ export class LoginPage implements OnInit {
   }
 
   public tryToLogin() {
-    //TODO: api fonctione, faut modifier le code
     this.apiService.getLocalData("user").then(val => {
       if (val && reponse) {
         console.log("log in");

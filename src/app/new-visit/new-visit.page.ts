@@ -282,8 +282,7 @@ export class NewVisitPage implements OnInit {
     }).addTo(this.map);
   }
 
-  toggleAffichage() //TODO: adapter l'interface a la largeur de l'appareil
-  {
+  toggleAffichage() {
     if (this.modif > 25) {
       clearInterval(this.eventInterval);
       this.eventInterval = setInterval(() => this.animAffic(false), 1);
