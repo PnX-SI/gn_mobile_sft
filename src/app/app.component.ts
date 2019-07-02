@@ -14,10 +14,12 @@ const settings = {
   API_Dir: "sft",
   Default_Lat: 44.5682846,
   Default_Lon: 6.0634622,
+  TilePath: "",
   TilesDirectory: "scan",
   MaxZoomLevel: 18,
   Online_Leaflet_URL: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
-  Online_Attribution: "OpenTopoMap"
+  Online_Attribution: "OpenTopoMap",
+  seeSetting: true
 };
 
 @Component({

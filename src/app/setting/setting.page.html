@@ -75,6 +75,9 @@
       value="{{ settings.API_Dir }}"
       [(ngModel)]="settings.API_Dir"
     ></ion-input>
+
+    <ion-label>Accéder aux paramêtres ?</ion-label>
+    <ion-toggle [(ngModel)]="settings.seeSetting" color="success"></ion-toggle>
   </ion-item-group>
 
   <ion-button expand="block" (click)="setSettings()">

@@ -26,6 +26,9 @@ export class HomePage {
   ionViewDidEnter() //quand on rentre dans la page
   {
     //indication de la dernière synchro
+    if (!this.local.getSettings()["seeSetting"]) {
+      document.getElementById("settings").setAttribute("hidden", null);
+    }
     this.storage.get("timestampSynchro").then(res => {
       if (res) {
         var temps = new Date();
