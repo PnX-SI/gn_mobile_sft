@@ -31,6 +31,13 @@
     <ion-button (click)="getPos()">centrer par rapport a ici</ion-button>
 
     <ion-label><p>Carte hors ligne</p></ion-label>
+    <ion-label position="stacked">Chemin de tuiles :</ion-label>
+    <ion-input
+      type="text"
+      value="{{ settings.TilesPath }}"
+      [(ngModel)]="settings.TilesPath"
+    ></ion-input>
+
     <ion-label position="stacked">Dossier de tuiles :</ion-label>
     <ion-input
       type="text"

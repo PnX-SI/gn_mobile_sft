@@ -75,6 +75,7 @@ export class StartInputPage implements OnInit {
         //Carte locale (dossier de tuiles)
         /*var pathToFile =
             this.file.externalRootDirectory +
+            this.local.getSettings()["TilesPath"]+
             this.local.getSettings()["TilesDirectory"];
           var truePath = WebView.convertFileSrc(pathToFile);
           console.log("mbtile chargé");

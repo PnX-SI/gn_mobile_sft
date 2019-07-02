@@ -52,8 +52,9 @@ export class HomePage {
     });
 
     //récupération du nombre de visites non synchronisées
-    this.donneesStockee = []; //reset pour éviter un faux positif
+
     this.apiService.getData(true).subscribe(res => {
+      this.donneesStockee = []; //reset pour éviter un faux positif
       res.forEach(element => {
         this.storage.get("visiteSite" + element.id).then(visit => {
           if (visit) {
