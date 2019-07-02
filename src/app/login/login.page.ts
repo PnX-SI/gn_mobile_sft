@@ -58,7 +58,7 @@ export class LoginPage implements OnInit {
   public goToOffline() {
     //au clique du bouton, renvoi a l'ancienne page ou, a défaut, sur home
     var confirmation = confirm(
-      "Voulez-vous utiliser l'application en mode hors ligne ?"
+      "Voulez-vous utiliser l'application en mode invité ?"
     );
     if (confirmation) {
       document.getElementById("erreur").setAttribute("hidden", null);

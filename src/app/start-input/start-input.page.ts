@@ -70,14 +70,6 @@ export class StartInputPage implements OnInit {
   ionViewDidEnter() //quand on rentre dans la page
   {
     //on fait en sorte que la carte soit affiché
-    cordova(
-      this,
-      "getExternalSdCardDetails",
-      { platforms: ["Android"] },
-      arguments
-    ).then(res => {
-      alert("test hard");
-    });
     this.diagnostic.getExternalSdCardDetails().then(
       res => {
         //Carte locale (dossier de tuiles)

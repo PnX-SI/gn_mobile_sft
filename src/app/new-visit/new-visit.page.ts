@@ -189,8 +189,8 @@ export class NewVisitPage implements OnInit {
 
   ionViewDidLeave() {
     //on ferme l'affichage
-    document.getElementById("affichage").style.left = "100%";
-    document.getElementById("affichage").style.right = "-75%";
+    document.getElementById("affichageNewVisit").style.left = "100%";
+    document.getElementById("affichageNewVisit").style.right = "-75%";
     this.modif = 100;
   }
 
@@ -299,12 +299,16 @@ export class NewVisitPage implements OnInit {
 
   animAffic(reverse: Boolean) {
     if (this.modif >= 25 && !reverse) {
-      document.getElementById("affichage").style.left = this.modif + "%";
-      document.getElementById("affichage").style.right = 25 - this.modif + "%";
+      document.getElementById("affichageNewVisit").style.left =
+        this.modif + "%";
+      document.getElementById("affichageNewVisit").style.right =
+        25 - this.modif + "%";
       this.modif--;
     } else if (this.modif <= 100 && reverse) {
-      document.getElementById("affichage").style.left = this.modif + "%";
-      document.getElementById("affichage").style.right = 25 - this.modif + "%";
+      document.getElementById("affichageNewVisit").style.left =
+        this.modif + "%";
+      document.getElementById("affichageNewVisit").style.right =
+        25 - this.modif + "%";
       this.modif++;
     } else {
       clearInterval(this.eventInterval);

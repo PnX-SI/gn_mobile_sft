@@ -1,11 +1,34 @@
 <ion-header>
-  
+  <ion-toolbar>
+    <ion-title>Suivi Flore Territoire</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding style="text-align: center;">
-  <ion-input [(ngModel)]="login" type="text" placeholder="login"></ion-input>
-  <ion-input [(ngModel)]="password" type="password" placeholder="password"></ion-input>
+  <ion-input
+    [(ngModel)]="login"
+    type="text"
+    placeholder="Utilisateur"
+  ></ion-input>
+  <ion-input
+    [(ngModel)]="password"
+    type="password"
+    placeholder="Mot de passe"
+  ></ion-input>
   <ion-label id="erreur" hidden color="danger"></ion-label>
-  <ion-button expand="full" (click)="goToOnline()">log in</ion-button>
-  <ion-label tappable (click)="goToOffline()">mode hors connexion</ion-label>
+  <ion-button expand="full" (click)="goToOnline()">Authentification</ion-button>
+  <br /><br />
+  <ion-label tappable (click)="goToOffline()">Mode invité</ion-label>
 </ion-content>
+<ion-footer>
+  <img
+    style="max-width: 50%; position: absolute; left: 0; bottom: 0"
+    src="assets/PNE.jpeg"
+    slot="start"
+  />
+  <img
+    style="max-width: 50%; position: absolute; right: 0; bottom: 0"
+    src="assets/CBNA.jpeg"
+    slot="end"
+  />
+</ion-footer>

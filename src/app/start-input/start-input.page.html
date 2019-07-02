@@ -1,71 +1,77 @@
 <ion-header>
-	<ion-toolbar>
-		<ion-buttons slot="start">
-				<ion-button (click)="GoToHome()" slot="end">
-					<ion-icon name="arrow-back"></ion-icon>
-				</ion-button>
-		</ion-buttons>
-		<ion-title>Zones de prospection</ion-title>
-		
-		<ion-buttons slot="end">
-			<ion-spinner id="affichChargement" hidden></ion-spinner>
-			<ion-button (click)="reload()" slot="end">
-				<ion-icon name="refresh"></ion-icon>
-			</ion-button>
-			<ion-button (click)="toggleAffichage()" slot="end">
-				<ion-icon name="menu"></ion-icon>
-			</ion-button>
-		</ion-buttons>
-	</ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="GoToHome()" slot="end">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Zones de prospection</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-spinner id="affichChargement" hidden></ion-spinner>
+      <ion-button (click)="reload()" slot="end">
+        <ion-icon name="refresh"></ion-icon>
+      </ion-button>
+      <ion-button (click)="toggleAffichage()" slot="end">
+        <ion-icon name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<div id="affichageGeneral"
-	style="
+  <div
+    id="affichageGeneral"
+    style="
 	z-index: 3000; 
 	position: absolute; 
 	top: 0; 
 	left: 100%; 
 	bottom: 0; 
 	right: -75%;
-	">
-		<ion-content>
-			<ion-list-header>
-				<ion-label>Filtres</ion-label>
-			</ion-list-header>
-			<ion-item-group>
-				<ion-label position="stacked">Espèce :</ion-label>
-				<ion-input placeholder="ex:marguerite" [(ngModel)]="nom"></ion-input>
-				<ion-label position="stacked">Date de visite :</ion-label>
-				<ion-input type="date" [(ngModel)]="jour"></ion-input>
-				<ion-label position="stacked">Organisme :</ion-label>
-				<ion-select placeholder="Organisme" [(ngModel)]="organisme">
-					<ion-select-option value="">Tous</ion-select-option>
-					<ion-select-option *ngFor="let item of organismes;let i = index;" >{{item.nom_organisme}}</ion-select-option>
-				</ion-select>
-			</ion-item-group>
-				
-				
-			<ion-list-header>
-				<ion-label>Sites</ion-label>
-			</ion-list-header>
-			<ion-list *ngFor="let item of data|taxon: nom|date:jour|organisme:organisme">
-				<ion-item>
-					<ion-label text-wrap>
-						<h3>Espèce : {{item.properties.nom_taxon}}</h3>
-						<h3>Commune : {{item.properties.nom_commune}}</h3>
-						<p>Nb visite : {{item.properties.nb_visit}}</p>
-						<p>Dernière visite : {{item.properties.date_max}}</p>
-						<p>Organisme : {{item.properties.organisme}}</p>
-					</ion-label>
-					<ion-button (click)="watchArea(item.id)"><ion-icon name="eye"></ion-icon></ion-button>		
-				</ion-item>
-			</ion-list>
-		</ion-content>
-	</div>
-	<div id="mapProspec" style="width:100; height:100%;"></div>
+	"
+  >
+    <ion-content>
+      <ion-toolbar><ion-label padding>Filtres</ion-label></ion-toolbar>
+      <ion-item-group padding>
+        <ion-label position="stacked">Espèce :</ion-label>
+        <ion-input
+          placeholder="ex: Eryngium Alpinum L"
+          [(ngModel)]="nom"
+        ></ion-input>
+        <ion-label position="stacked">Date de visite :</ion-label>
+        <ion-input type="date" [(ngModel)]="jour"></ion-input>
+        <ion-label position="stacked">Organisme :</ion-label>
+        <ion-select placeholder="Organisme" [(ngModel)]="organisme">
+          <ion-select-option value="">Tous</ion-select-option>
+          <ion-select-option *ngFor="let item of organismes; let i = index">{{
+            item.nom_organisme
+          }}</ion-select-option>
+        </ion-select>
+      </ion-item-group>
+
+      <ion-toolbar
+        ><ion-label padding>Zones de prospection</ion-label></ion-toolbar
+      >
+      <ion-list
+        *ngFor="
+          let item of data | taxon: nom | date: jour | organisme: organisme
+        "
+      >
+        <ion-item>
+          <ion-label text-wrap>
+            <h3>Espèce : {{ item.properties.nom_taxon }}</h3>
+            <h3>Commune : {{ item.properties.nom_commune }}</h3>
+            <p>Nb visite(s) : {{ item.properties.nb_visit }}</p>
+            <p>Dernière visite : {{ item.properties.date_max }}</p>
+            <p>Organisme(s) : {{ item.properties.organisme }}</p>
+          </ion-label>
+          <ion-button (click)="watchArea(item.id)"
+            ><ion-icon name="eye"></ion-icon
+          ></ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </div>
+  <div id="mapProspec" style="width:100; height:100%;"></div>
 </ion-content>
-
-
-
-
