@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { NetworkService, ConnectionStatus } from "../services/network.service";
 import { ApiService, reponse } from "../services/api.service";
+import { Storage } from "@ionic/storage";
 
 @Component({
   selector: "app-login",
@@ -19,7 +20,8 @@ export class LoginPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private networkService: NetworkService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private storage: Storage
   ) {
     this.route.params.subscribe(params => {
       //console.log(params)
@@ -36,7 +38,18 @@ export class LoginPage implements OnInit {
     this.apiService.getLocalData("user").then(val => {
       console.log(val);
       if (val) {
-        this.router.navigate([this.prev_page]);
+        var today = new Date();
+        console.log("today", today.getTime());
+        var testeur = Date.parse(val["expires"]);
+        console.log("testeur", testeur);
+
+        if (testeur < today.getTime()) {
+          alert("Votre connexion a expiré, veuillez vous reconnecter.");
+          this.storage.remove("user");
+        } else {
+          console.log("le token est valide");
+          this.router.navigate([this.prev_page]);
+        }
       }
     });
   }
