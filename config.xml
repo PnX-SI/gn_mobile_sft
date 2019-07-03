@@ -2,7 +2,7 @@
 <widget id="com.geonature.sft" version="0.3.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Suivi flore territoire</name>
     <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Parc Nationnal des Ecrins</author>
+    <author email="applimobile_pne@ecrins-parcnational.fr" href="http://www.ecrins-parcnational.fr/">Parc Nationnal des Ecrins</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
