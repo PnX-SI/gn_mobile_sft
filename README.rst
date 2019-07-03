@@ -24,24 +24,29 @@ Lancer l'appli sur le navigateur
 Lancer l'appli sur un terminal
 -------------
 **IOS**
+
 Nécessite un environnement IOS seulement disponible sur MacOS (https://ionicframework.com/docs/installation/ios)
 .. code-block::RST
   ionic cordova run ios
 **Android**
+
 Nécessite un environnement Android disponible sur Windows, MacOS et Linux (https://ionicframework.com/docs/installation/android)
 .. code-block::RST
   ionic cordova run android
 Build l'appli
 -------------
 **IOS**
+
 .. code-block::RST
   ionic cordova build ios
 **Android**
+
 .. code-block::RST
   ionic cordova build android
 Customination
 -------------
 **config.xml**
+
 Modifier l'id de l'appli
 .. code-block::RST
   <widget id="com.geonature.sft">
@@ -52,8 +57,11 @@ Description de l'appli
 .. code-block::RST
   <description>An awesome Ionic/Cordova app.</description>
 **Couleur/thème de l'appli**
+
 Il faut modifier le fichier src/theme/variables.scss (aide: https://ionicframework.com/docs/theming/color-generator)
+
 **Icone et splashscreen**
+
 * l'image source de l'icone doit faire 1024×1024px et être localisé dans resources/icon.png
 * l'image source du splashscreen doit faire 2732×2732px et être localisé dans resources/splash.png
 
