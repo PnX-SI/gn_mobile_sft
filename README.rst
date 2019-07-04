@@ -2,7 +2,7 @@
 gn_mobile_sft
 =========
 
-Application mobile de saisie dans le module GeoNature Suivi Flore Territoire : https://github.com/PnX-SI/gn_module_suivi_flore_territoire
+Application mobile de saisie dans le module `GeoNature Suivi Flore Territoire <https://github.com/PnX-SI/gn_module_suivi_flore_territoire>`_
 
 Installation
 -------------
@@ -32,14 +32,14 @@ Lancer l'appli sur un terminal
 ------------------------------
 **IOS**
 
-Nécessite un environnement IOS seulement disponible sur MacOS (https://ionicframework.com/docs/installation/ios)
+Nécessite un environnement `IOS <https://ionicframework.com/docs/installation/ios>`_ seulement disponible sur MacOS 
 ::
  
     ionic cordova run ios
 
 **Android**
 
-Nécessite un environnement Android disponible sur Windows, MacOS et Linux (https://ionicframework.com/docs/installation/android)
+Nécessite un environnement `Android <https://ionicframework.com/docs/installation/android>`_ disponible sur Windows, MacOS et Linux 
 ::
  
     ionic cordova run android
@@ -81,7 +81,7 @@ Description de l'appli
 
 **Couleur/thème de l'appli**
 
-Il faut modifier le fichier ``src/theme/variables.scss`` (aide: https://ionicframework.com/docs/theming/color-generator)
+Il faut modifier le fichier ``src/theme/variables.scss`` (`générateur <https://ionicframework.com/docs/theming/color-generator>`_ )
 
 **Icone et splashscreen**
 
