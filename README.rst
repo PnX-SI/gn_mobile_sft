@@ -7,7 +7,7 @@ Application mobile de saisie dans le module `GeoNature Suivi Flore Territoire <h
 Installation
 -------------
 
-Avant de commencer, vérifiez que Node.js et npm installés et sont a jour
+Avant de commencer, vérifiez que `Node.js et npm <https://nodejs.org/fr/>`_ sont installés et sont a jour 
 
 ::
  
