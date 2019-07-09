@@ -44,6 +44,7 @@ export class StartInputPage implements OnInit {
   ) {
     this.loadData(true); //on charge des données
     this.loadDataOrg(true, "organisme");
+    this.reload(); //on appel un chargement de page
   }
 
   loadData(refresh = false, type = "base", refresher?) {
@@ -53,7 +54,6 @@ export class StartInputPage implements OnInit {
       if (refresher) {
         refresher.target.complete();
       }
-      this.reload(); //on appel un chargement de page
     });
   }
   loadDataOrg(refresh = false, type = "base", refresher?) {
@@ -63,7 +63,6 @@ export class StartInputPage implements OnInit {
       if (refresher) {
         refresher.target.complete();
       }
-      this.reload(); //on appel un chargement de page
     });
   }
 
