@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { MenuController, IonicModule } from "@ionic/angular";
 import { Router } from "@angular/router";
 import { File } from "@ionic-native/file/ngx";
-import { WebView } from "@ionic-native/ionic-webview";
 import { Diagnostic } from "@ionic-native/diagnostic/ngx";
 
 import { ApiService } from "../services/api.service";
@@ -11,7 +10,7 @@ import { LocalVariablesService } from "../services/local-variables.service";
 import "leaflet";
 import "leaflet-tilelayer-mbtiles-ts";
 import * as geoJSON from "geojson";
-import { cordova } from "@ionic-native/core";
+import { AlertController } from "@ionic/angular";
 
 declare var L: any;
 
@@ -40,7 +39,8 @@ export class StartInputPage implements OnInit {
     private apiService: ApiService,
     private local: LocalVariablesService,
     private file: File,
-    private diagnostic: Diagnostic
+    private diagnostic: Diagnostic,
+    private alert: AlertController
   ) {
     this.loadData(true); //on charge des données
     this.loadDataOrg(true, "organisme");
@@ -157,8 +157,6 @@ export class StartInputPage implements OnInit {
     //on ferme l'affichage
     clearInterval(this.eventInterval);
     this.eventInterval = setInterval(() => this.animAffic(true), 1);
-    //on active le bon menu
-    this.menu.enable(true, "VisuTaxon");
     //on recharge rapidement la carte
     this.map.invalidateSize();
 
@@ -201,18 +199,39 @@ export class StartInputPage implements OnInit {
           .getBounds()
           .contains([e["latitude"], e["longitude"]])
       ) {
-        var validation = confirm(
-          "Vous êtes détecté comme vous trouvant sur le site suivant :\r" +
+        var validation = false;
+        this.alert.create({
+          header: "Confirmation requise",
+          message:
+            "Vous êtes détecté comme vous trouvant sur le site suivant :\r" +
             "Espèce : " +
             this.data[feature]["properties"]["nom_taxon"] +
             "\r" +
             "Commune : " +
             this.data[feature]["properties"]["nom_commune"] +
             "\r\r" +
-            "Voulez-vous visiter ce site ?"
-        );
+            "Voulez-vous visiter ce site ?",
+          buttons: [
+            {
+              text: "Non",
+              role: "cancel",
+              cssClass: "secondary",
+              handler: () => {
+                console.log("non");
+              }
+            },
+            {
+              text: "Oui",
+              handler: () => {
+                console.log("oui");
+                validation = true;
+                this.watchArea(parseInt(feature) + 1);
+              }
+            }
+          ]
+        });
+
         if (validation) {
-          this.watchArea(parseInt(feature) + 1);
           break;
         }
       }

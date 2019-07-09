@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { NetworkService, ConnectionStatus } from "../services/network.service";
 import { ApiService, reponse } from "../services/api.service";
 import { Storage } from "@ionic/storage";
+import { AlertController } from "@ionic/angular";
 
 @Component({
   selector: "app-login",
@@ -21,7 +22,8 @@ export class LoginPage implements OnInit {
     private route: ActivatedRoute,
     private networkService: NetworkService,
     private apiService: ApiService,
-    private storage: Storage
+    private storage: Storage,
+    private alert: AlertController
   ) {
     this.route.params.subscribe(params => {
       //console.log(params)
@@ -44,7 +46,20 @@ export class LoginPage implements OnInit {
         console.log("testeur", testeur);
 
         if (testeur < today.getTime()) {
-          alert("Votre connexion a expiré, veuillez vous reconnecter.");
+          this.alert
+            .create({
+              header: "Information",
+              message: "Votre connexion a expiré, veuillez vous reconnecter.",
+              buttons: [
+                {
+                  text: "ok",
+                  handler: () => {}
+                }
+              ]
+            })
+            .then(alert => {
+              alert.present();
+            });
           this.storage.remove("user");
         } else {
           console.log("le token est valide");
@@ -70,13 +85,32 @@ export class LoginPage implements OnInit {
 
   public goToOffline() {
     //au clique du bouton, renvoi a l'ancienne page ou, a défaut, sur home
-    var confirmation = confirm(
-      "Voulez-vous utiliser l'application en mode invité ?"
-    );
-    if (confirmation) {
-      document.getElementById("erreur").setAttribute("hidden", null);
-      this.router.navigate([this.prev_page]);
-    }
+    this.alert
+      .create({
+        header: "Confirmation requise",
+        message: "Voulez-vous utiliser l'application en mode invité ?",
+        buttons: [
+          {
+            text: "Non",
+            role: "cancel",
+            cssClass: "secondary",
+            handler: () => {
+              console.log("non");
+            }
+          },
+          {
+            text: "Oui",
+            handler: () => {
+              console.log("oui");
+              document.getElementById("erreur").setAttribute("hidden", null);
+              this.router.navigate([this.prev_page]);
+            }
+          }
+        ]
+      })
+      .then(alert => {
+        alert.present();
+      });
   }
 
   public tryToLogin() {
