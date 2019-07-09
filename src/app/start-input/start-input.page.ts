@@ -53,7 +53,6 @@ export class StartInputPage implements OnInit {
       if (refresher) {
         refresher.target.complete();
       }
-      this.reload(); //on appel un chargement de page
     });
   }
   loadDataOrg(refresh = false, type = "base", refresher?) {
@@ -63,12 +62,12 @@ export class StartInputPage implements OnInit {
       if (refresher) {
         refresher.target.complete();
       }
-      this.reload(); //on appel un chargement de page
     });
   }
 
   ionViewDidEnter() //quand on rentre dans la page
   {
+    this.reload(); //on appel un chargement de page
     //on fait en sorte que la carte soit affiché
     this.diagnostic.getExternalSdCardDetails().then(
       res => {
