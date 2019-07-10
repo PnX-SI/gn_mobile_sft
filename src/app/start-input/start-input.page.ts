@@ -69,6 +69,7 @@ export class StartInputPage implements OnInit {
   ionViewDidEnter() //quand on rentre dans la page
   {
     //on fait en sorte que la carte soit affiché
+    console.log("A");
     this.diagnostic.getExternalSdCardDetails().then(
       res => {
         //Carte locale (dossier de tuiles)
@@ -83,6 +84,7 @@ export class StartInputPage implements OnInit {
             attribution: "local"
           }).addTo(this.map);*/
         alert("test soft");
+        console.log("B");
       },
       err => {
         console.error(err);
@@ -95,6 +97,7 @@ export class StartInputPage implements OnInit {
         }).addTo(this.map);
       }
     );
+    console.log("C");
   }
 
   ngOnInit() //quand on créé la page
