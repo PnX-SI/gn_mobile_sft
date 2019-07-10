@@ -23,7 +23,7 @@ export class StartInputPage implements OnInit {
   //variables de la page
   map: L.Map;
   userPosPoint;
-  data: geoJSON.FeatureCollection;
+  data: any; //geoJSON.FeatureCollection;
   testeur = 0;
   modif = 100;
   eventInterval;
@@ -53,6 +53,7 @@ export class StartInputPage implements OnInit {
       if (refresher) {
         refresher.target.complete();
       }
+      this.reload(); //on appel un chargement de page
     });
   }
   loadDataOrg(refresh = false, type = "base", refresher?) {
@@ -67,7 +68,6 @@ export class StartInputPage implements OnInit {
 
   ionViewDidEnter() //quand on rentre dans la page
   {
-    this.reload(); //on appel un chargement de page
     //on fait en sorte que la carte soit affiché
     this.diagnostic.getExternalSdCardDetails().then(
       res => {
@@ -193,22 +193,29 @@ export class StartInputPage implements OnInit {
       radius: 3
     }).addTo(this.map);
     //on indique qu'on a fini de charger
-    for (const feature in this.data) {
-      if (
-        L.geoJSON(this.data[feature])
-          .getBounds()
-          .contains([e["latitude"], e["longitude"]])
-      ) {
-        var validation = false;
-        this.alert.create({
+    this.boucleur(0, e);
+    document.getElementById("affichChargement").setAttribute("hidden", null);
+  }
+
+  //fonction de bouclage controlé
+  boucleur(increment, e) {
+    var validation = false;
+    if (
+      L.geoJSON(this.data[increment])
+        .getBounds()
+        .contains([e["latitude"], e["longitude"]])
+    ) {
+      console.log("test " + increment);
+      this.alert
+        .create({
           header: "Confirmation requise",
           message:
             "Vous êtes détecté comme vous trouvant sur le site suivant :\r" +
             "Espèce : " +
-            this.data[feature]["properties"]["nom_taxon"] +
+            this.data[increment]["properties"]["nom_taxon"] +
             "\r" +
             "Commune : " +
-            this.data[feature]["properties"]["nom_commune"] +
+            this.data[increment]["properties"]["nom_commune"] +
             "\r\r" +
             "Voulez-vous visiter ce site ?",
           buttons: [
@@ -225,24 +232,41 @@ export class StartInputPage implements OnInit {
               handler: () => {
                 console.log("oui");
                 validation = true;
-                this.watchArea(parseInt(feature) + 1);
+                this.watchArea(parseInt(increment) + 1);
               }
             }
           ]
+        })
+        .then(alert => {
+          alert.present();
+          alert.onDidDismiss().then(() => {
+            if (validation == false && increment + 1 < this.data.length) {
+              this.boucleur(increment + 1, e);
+            }
+          });
         });
-
-        if (validation) {
-          break;
-        }
+    } else {
+      if (increment + 1 < this.data.length) {
+        this.boucleur(increment + 1, e);
       }
     }
-    document.getElementById("affichChargement").setAttribute("hidden", null);
   }
 
   //quand on ne trouve pas l'utilisateur
   onLocationError(e) {
     console.error(e.message); //on vois le message d'erreur sur la console
-    alert(e.message + "\rNous allons afficher la carte par défaut"); //on dit pourquoi on l'as pas trouver
+    this.alert
+      .create({
+        header: "Information",
+        message: e.message + "\rNous allons afficher la carte par défaut",
+        buttons: [
+          {
+            text: "Ok",
+            handler: () => {}
+          }
+        ]
+      })
+      .then(alert => alert.present()); //on dit pourquoi on l'as pas trouver
     //on met l'utilisateur sur la carte par défaut
     this.map.setView(
       /*centre*/ [this.default_Lat, this.default_Long],

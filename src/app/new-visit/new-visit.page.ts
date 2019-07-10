@@ -11,6 +11,7 @@ import * as geoJSON from "geojson";
 import { ConnectionStatus, NetworkService } from "../services/network.service";
 import { LocalVariablesService } from "../services/local-variables.service";
 import { watch } from "fs";
+import { AlertController } from "@ionic/angular";
 
 declare var L: any;
 
@@ -64,7 +65,8 @@ export class NewVisitPage implements OnInit {
     private apiService: ApiService,
     private file: File,
     private networkService: NetworkService,
-    private local: LocalVariablesService
+    private local: LocalVariablesService,
+    private alert: AlertController
   ) {
     //on lis les paramêtres qu'on a passé
     this.route.params.subscribe(params => {
@@ -334,19 +336,54 @@ export class NewVisitPage implements OnInit {
       //this.dataSend.id_base_visit = null
       //this.dataSend.id_digitiser = null
       //this.dataSend.uuid_base_visit = null
-      console.log("géré (beta):");
-      console.log(
-        "les données sont stockées en local, et non envoyées, car non complète."
-      );
       console.log(this.dataSend);
       this.apiService.setLocalData("visiteSite" + this.id, this.dataSend);
       this.router.navigate(["/home"]);
     } else if (this.maillesNonVisite == this.totalMailles) {
-      alert("vous n'avez pas visité de mailles");
+      this.alert
+        .create({
+          header: "Information",
+          message: "Vous n'avez pas visité de mailles.",
+          buttons: [
+            {
+              text: "Ok",
+              handler: () => {}
+            }
+          ]
+        })
+        .then(alert => {
+          alert.present();
+        });
     } else if (this.form.observers.length == 0) {
-      alert("aucun observateur sélectionné");
+      this.alert
+        .create({
+          header: "Information",
+          message: "Aucun observateur sélectionné.",
+          buttons: [
+            {
+              text: "Ok",
+              handler: () => {}
+            }
+          ]
+        })
+        .then(alert => {
+          alert.present();
+        });
     } else if (this.form.date == "") {
-      alert("vous n'avez pas mis de date");
+      this.alert
+        .create({
+          header: "Information",
+          message: "Vous n'avez pas mis de date.",
+          buttons: [
+            {
+              text: "Ok",
+              handler: () => {}
+            }
+          ]
+        })
+        .then(alert => {
+          alert.present();
+        });
     }
   }
 }

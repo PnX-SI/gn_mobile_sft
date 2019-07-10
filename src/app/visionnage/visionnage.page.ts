@@ -12,6 +12,7 @@ declare var L: any;
 import { ApiService } from "../services/api.service";
 import { ConnectionStatus, NetworkService } from "../services/network.service";
 import { LocalVariablesService } from "../services/local-variables.service";
+import { AlertController } from "@ionic/angular";
 
 @Component({
   selector: "app-visionnage",
@@ -35,7 +36,8 @@ export class VisionnagePage implements OnInit {
     private storage: Storage,
     private file: File,
     private networkService: NetworkService,
-    private local: LocalVariablesService
+    private local: LocalVariablesService,
+    private alert: AlertController
   ) {
     //on lis les paramêtres qu'on a passé
     this.route.params.subscribe(params => {
@@ -59,9 +61,21 @@ export class VisionnagePage implements OnInit {
   {
     this.storage.get("visiteSite" + this.id).then(res => {
       if (res) {
-        alert(
-          "Avertisement: Vous avez déjà visité ce site. Enregistrer une visite écrasera l'ancienne."
-        );
+        this.alert
+          .create({
+            header: "Information",
+            message:
+              "Vous avez déjà visité ce site. Enregistrer une visite écrasera l'ancienne.",
+            buttons: [
+              {
+                text: "Ok",
+                handler: () => {}
+              }
+            ]
+          })
+          .then(alert => {
+            alert.present();
+          });
       }
     });
     //on fait en sorte que la carte soit affiché

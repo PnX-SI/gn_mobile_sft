@@ -52,7 +52,7 @@ export class LoginPage implements OnInit {
               message: "Votre connexion a expiré, veuillez vous reconnecter.",
               buttons: [
                 {
-                  text: "ok",
+                  text: "Ok",
                   handler: () => {}
                 }
               ]

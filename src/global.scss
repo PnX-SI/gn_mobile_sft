@@ -1,47 +1,51 @@
 // http://ionicframework.com/docs/theming/
-@import '~@ionic/angular/css/core.css';
-@import '~@ionic/angular/css/normalize.css';
-@import '~@ionic/angular/css/structure.css';
-@import '~@ionic/angular/css/typography.css';
+@import "~@ionic/angular/css/core.css";
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
 
-@import '~@ionic/angular/css/padding.css';
-@import '~@ionic/angular/css/float-elements.css';
-@import '~@ionic/angular/css/text-alignment.css';
-@import '~@ionic/angular/css/text-transformation.css';
-@import '~@ionic/angular/css/flex-utils.css';
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
 
-:root{
-	--ion-background-color: var(--ion-color-secondary);
-	--ion-text-color: var(--ion-color-light);
-	
-	ion-toolbar{
-		--background: var(--ion-color-primary);
-	}
-	
-	ion-searchbar{
-		--background: var(--ion-color-primary);
-		--color: var(--ion-color-light);
-	}
-	
-	ion-checkbox{
-		--border-color: var(--ion-color-light);
-	}
-	
-	ion-title{
-		font-weight:bold;
-	}
-	
-	ion-item{
-		--border-color: var(--ion-color-light);
-	}
-	
-	ion-icon{
-		color: var(--ion-color-light);
-	}
-	
-	ion-button{
-		--background: var(--ion-color-medium);
-		--box-shadow: no;
-		font-weight:bold;
-	}
+:root {
+  --ion-background-color: var(--ion-color-secondary);
+  --ion-text-color: var(--ion-color-light);
+
+  ion-toolbar {
+    --background: var(--ion-color-primary);
+  }
+
+  ion-searchbar {
+    --background: var(--ion-color-primary);
+    --color: var(--ion-color-light);
+  }
+
+  ion-checkbox {
+    --border-color: var(--ion-color-light);
+  }
+
+  ion-title {
+    font-weight: bold;
+  }
+
+  ion-item {
+    --border-color: var(--ion-color-light);
+  }
+
+  ion-icon {
+    color: var(--ion-color-light);
+  }
+
+  ion-button {
+    --background: var(--ion-color-medium);
+    --box-shadow: no;
+    font-weight: bold;
+  }
+
+  ion-alert {
+    --background: var(--ion-background-color);
+  }
 }
