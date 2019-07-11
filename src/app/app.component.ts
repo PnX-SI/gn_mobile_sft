@@ -6,7 +6,7 @@ import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { File } from "@ionic-native/file/ngx";
 
-import { OfflineManagerService } from "./services/offline-manager.service";
+//import { OfflineManagerService } from "./services/offline-manager.service";
 import { LocalVariablesService } from "./services/local-variables.service";
 
 const settings = {
@@ -34,7 +34,7 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private offlineManager: OfflineManagerService,
+    //private offlineManager: OfflineManagerService,
     private networkService: NetworkService,
     private file: File,
     private local: LocalVariablesService
@@ -53,7 +53,7 @@ export class AppComponent {
         .onNetworkChange()
         .subscribe((status: ConnectionStatus) => {
           if (status == ConnectionStatus.Online) {
-            this.offlineManager.checkForEvents().subscribe();
+            //this.offlineManager.checkForEvents().subscribe();
           }
         });
 

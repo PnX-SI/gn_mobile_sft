@@ -1,4 +1,3 @@
-import { OfflineManagerService } from "./offline-manager.service";
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { NetworkService, ConnectionStatus } from "./network.service";
@@ -20,7 +19,6 @@ export class ApiService {
     private http: HttpClient,
     private networkService: NetworkService,
     private storage: Storage,
-    private offlineManager: OfflineManagerService,
     private local: LocalVariablesService
   ) {}
 
