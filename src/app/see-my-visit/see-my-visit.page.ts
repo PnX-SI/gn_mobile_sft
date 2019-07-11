@@ -50,9 +50,14 @@ export class SeeMyVisitPage implements OnInit {
     this.route.params.subscribe(params => {
       this.id = params.id;
 
-      //on call une lecture de données
-      this.loadDataVisite(true, "visite", this.id);
-      this.loadDataMailles(true, "maille", this.id);
+      //ont appelle la visite stocker en locale
+      this.storage.get("visitsDone").then(res => {
+        this.MyVisit = res[this.id];
+        console.log(this.MyVisit);
+        //on call une lecture de données
+        this.loadDataVisite(true, "visite", this.MyVisit["id_base_site"]);
+        this.loadDataMailles(true, "maille", this.MyVisit["id_base_site"]);
+      });
     });
   }
 
@@ -71,15 +76,10 @@ export class SeeMyVisitPage implements OnInit {
       console.log(res);
 
       this.totalMailles = res.length;
+      this.maillesNonVisite =
+        this.totalMailles - this.MyVisit["cor_visit_grid"].length;
+      this.reload();
 
-      //ont appelle la visite stocker en locale
-      this.storage.get("visiteSite" + this.id).then(res => {
-        this.MyVisit = res;
-        console.log(this.MyVisit);
-        this.maillesNonVisite =
-          this.totalMailles - this.MyVisit["cor_visit_grid"].length;
-        this.reload();
-      });
       if (refresher) {
         refresher.target.complete();
       }

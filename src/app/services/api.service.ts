@@ -5,6 +5,7 @@ import { Storage } from "@ionic/storage";
 import { Observable, from } from "rxjs";
 import { tap, map, catchError } from "rxjs/operators";
 import { LocalVariablesService } from "./local-variables.service";
+import { AlertController } from "@ionic/angular";
 
 //const API_URL = 'http://demo.geonature.fr/geonature/api'; //API test
 //const API_URL = 'http://51.75.122.69/geonature/api'; //API prod
@@ -19,7 +20,8 @@ export class ApiService {
     private http: HttpClient,
     private networkService: NetworkService,
     private storage: Storage,
-    private local: LocalVariablesService
+    private local: LocalVariablesService,
+    private alert: AlertController
   ) {}
 
   getData(
@@ -141,16 +143,28 @@ export class ApiService {
     }
   }
 
-  sendData(token, data) {
+  sendData(token, data, id) {
     let url = `${this.local.getSettings()["API_URL"]}/${
       this.local.getSettings()["API_Dir"]
     }/visitJWT`;
     if (
       this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline
     ) {
-      alert(
-        "Vous n'êtes pas connecté a internet. Les données n'ont pas été envoyées"
-      );
+      this.alert
+        .create({
+          header: "Information",
+          message:
+            "Vous n'êtes pas connecté a internet. Les données n'ont pas été envoyées",
+          buttons: [
+            {
+              text: "Ok",
+              handler: () => {}
+            }
+          ]
+        })
+        .then(alert => {
+          alert.present();
+        });
       return null;
     } else {
       return this.http
@@ -166,14 +180,59 @@ export class ApiService {
           mes => {
             console.log("données envoyées");
             console.log(mes);
-            alert("ZP envoyé");
+            this.storage.get("visitsDone").then(res => {
+              if (res) {
+                res.splice(id, 1);
+                this.storage.set("visitsDone", res);
+              }
+            });
+            this.alert
+              .create({
+                header: "Information",
+                message: "ZP envoyé",
+                buttons: [
+                  {
+                    text: "Ok",
+                    handler: () => {}
+                  }
+                ]
+              })
+              .then(alert => {
+                alert.present();
+              });
           },
           err => {
             console.error(JSON.stringify(err));
             if (err.error.message) {
-              alert(err.error.message);
+              this.alert
+                .create({
+                  header: "Information",
+                  message: err.error.message,
+                  buttons: [
+                    {
+                      text: "Ok",
+                      handler: () => {}
+                    }
+                  ]
+                })
+                .then(alert => {
+                  alert.present();
+                });
             } else {
-              alert("une erreur inconnue s'est produite");
+              this.alert
+                .create({
+                  header: "Information",
+                  message: "une erreur inconnue s'est produite",
+                  buttons: [
+                    {
+                      text: "Ok",
+                      handler: () => {}
+                    }
+                  ]
+                })
+                .then(alert => {
+                  alert.present();
+                });
             }
           }
         );
@@ -184,7 +243,7 @@ export class ApiService {
     resultSilentDataSend = "";
   }
 
-  SilentSendData(token, data) {
+  SilentSendData(token, data, id) {
     let url = `${this.local.getSettings()["API_URL"]}/${
       this.local.getSettings()["API_Dir"]
     }/visitJWT`;
@@ -208,7 +267,12 @@ export class ApiService {
             resultSilentDataSend =
               resultSilentDataSend + "\nZP" + mes["id_base_site"] + ": envoyé";
             console.log(mes);
-            this.storage.remove("visiteSite" + mes["id_base_site"]);
+            this.storage.get("visitsDone").then(res => {
+              if (res) {
+                res.splice(id, 1);
+                this.storage.set("visitsDone", res);
+              }
+            });
           },
           err => {
             console.error(JSON.stringify(err));

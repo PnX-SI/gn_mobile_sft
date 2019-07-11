@@ -170,7 +170,8 @@ export class DataSyncPage implements OnInit {
 
                 this.apiService.SilentSendData(
                   user["access_token"],
-                  formatedData
+                  formatedData,
+                  i
                 );
                 this.progressBarEnvoyee =
                   this.progressBarEnvoyee + 1 / res.length;

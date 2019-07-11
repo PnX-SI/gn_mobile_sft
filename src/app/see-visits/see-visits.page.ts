@@ -123,16 +123,9 @@ export class SeeVisitsPage implements OnInit {
                     if (user["access_token"]) {
                       this.apiService.sendData(
                         user["access_token"],
-                        formatedData
+                        formatedData,
+                        id
                       );
-                      this.storage.get("visitsDone").then(res => {
-                        if (res) {
-                          res.splice(id, 1);
-                          this.storage.set("visitsDone", res).then(x => {
-                            this.ionViewDidEnter();
-                          });
-                        }
-                      });
                     } else {
                       console.error("pas de token");
                       this.alert
