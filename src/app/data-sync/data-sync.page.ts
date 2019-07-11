@@ -14,8 +14,6 @@ export class DataSyncPage implements OnInit {
   progressBarEnvoyee = 0;
   disableButton = false;
 
-  totalToSend = 0;
-
   textResult;
 
   isLocalDataUpdated = false;
@@ -86,7 +84,7 @@ export class DataSyncPage implements OnInit {
       this.storage.remove("observeur");
       this.storage.remove("perturbations");
       this.storage.remove("organisme");
-      this.apiService.getLocalData("base").then(res => {
+      this.storage.get("base").then(res => {
         res.forEach(element => {
           this.storage.remove("visite" + element.id);
           this.storage.remove("maille" + element.id);
@@ -95,25 +93,25 @@ export class DataSyncPage implements OnInit {
       });
       /****************************/
       this.apiService.getData(true, "observeur").subscribe(res => {
-        this.apiService.setLocalData("observeur", res);
+        this.storage.set("observeur", res);
         this.progressBarRecupdonnee = this.progressBarRecupdonnee + 0.1; //+10% dans la progress bar
       });
       this.apiService.getData(true, "organisme").subscribe(res => {
-        this.apiService.setLocalData("organisme", res);
+        this.storage.set("organisme", res);
         this.progressBarRecupdonnee = this.progressBarRecupdonnee + 0.1; //+10% dans la progress bar
       });
       this.apiService.getData(true, "perturbations").subscribe(res => {
-        this.apiService.setLocalData("perturbations", res);
+        this.storage.set("perturbations", res);
         this.progressBarRecupdonnee = this.progressBarRecupdonnee + 0.1; //+10% dans la progress bar
       });
       this.apiService.getData(true).subscribe(res => {
-        this.apiService.setLocalData("base", res);
+        this.storage.set("base", res);
         this.progressBarRecupdonnee = this.progressBarRecupdonnee + 0.1; //+10% dans la progress bar
         res.forEach(element => {
           this.apiService
             .getData(true, "visite", element.id)
             .subscribe(elem => {
-              this.apiService.setLocalData("visite" + element.id, elem);
+              this.storage.set("visite" + element.id, elem);
               this.progressBarRecupdonnee =
                 this.progressBarRecupdonnee + 0.3 / res.length;
             });
@@ -122,7 +120,7 @@ export class DataSyncPage implements OnInit {
           this.apiService
             .getData(true, "maille", element.id)
             .subscribe(elem => {
-              this.apiService.setLocalData("maille" + element.id, elem);
+              this.storage.set("maille" + element.id, elem);
               this.progressBarRecupdonnee =
                 this.progressBarRecupdonnee + 0.3 / res.length;
             });
@@ -137,18 +135,15 @@ export class DataSyncPage implements OnInit {
     if (
       this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Online
     ) {
-      this.totalToSend = 0; //reset du compte de données a envoyer
       this.progressBarEnvoyee = 0; //reset la progress bar
       this.apiService.PurgeresultSilentDataSend();
       this.storage.get("user").then(user => {
         if (user["access_token"]) {
           //on s'assure que l'utilisateur est connecté à une api qui utilise le jwt
-          for (var i = 0; i <= 99; i++) {
-            this.storage.get("visiteSite" + i).then(data => {
-              //pour un grand nombre de donnée
-              if (data) {
-                // si la donnée existe
-                this.totalToSend++;
+          this.storage.get("visitsDone").then(res => {
+            if (res) {
+              for (var i = 0; i < res.length; i++) {
+                var data = res[i];
                 var formatedData = {
                   cor_visit_grid: data["cor_visit_grid"],
                   id_base_visit: data["id_base_visit"],
@@ -178,10 +173,10 @@ export class DataSyncPage implements OnInit {
                   formatedData
                 );
                 this.progressBarEnvoyee =
-                  this.progressBarEnvoyee + 1 / this.totalToSend;
+                  this.progressBarEnvoyee + 1 / res.length;
               }
-            });
-          }
+            }
+          });
         } else {
           console.error("pas de token");
           alert("Veuillez vous connecter à la bonne API.");

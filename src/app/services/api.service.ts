@@ -34,17 +34,17 @@ export class ApiService {
     ) {
       // Return the cached data from Storage
       if (requeteType == "base") {
-        return from(this.getLocalData("base"));
+        return from(this.storage.get("base"));
       } else if (requeteType == "maille") {
-        return from(this.getLocalData("maille" + id));
+        return from(this.storage.get("maille" + id));
       } else if (requeteType == "visite") {
-        return from(this.getLocalData("visite" + id));
+        return from(this.storage.get("visite" + id));
       } else if (requeteType == "observeur") {
-        return from(this.getLocalData("observeur"));
+        return from(this.storage.get("observeur"));
       } else if (requeteType == "perturbations") {
-        return from(this.getLocalData("perturbations"));
+        return from(this.storage.get("perturbations"));
       } else if (requeteType == "organisme") {
-        return from(this.getLocalData("organisme"));
+        return from(this.storage.get("organisme"));
       }
     } else {
       // Return real API data
@@ -63,7 +63,7 @@ export class ApiService {
               console.error(err);
               console.log("renvoi des données locales");
 
-              return from(this.getLocalData("base"));
+              return from(this.storage.get("base"));
             })
           );
       } else if (requeteType == "visite") {
@@ -78,7 +78,7 @@ export class ApiService {
             catchError(err => {
               console.error(err);
               console.log("renvoi des données locales");
-              return from(this.getLocalData("visite" + id));
+              return from(this.storage.get("visite" + id));
             })
           );
       } else if (requeteType == "maille") {
@@ -93,7 +93,7 @@ export class ApiService {
             catchError(err => {
               console.error(err);
               console.log("renvoi des données locales");
-              return from(this.getLocalData("maille" + id));
+              return from(this.storage.get("maille" + id));
             })
           );
       } else if (requeteType == "observeur") {
@@ -104,7 +104,7 @@ export class ApiService {
             catchError(err => {
               console.error(err);
               console.log("renvoi des données locales");
-              return from(this.getLocalData("observeur"));
+              return from(this.storage.get("observeur"));
             })
           );
       } else if (requeteType == "perturbations") {
@@ -119,7 +119,7 @@ export class ApiService {
             catchError(err => {
               console.error(err);
               console.log("renvoi des données locales");
-              return from(this.getLocalData("perturbations"));
+              return from(this.storage.get("perturbations"));
             })
           );
       } else if (requeteType == "organisme") {
@@ -134,7 +134,7 @@ export class ApiService {
             catchError(err => {
               console.error(err);
               console.log("renvoi des données locales");
-              return from(this.getLocalData("organisme"));
+              return from(this.storage.get("organisme"));
             })
           );
       }
@@ -167,7 +167,6 @@ export class ApiService {
             console.log("données envoyées");
             console.log(mes);
             alert("ZP envoyé");
-            this.storage.remove("visiteSite" + mes["id_base_site"]);
           },
           err => {
             console.error(JSON.stringify(err));
@@ -274,7 +273,7 @@ export class ApiService {
         }
       );
   }
-
+  /*
   // Save result of API requests
   public setLocalData(key, data) {
     //this.storage.set(`${API_STORAGE_KEY}-${key}`, data);
@@ -286,6 +285,7 @@ export class ApiService {
     //return this.storage.get(`${API_STORAGE_KEY}-${key}`);
     return this.storage.get(`${key}`);
   }
+  */
 }
 
 export var reponse;

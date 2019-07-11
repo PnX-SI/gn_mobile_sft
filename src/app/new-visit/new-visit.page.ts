@@ -8,10 +8,9 @@ import { ApiService } from "../services/api.service";
 import "leaflet";
 import "leaflet-tilelayer-mbtiles-ts";
 import * as geoJSON from "geojson";
-import { ConnectionStatus, NetworkService } from "../services/network.service";
 import { LocalVariablesService } from "../services/local-variables.service";
-import { watch } from "fs";
 import { AlertController } from "@ionic/angular";
+import { Storage } from "@ionic/storage";
 
 declare var L: any;
 
@@ -64,7 +63,7 @@ export class NewVisitPage implements OnInit {
     private route: ActivatedRoute,
     private apiService: ApiService,
     private file: File,
-    private networkService: NetworkService,
+    private storage: Storage,
     private local: LocalVariablesService,
     private alert: AlertController
   ) {
@@ -337,8 +336,20 @@ export class NewVisitPage implements OnInit {
       //this.dataSend.id_digitiser = null
       //this.dataSend.uuid_base_visit = null
       console.log(this.dataSend);
-      this.apiService.setLocalData("visiteSite" + this.id, this.dataSend);
-      this.router.navigate(["/home"]);
+      this.storage.get("visitsDone").then(res => {
+        if (res) {
+          res.push(this.dataSend);
+          this.storage.set("visitsDone", res).then(x => {
+            this.router.navigate(["/home"]);
+          });
+        } else {
+          res = [];
+          res.push(this.dataSend);
+          this.storage.set("visitsDone", res).then(x => {
+            this.router.navigate(["/home"]);
+          });
+        }
+      });
     } else if (this.maillesNonVisite == this.totalMailles) {
       this.alert
         .create({

@@ -37,7 +37,7 @@ export class LoginPage implements OnInit {
 
   ionViewDidEnter() //quand on rentre dans la page
   {
-    this.apiService.getLocalData("user").then(val => {
+    this.storage.get("user").then(val => {
       console.log(val);
       if (val) {
         var today = new Date();
@@ -114,7 +114,7 @@ export class LoginPage implements OnInit {
   }
 
   public tryToLogin() {
-    this.apiService.getLocalData("user").then(val => {
+    this.storage.get("user").then(val => {
       if (val && reponse) {
         console.log("log in");
         console.log(reponse);

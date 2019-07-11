@@ -24,18 +24,9 @@ export class SeeVisitsPage implements OnInit {
   ionViewDidEnter() //quand on rentre dans la page
   {
     //récupération du nombre de visites non synchronisées
-    this.apiService.getData(true).subscribe(res => {
-      this.visites = []; //reset pour éviter un faux positif
-      res.forEach(element => {
-        this.storage.get("visiteSite" + element.id).then(visit => {
-          if (visit) {
-            this.visites.push(visit);
-            //this.local.setListVisit(this.donneesStockee);
-          }
-        });
-      });
+    this.storage.get("visitsDone").then(res => {
+      this.visites = res;
     });
-    //console.log(this.visites);
   }
 
   GoToHome() {
@@ -65,8 +56,14 @@ export class SeeVisitsPage implements OnInit {
             text: "Oui",
             handler: () => {
               console.log("oui");
-              this.storage.remove("visiteSite" + id);
-              this.ionViewDidEnter();
+              this.storage.get("visitsDone").then(res => {
+                if (res) {
+                  res.splice(id, 1);
+                  this.storage.set("visitsDone", res).then(x => {
+                    this.ionViewDidEnter();
+                  });
+                }
+              });
             }
           }
         ]
@@ -94,7 +91,9 @@ export class SeeVisitsPage implements OnInit {
             text: "Oui",
             handler: () => {
               console.log("oui");
-              this.storage.get("visiteSite" + id).then(data => {
+              this.storage.get("visitsDone").then(data => {
+                data = data[id];
+
                 var formatedData = {
                   cor_visit_grid: data["cor_visit_grid"],
                   id_base_visit: data["id_base_visit"],
@@ -126,6 +125,14 @@ export class SeeVisitsPage implements OnInit {
                         user["access_token"],
                         formatedData
                       );
+                      this.storage.get("visitsDone").then(res => {
+                        if (res) {
+                          res.splice(id, 1);
+                          this.storage.set("visitsDone", res).then(x => {
+                            this.ionViewDidEnter();
+                          });
+                        }
+                      });
                     } else {
                       console.error("pas de token");
                       this.alert
