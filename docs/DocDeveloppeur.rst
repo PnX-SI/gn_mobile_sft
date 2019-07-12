@@ -141,7 +141,5 @@ A terminer
 
 **Fonctionnalités**
 
-Lecture dans la carte SD au lieu de files (en attente d’une réponse sur `cette question stack Overflow <https://stackoverflow.com/questions/56802609/cordova-diagnostic-exception-on-diagnostic-getexternalsdcarddetails>`_)
-
 **Bugs**
 

@@ -51,7 +51,11 @@ export class HomePage {
 
     //récupération du nombre de visites non synchronisées
     this.storage.get("visitsDone").then(res => {
-      this.donneesStockee = res;
+      if (res) {
+        this.donneesStockee = res;
+      } else {
+        this.donneesStockee = [];
+      }
     });
   }
 

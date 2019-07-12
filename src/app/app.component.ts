@@ -8,13 +8,14 @@ import { File } from "@ionic-native/file/ngx";
 
 //import { OfflineManagerService } from "./services/offline-manager.service";
 import { LocalVariablesService } from "./services/local-variables.service";
+import { Diagnostic } from "@ionic-native/diagnostic/ngx";
 
 const settings = {
   API_URL: "http://demo.geonature.fr/geonature/api",
   API_Dir: "sft",
   Default_Lat: 44.5682846,
   Default_Lon: 6.0634622,
-  TilesPath: "path/to/tiles/",
+  TilesPath: "/path/to/tiles/",
   TilesDirectory: "scan",
   MaxZoomLevel: 18,
   Online_Leaflet_URL: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
@@ -37,7 +38,8 @@ export class AppComponent {
     //private offlineManager: OfflineManagerService,
     private networkService: NetworkService,
     private file: File,
-    private local: LocalVariablesService
+    private local: LocalVariablesService,
+    private diagnostic: Diagnostic
   ) {
     this.initializeApp();
   }
@@ -64,7 +66,9 @@ export class AppComponent {
         );
         this.local.setSettings(settings);
       } else {
+        this.diagnostic.requestExternalStorageAuthorization(); //on demande la permition d'aller
         /*on verifie l'existence des dossiers et fichiers qui nous interressent*/
+
         this.settings();
       }
 

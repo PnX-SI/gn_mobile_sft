@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { File } from "@ionic-native/file/ngx";
 import { WebView } from "@ionic-native/ionic-webview";
+import { Diagnostic } from "@ionic-native/diagnostic/ngx";
 
 import { ApiService } from "../services/api.service";
 
@@ -65,6 +66,7 @@ export class NewVisitPage implements OnInit {
     private file: File,
     private storage: Storage,
     private local: LocalVariablesService,
+    private diagnostic: Diagnostic,
     private alert: AlertController
   ) {
     //on lis les paramêtres qu'on a passé
@@ -146,34 +148,70 @@ export class NewVisitPage implements OnInit {
   ionViewDidEnter() //quand on rentre dans la page
   {
     //on fait en sorte que la carte soit affiché
-    this.file
-      .checkDir(
-        this.file.externalDataDirectory,
-        this.local.getSettings()["TilesDirectory"]
-      )
-      .then(
-        res => {
+    this.diagnostic.getExternalSdCardDetails().then(
+      res => {
+        console.log(res);
+        if (res.length > 0) {
+          //y a une carte sd
           //Carte locale (dossier de tuiles)
           var pathToFile =
-            this.file.externalDataDirectory +
+            res[0]["path"] +
+            this.local.getSettings()["TilesPath"] +
             this.local.getSettings()["TilesDirectory"];
           var truePath = WebView.convertFileSrc(pathToFile);
-          console.log("mbtile chargé");
+          console.log("tuiles chargé");
           L.tileLayer(truePath + "/{z}/{x}/{y}.png", {
             maxZoom: this.local.getSettings()["MaxZoomLevel"],
             attribution: "local"
           }).addTo(this.map);
-        },
-        err => {
-          //Carte online
-          L.tileLayer(this.local.getSettings()["Online_Leaflet_URL"], {
-            // tslint:disable-next-line
-            attribution:
-              "&copy;" + this.local.getSettings()["Online_Attribution"],
-            maxZoom: this.local.getSettings()["MaxZoomLevel"]
-          }).addTo(this.map);
+        } //y en a pas, on cherche dans les fichiers internes
+        else {
+          this.file
+            .checkDir(
+              this.file.externalDataDirectory +
+                this.local.getSettings()["TilesPath"].slice(1),
+              this.local.getSettings()["TilesDirectory"]
+            )
+            .then(
+              res => {
+                //on trouve une carte locale
+                //Carte locale (dossier de tuiles)
+                var pathToFile =
+                  this.file.externalDataDirectory +
+                  this.local.getSettings()["TilesPath"].slice(1) +
+                  this.local.getSettings()["TilesDirectory"];
+                var truePath = WebView.convertFileSrc(pathToFile);
+                console.log("tuiles chargé");
+                L.tileLayer(truePath + "/{z}/{x}/{y}.png", {
+                  maxZoom: this.local.getSettings()["MaxZoomLevel"],
+                  attribution: "local"
+                }).addTo(this.map);
+              },
+              err => {
+                //on ne trouve pas de carte locale
+                //Carte online
+                L.tileLayer(this.local.getSettings()["Online_Leaflet_URL"], {
+                  // tslint:disable-next-line
+                  attribution:
+                    "&copy;" + this.local.getSettings()["Online_Attribution"],
+                  maxZoom: this.local.getSettings()["MaxZoomLevel"]
+                }).addTo(this.map);
+              }
+            );
         }
-      );
+      },
+      err => {
+        console.error(err);
+        //on ne trouve pas de carte locale
+        //Carte online
+        L.tileLayer(this.local.getSettings()["Online_Leaflet_URL"], {
+          // tslint:disable-next-line
+          attribution:
+            "&copy;" + this.local.getSettings()["Online_Attribution"],
+          maxZoom: this.local.getSettings()["MaxZoomLevel"]
+        }).addTo(this.map);
+      }
+    );
   }
 
   ngOnInit() //quand on créé la page
