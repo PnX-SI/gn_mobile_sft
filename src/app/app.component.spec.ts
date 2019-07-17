@@ -6,6 +6,9 @@ import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 
 import { AppComponent } from "./app.component";
+import { Network } from "@ionic-native/network/ngx";
+import { File } from "@ionic-native/file/ngx";
+import { Diagnostic } from "@ionic-native/diagnostic/ngx";
 
 describe("AppComponent", () => {
   let statusBarSpy, splashScreenSpy, platformReadySpy, platformSpy;
@@ -22,7 +25,10 @@ describe("AppComponent", () => {
       providers: [
         { provide: StatusBar, useValue: statusBarSpy },
         { provide: SplashScreen, useValue: splashScreenSpy },
-        { provide: Platform, useValue: platformSpy }
+        { provide: Platform, useValue: platformSpy },
+        Network,
+        File,
+        Diagnostic
       ]
     }).compileComponents();
   }));

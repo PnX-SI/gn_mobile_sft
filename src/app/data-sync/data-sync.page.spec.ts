@@ -1,18 +1,17 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DataSyncPage } from './data-sync.page';
+import { DataSyncPage } from "./data-sync.page";
 
-describe('DataSyncPage', () => {
+describe("DataSyncPage", () => {
   let component: DataSyncPage;
   let fixture: ComponentFixture<DataSyncPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DataSyncPage ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
-    .compileComponents();
+      declarations: [DataSyncPage],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -21,7 +20,7 @@ describe('DataSyncPage', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
