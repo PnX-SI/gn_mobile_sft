@@ -2,6 +2,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { HomePage } from "./home.page";
+import { Router } from "@angular/router";
+import { Storage } from "@ionic/storage";
 
 describe("HomePage", () => {
   let component: HomePage;
@@ -10,7 +12,21 @@ describe("HomePage", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomePage],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        {
+          provide: Router,
+          useValue: class {
+            navigate = jasmine.createSpy("navigate");
+          }
+        },
+        {
+          provide: Storage,
+          useValue: () => {
+            return new Storage({});
+          }
+        }
+      ]
     }).compileComponents();
   }));
 
@@ -22,9 +38,5 @@ describe("HomePage", () => {
 
   it("should create", () => {
     expect(component).toBeTruthy();
-  });
-
-  it("DonneesStockee existe", () => {
-    expect(component.donneesStockee).not.toBe(null);
   });
 });
