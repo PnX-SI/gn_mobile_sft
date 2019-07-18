@@ -59,6 +59,8 @@ Build l'appli
  
     ionic cordova build android
 
+pour build une version signée, utilisez android studio, allez dans build, generate signed Bundle/APK, choisissez APK, suivez les instructions 
+
 Customination
 -------------
 
