@@ -52,7 +52,6 @@ export class ApiService {
       // Return real API data
 
       if (requeteType == "base") {
-        //console.log("api url:"+this.local.getSettings()['API_URL']+" api dir:"+this.local.getSettings()['API_Dir'])
         return this.http
           .get(
             `${this.local.getSettings()["API_URL"]}/${
@@ -337,19 +336,6 @@ export class ApiService {
         }
       );
   }
-  /*
-  // Save result of API requests
-  public setLocalData(key, data) {
-    //this.storage.set(`${API_STORAGE_KEY}-${key}`, data);
-    this.storage.set(`${key}`, data);
-  }
-
-  // Get cached API result
-  public getLocalData(key) {
-    //return this.storage.get(`${API_STORAGE_KEY}-${key}`);
-    return this.storage.get(`${key}`);
-  }
-  */
 }
 
 export var reponse;
