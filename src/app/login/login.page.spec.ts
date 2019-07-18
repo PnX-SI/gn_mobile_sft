@@ -19,12 +19,14 @@ describe("LoginPage", () => {
         {
           provide: Router,
           useValue: class {
-            navigate = jasmine.createSpy("navigate");
+            navigate = {}; //jasmine.createSpy("navigate");
           }
         },
         {
           provide: ActivatedRoute,
-          useValue: { snapshot: { data: {} } }
+          useValue: class {
+            params = jasmine.createSpy("params");
+          }
         },
         Network,
         HttpClient,
