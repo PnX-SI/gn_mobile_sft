@@ -129,7 +129,6 @@ export class AppComponent {
                             res => {
                               console.log("lecture de settings.json");
                               this.local.setSettings(JSON.parse(res));
-                              //verif dossier des mbtiles
                             },
                             err => {
                               console.log("Erreur: settings.json illisible");
