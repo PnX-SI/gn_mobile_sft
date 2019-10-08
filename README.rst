@@ -1,8 +1,12 @@
-=========
-gn_mobile_sft
-=========
+=============================
+Suivi Flore Territoire mobile
+=============================
 
-Application mobile de saisie dans le module `GeoNature Suivi Flore Territoire <https://github.com/PnX-SI/gn_module_suivi_flore_territoire>`_
+Application mobile Android de saisie dans le module `GeoNature Suivi Flore Territoire <https://github.com/PnX-SI/gn_module_suivi_flore_territoire>`_
+
+Démo vidéo : https://geonature.fr/docs/img/2019-05-SFT-mobile-0.2.0.gif
+
+.. image :: https://github.com/PnX-SI/gn_mobile_sft/blob/master/docs/img/screenshots-0-2-0.png
 
 Installation
 -------------
@@ -30,6 +34,7 @@ Lancer l'appli sur le navigateur
 
 Lancer l'appli sur un terminal
 ------------------------------
+
 **IOS**
 
 Nécessite un environnement `IOS <https://ionicframework.com/docs/installation/ios>`_ seulement disponible sur MacOS 
