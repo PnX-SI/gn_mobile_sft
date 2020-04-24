@@ -2,6 +2,19 @@
 CHANGELOG
 =========
 
+1.0.0 (2019-07-19)
+------------------
+
+Quatrième version de l'appli mobile GeoNature (protocole Suivi flore territoire), pilotée par le PNE et le CBNA, développée par @rorp24. 
+
+**Fonctionnalités**
+
+* Accélération de l'application
+* Lecture sur carte SD et fichiers locaux
+* Documentation développeur (V2)
+* Documentation utilisateur (V1)
+* Mise à jour de l'interface
+
 0.3.0 (2019-06-18)
 ------------------
 
