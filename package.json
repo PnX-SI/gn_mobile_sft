@@ -51,7 +51,7 @@
     "cordova.plugins.diagnostic": "^5.0.0",
     "core-js": "^2.5.4",
     "help": "3.0.2",
-    "karma": "^4.1.0",
+    "karma": "^6.3.16",
     "leaflet": "^1.4.0",
     "leaflet-tilelayer-mbtiles-ts": "^1.4.9",
     "node-sass": "^4.12.0",
